@@ -1,0 +1,23 @@
+#context-menu {
+    position: fixed; 
+    top: -1000px;
+    
+    display: flex; /* Cachez le menu par défaut */
+    z-index: 1000; /* Assurez-vous qu'il s'affiche au-dessus des autres éléments */
+    background-color: #f0f0f0; /* Couleur de fond de votre choix */
+    border: 1px solid #ccc; /* Bordure de votre choix */
+    padding: 10px; /* Espace entre le bord du menu et les options du menu */
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2); /* Ombre portée pour donner un effet 3D */
+    flex-direction: column;
+}
+
+.menu-option {
+    display: block; /* Affiche chaque option sur une nouvelle ligne */
+    padding: 5px 10px; /* Espace autour du texte de chaque option */
+    cursor: pointer; /* Affiche un curseur pointer pour indiquer une option cliquable */
+}
+
+.menu-option:hover {
+    background-color: #e0e0e0; /* Couleur de fond lorsque vous survolez une option */
+}
+

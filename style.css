@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  cursor: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #e4e4e4;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  animation: changeColors 1s infinite;
+}
+
+/* @keyframes changeColors {
+  0%   { background-color: red; }
+  20%  { background-color: orange; }
+  40%  { background-color: yellow; }
+  60%  { background-color: green; }
+  80%  { background-color: blue; }
+  100% { background-color: purple; }
+}
+
+.animate-bg {
+animation: changeColors 1s infinite;
+} */
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.windows {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.window {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  background: white;
+}
+
+.window-header {
+  background: lightgray;
+  padding: 5px;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.window-content {
+  padding: 5px;
+}
+
+button {
+  border: none;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: gray;
+}
+
+.minimized-windows {
+  display: flex;
+  /* Rest of your styles */
+}
+
+.window.maximized {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.app-windows {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.calculator-template {
+  display: none;
+}
+
+
+#folder-window-template {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: 1px solid black;
+  /* Ajoutez plus de styles ici pour personnaliser l'apparence de la fenêtre */
+}

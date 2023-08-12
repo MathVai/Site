@@ -1,0 +1,88 @@
+.desktop-icon, .desktop-icon-container {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+.desktop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 30px;
+}
+
+.desktop-icon-container {
+  position: relative;
+  width: 100px;
+  height: 150px;
+}
+
+.desktop-icon {
+  position: relative;
+  width: 96px;
+  height: 96px;  
+  cursor: move;
+}
+
+.icon-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.desktop-icon img {
+    width: 100%;
+    height: auto;
+}
+
+.desktop-icon-image {
+    width: 100%;
+    height: 100%;
+    image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: pixelated;                 /* Universal support since 2021   */
+    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+
+  }
+
+.desktop-icon p {
+    text-align: center;
+    font-size: 2em;
+    z-index: 1;
+}
+
+.desktop-icon-container.selected {
+    background-color: lightblue;
+  }
+
+.desktop-icon-label {
+    text-align: center;
+    font-family: 'VT323', monospace;
+  }
+
+  .desktop-icon-container[data-moved="true"] {
+    grid-column: auto;
+    grid-row: auto;
+}
+
+.desktop-icon-placeholder {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+
+.desktop-icon-container.placeholder {
+  visibility: collapse;
+}
+
+
+

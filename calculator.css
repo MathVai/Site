@@ -1,0 +1,95 @@
+.calculator {
+    background-color: var(--bg-color);
+    width: fit-content;
+    height: fit-content;
+    max-width: 290px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+  
+.input {
+    border: 2px solid var(--border-color);
+    height: 50px;
+    padding-right: 15px;
+    padding-top: 10px;
+    text-align: right;
+    margin: 4px 4px;
+    font-size: 2.5rem;
+    color: var(--text-color);
+    overflow-x: auto;
+    transition: all .2s ease-in-out;
+}
+
+.input:hover {
+    border: 2px solid var(--border-color);
+    list-style-type: none;
+    overflow-x: auto;
+}
+  
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.operators, .numbers {
+    display: contents; 
+}
+  
+.operators div, .numbers div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    border: 2px solid var(--border-color-int);
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    font-size: 30px;
+    padding: 10px;
+    margin: 4px 4px 4px 4px;
+    cursor: pointer;
+    background-color: var(--bg-color);
+    transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s;
+}
+  
+.operators div:hover, .numbers div:hover {
+    background-color: var(--bg-color-hover);
+    border-color: 2px solid var(--border-color-int);
+}
+  
+.operators div:active, .numbers div:active {
+    font-weight: bold;
+}
+  
+.leftPanel {
+    display: inline-block;
+}
+  
+div.equal {
+    grid-row: 2 / 6; /* Span from the 2nd row to the 6th row */
+    grid-column: 4; /* Position on the 4th column */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--border-color-int);
+    text-align: center;
+    font-size: 30px;
+    vertical-align: top;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: all .2s ease-in-out;
+    margin: 4px;
+}
+  
+div.equal:hover {
+    background-color: var(--bg-color-hover);
+    border-color: var(--border-color);
+}
+  
+div.equal:active {
+    font-weight: bold;
+}

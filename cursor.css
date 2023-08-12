@@ -1,0 +1,19 @@
+#cursor {
+    background-image: url('./Icons/Souris.svg');
+    background-size: contain; /* Redimensionne l'image pour qu'elle soit entièrement visible */
+    background-repeat: no-repeat; /* Empêche l'image de se répéter */
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    pointer-events: none;
+    transition: transform 0.1s ease-in-out;
+    transform: translate(0%, 100%) scale(0);
+    animation: cursorAnimation 0.5s infinite;
+    z-index: 10000;
+}
+
+
+@keyframes cursorAnimation {
+    0% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+}
