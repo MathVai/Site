@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 event.stopPropagation();
 
                 if (event.target.id === 'delete-icon') {
-                    const selectedDesktopIcons = document.querySelectorAll('.desktop-icon-container.selected');
+                    const selectedDesktopIcons = Array.from(document.querySelectorAll('.desktop-icon-container.selected'));
+                    console.log("enculé",selectedDesktopIcons)
                     if(selectedDesktopIcons.length) {
                         selectedDesktopIcons.forEach(icon => {
                             window.deleteDesktopIcon(icon);

@@ -5,6 +5,9 @@ var startX = 0,
 var didSelectionOccur = false;
 
 document.addEventListener('mousedown', function (event) {
+  if (event.target.closest('#context-menu')) {
+    return; // Si le clic provient du menu contextuel, n'exécutez pas la logique de désélection
+  }
   if (event.button !== 0) return;
   if (!didSelectionOccur && !event.target.closest('.desktop-icon-container')) {
     const desktopIconContainers = document.querySelectorAll(

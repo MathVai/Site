@@ -335,12 +335,14 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeDesktopIcons();
 
   document.addEventListener('click', function (event) {
+    console.log(event.target,event.target.closest('.menu-contextuel'),!event.target.closest('.desktop-icon-container'))
     if (event.target.closest('.menu-contextuel')) {
       return; // Si le clic provient du menu contextuel, n'exécutez pas la logique de désélection
     }
     if (!event.target.closest('.desktop-icon-container')) {
       desktopIconContainers.forEach((iconContainer) =>
         iconContainer.classList.remove('selected')
+      
       );
     }
   });

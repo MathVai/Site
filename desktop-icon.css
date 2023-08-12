@@ -24,9 +24,7 @@
   z-index: 10; /* To ensure that all icons are on the same stacking context and z-index */
 }
 
-.desktop-icon-container.selected {
-  z-index: 15; /* To esnure that selected icons are higher up in the z-index */
-}
+
 
 .desktop-icon {
   position: relative;
@@ -65,9 +63,6 @@
   z-index: 1;
 }
 
-.desktop-icon-container.selected {
-  background-color: lightblue;
-}
 
 .desktop-icon-label {
   text-align: center;
