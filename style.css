@@ -10,11 +10,12 @@
   display: none;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   background: #e4e4e4;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   scrollbar-width: none;
   animation: changeColors 1s infinite;
 }
@@ -32,7 +33,6 @@ html, body {
 animation: changeColors 1s infinite;
 } */
 
-
 body {
   display: flex;
   justify-content: center;
@@ -43,7 +43,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 10;
 }
 
 .window {
@@ -52,6 +52,11 @@ body {
   height: 200px;
   border: 1px solid black;
   background: white;
+  z-index: 20;
+}
+
+.window.active {
+  z-index: 30;
 }
 
 .window-header {
@@ -87,6 +92,7 @@ button:hover {
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 30;
 }
 
 .app-windows {
@@ -103,7 +109,6 @@ button:hover {
 .calculator-template {
   display: none;
 }
-
 
 #folder-window-template {
   width: 200px;

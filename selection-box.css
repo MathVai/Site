@@ -1,14 +1,11 @@
-
 .desktop-icon-container.selected {
-    background-color: rgba(0, 128, 255, 0.2);
+  background-color: rgba(0, 128, 255, 0.2);
 }
 
 .selection-rectangle {
-    border: 1px dashed #000;
-    position: absolute;
-    z-index: 10;  /* Assurez-vous qu'il est au-dessus des icônes mais en dessous des fenêtres */
-    pointer-events: none;  /* Cela empêche le rectangle d'interférer avec d'autres éléments lors du déplacement de la souris */
-    background-color: rgba(0, 0, 255, 0.1);  /* Fond semi-transparent */
+  border: 1px dashed #000;
+  position: absolute;
+  z-index: 5; /* Assurez-vous qu'il est au-dessus des icônes mais en dessous des fenêtres */
+  pointer-events: none; /* Cela empêche le rectangle d'interférer avec d'autres éléments lors du déplacement de la souris */
+  background-color: rgba(0, 0, 255, 0.1); /* Fond semi-transparent */
 }
-
-

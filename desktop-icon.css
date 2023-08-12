@@ -1,4 +1,5 @@
-.desktop-icon, .desktop-icon-container {
+.desktop-icon,
+.desktop-icon-container {
   margin: 0;
   padding: 0;
   border: none;
@@ -20,58 +21,62 @@
   position: relative;
   width: 100px;
   height: 150px;
+  z-index: 10; /* To ensure that all icons are on the same stacking context and z-index */
+}
+
+.desktop-icon-container.selected {
+  z-index: 15; /* To esnure that selected icons are higher up in the z-index */
 }
 
 .desktop-icon {
   position: relative;
   width: 96px;
-  height: 96px;  
+  height: 96px;
   cursor: move;
 }
 
 .icon-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .desktop-icon img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .desktop-icon-image {
-    width: 100%;
-    height: 100%;
-    image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
-    image-rendering: pixelated;                 /* Universal support since 2021   */
-    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
-
-  }
+  width: 100%;
+  height: 100%;
+  image-rendering: optimizeSpeed; /* STOP SMOOTHING, GIVE ME SPEED  */
+  image-rendering: pixelated; /* Universal support since 2021   */
+  -ms-interpolation-mode: nearest-neighbor; /* IE8+                           */
+}
 
 .desktop-icon p {
-    text-align: center;
-    font-size: 2em;
-    z-index: 1;
+  text-align: center;
+  font-size: 2em;
+  z-index: 1;
 }
 
 .desktop-icon-container.selected {
-    background-color: lightblue;
-  }
+  background-color: lightblue;
+}
 
 .desktop-icon-label {
-    text-align: center;
-    font-family: 'VT323', monospace;
-  }
+  text-align: center;
+  font-family: 'VT323', monospace;
+}
 
-  .desktop-icon-container[data-moved="true"] {
-    grid-column: auto;
-    grid-row: auto;
+.desktop-icon-container[data-moved='true'] {
+  grid-column: auto;
+  grid-row: auto;
 }
 
 .desktop-icon-placeholder {
@@ -83,6 +88,3 @@
 .desktop-icon-container.placeholder {
   visibility: collapse;
 }
-
-
-
