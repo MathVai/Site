@@ -1,32 +1,20 @@
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Existing selection box code
-    let selectionRect = null;
+let selectionRect = null;
 let isSelecting = false;
 let startX = 0, startY = 0;
 let didSelectionOccur = false;
 
 document.addEventListener('mousedown', function(event) {
     if (event.button !== 0) return;
-
-        if (event.target.closest('.window-header') || event.target.closest('.navbar') || event.target.closest('.window')) {
-            return;
-        }
-    
-    
-    // Check if the click is not on a desktop icon, button, window, navbar or any other excluded element
-    if (event.target.closest('.desktop') && 
-        !event.target.closest('.desktop-icon-container') && 
-        !event.target.closest('button') && 
-        !event.target.closest('.window') &&
-        !event.target.closest('.navbar')) {
-        // Existing logic for initializing the selection box
+    if (!didSelectionOccur && !event.target.closest('.desktop-icon-container')) {
+        const desktopIconContainers = document.querySelectorAll('.desktop-icon-container');
+        desktopIconContainers.forEach(iconContainer => {
+            iconContainer.classList.remove('selected');
+        });
     }
-});
     didSelectionOccur = false;
 
     // Si l'utilisateur clique sur le bureau (et non sur une icône), initialisez le cadre de sélection
-    if (event && !event.target.closest('.desktop-icon-container') && !event.target.closest('button')) {
+    if (!event.target.closest('.desktop-icon-container') && !event.target.closest('button')) {
         if (!selectionRect) {
             selectionRect = document.createElement('div');
             selectionRect.className = 'selection-rectangle';
@@ -88,4 +76,3 @@ function isElementInsideSelection(element, selection) {
     return rect1.left < rect2.right && rect1.right > rect2.left &&
         rect1.top < rect2.bottom && rect1.bottom > rect2.top;
 }
-
