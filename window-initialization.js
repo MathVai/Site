@@ -1,6 +1,4 @@
 var activeWindow = null;
-import {
-  handleDragStart } from './window-drag.js';
 let highestZIndex = 0;
 
 export function increaseAndGetZIndex() {

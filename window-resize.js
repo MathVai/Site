@@ -47,7 +47,6 @@ document.querySelectorAll('.window:not(.fixed-size)').forEach(element => {
                 target.dataset.y = y;
             },
             resizeend(event) {
-                console.log('Resize ended, adjusting window position...');
                 adjustWindowPosition(event.target);
                 resizing = false; // Remettez le redimensionnement à false après avoir terminé
             },
@@ -77,26 +76,6 @@ document.querySelectorAll('.window').forEach(windowElement => {
     });
 });
 
-// Écouteur pour surveiller les modifications du dataset
-function monitorDatasetChanges(element) {
-    const mutationObserver = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            if (mutation.attributeName.startsWith('data-')) {
-                console.log(`Attribute ${mutation.attributeName} of ${mutation.target.id} was modified.`);
-                console.log(`Old value: ${mutation.oldValue}`);
-                console.log(`New value: ${element.getAttribute(mutation.attributeName)}`);
-            }
-        });
-    });
-
-    mutationObserver.observe(element, {
-        attributes: true,
-        attributeFilter: ['data-x', 'data-y'],
-        attributeOldValue: true
-    });
-
-    return mutationObserver;
-}
 
 // Ajoutez l'écouteur pour chaque fenêtre
 document.querySelectorAll('.window').forEach(windowElement => {

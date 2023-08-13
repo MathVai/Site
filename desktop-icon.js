@@ -6,6 +6,12 @@ let iconInitialPosition = {
 let isDragging = false;
 let deselectTimeout = null;
 let dragAboutToStart = false;
+let iconsWereDragged = false; 
+let isContextMenuOpen = false;
+window.updateDesktopIcons = updateDesktopIcons;
+window.handleIconSelection = handleIconSelection;
+
+
 
 function initializeDesktopIcon(iconContainer) {
   handleIconSelection(iconContainer);
@@ -26,8 +32,6 @@ function initializeDesktopIcons() {
     listeners: {
       start(event) {
         dragAboutToStart = true;
-        console.log('Drag started. dragAboutToStart:', dragAboutToStart);
-        console.log('Setting dragAboutToStart to true');
 
         if (deselectTimeout) {
           clearTimeout(deselectTimeout);
@@ -105,7 +109,6 @@ function initializeDesktopIcons() {
       },
 
       end(event) {
-        console.log('Resetting dragAboutToStart to false');
         dragAboutToStart = false;
         isDragging = false;
         const target = event.target;
@@ -144,7 +147,6 @@ function attachDoubleClickEvent() {
       const windowId = desktopIcon.dataset.window;
       openWindow(windowId);
       unselectAll();
-      console.log('Double clicked: ' + windowId);
     });
   });
 }
@@ -309,7 +311,6 @@ function openWindow(windowId) {
       windowElement.classList.remove('hidden');
       document.body.appendChild(windowElement);
     } else {
-      console.log(`No window or template found with ID "${windowId}"`);
       return;
     }
   }
@@ -317,14 +318,14 @@ function openWindow(windowId) {
   highestZIndex++;
   windowElement.style.zIndex = highestZIndex;
   centerWindow(windowElement);
-  console.log('Open window: ' + windowId);
+
 
   // Select the close button inside the new window
   const closeButton = windowElement.querySelector('.close');
 
   // Attach an event listener to the close button
   closeButton.addEventListener('click', () => {
-    console.log('Close button clicked');
+
     windowElement.classList.add('hidden');
   });
 }
@@ -335,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeDesktopIcons();
 
   document.addEventListener('click', function (event) {
-    console.log(event.target,event.target.closest('.menu-contextuel'),!event.target.closest('.desktop-icon-container'))
+
     if (event.target.closest('.menu-contextuel')) {
       return; // Si le clic provient du menu contextuel, n'exécutez pas la logique de désélection
     }
@@ -348,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-function resetDesktopIcons() {
+window.resetDesktopIcons = function() {
   const placeholders = document.querySelectorAll(
     '.desktop-icon-container.placeholder'
   );
@@ -380,9 +381,6 @@ document.addEventListener('click', function (event) {
   setTimeout(() => {
     const selectedIcons = document.querySelectorAll(
       '.desktop-icon-container.selected'
-    );
-    console.log(
-      `Nombre d'icônes sélectionnées après clic : ${selectedIcons.length}`
     );
   }, 50); // Légèrement retardé pour s'assurer que toutes les manipulations de la classe sont terminées.
 });
