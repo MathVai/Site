@@ -1,6 +1,6 @@
 import './navbar.js';
-import './window-open.js';
 import './window-drag.js';
+import './window-open.js';
 import './window-initialization.js';
 import './window-resize.js';
 import './desktop-icon.js';

@@ -10,6 +10,11 @@ let iconsWereDragged = false;
 let isContextMenuOpen = false;
 window.updateDesktopIcons = updateDesktopIcons;
 window.handleIconSelection = handleIconSelection;
+import { zIndexControl } from './window-initialization.js';
+import { openWindowAlt } from './window-open.js';
+
+
+
 
 
 
@@ -144,8 +149,9 @@ function attachDoubleClickEvent() {
   const desktopIcons = document.querySelectorAll('.desktop-icon');
   desktopIcons.forEach((desktopIcon) => {
     desktopIcon.addEventListener('dblclick', () => {
+      console.log('Double-click detected on', desktopIcon);
       const windowId = desktopIcon.dataset.window;
-      openWindow(windowId);
+      openWindowAlt(windowId);
       unselectAll();
     });
   });
@@ -315,8 +321,8 @@ function openWindow(windowId) {
     }
   }
 
-  highestZIndex++;
-  windowElement.style.zIndex = highestZIndex;
+  zIndexControl.increase();
+  windowElement.style.zIndex = zIndexControl.value;
   centerWindow(windowElement);
 
 

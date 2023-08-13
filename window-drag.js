@@ -29,40 +29,44 @@ function updateDragPosition(event) {
 }
 
 
-document.querySelectorAll('.window .window-header').forEach(header => {
-    interact(header).draggable({
-        listeners: {
-            start(event) {
+export function attachDragEventsToWindow(windowElement) {
+  const header = windowElement.querySelector('.window-header');
+  if (!header) return;
 
-                isWindowDragging = true;
-                const parentWindow = event.target.closest('.window');
-                originalDataX = parentWindow.getAttribute('data-x');
-                originalDataY = parentWindow.getAttribute('data-y');
+  interact(header).draggable({
+      listeners: {
+          start(event) {
+              isWindowDragging = true;
+              const parentWindow = event.target.closest('.window');
+              originalDataX = parentWindow.getAttribute('data-x');
+              originalDataY = parentWindow.getAttribute('data-y');
+              parentWindow.style.zIndex = increaseAndGetZIndex();
+          },
+          move(event) {
+              updateDragPosition(event);
+          },
+          end(event) {
+              const parentWindow = event.target.closest('.window');
+              if (parentWindow.classList.contains('maximized')) {
+                  parentWindow.setAttribute('data-x', originalDataX);
+                  parentWindow.setAttribute('data-y', originalDataY);
+              }
+              isWindowDragging = false;
+          }
+      }
+  });
 
+  windowElement.addEventListener('mousedown', (event) => {
+      if (isWindowDragging) {
+          return;
+      }
+      windowElement.style.zIndex = increaseAndGetZIndex();
+      event.stopPropagation();
+  });
+}
 
-                parentWindow.style.zIndex = increaseAndGetZIndex();
-            },
-            move(event) {
-                updateDragPosition(event);
-            },
-            end(event) {
-                const parentWindow = event.target.closest('.window');
-                if (parentWindow.classList.contains('maximized')) {
-                    parentWindow.setAttribute('data-x', originalDataX);
-                    parentWindow.setAttribute('data-y', originalDataY);
-                }
-                isWindowDragging = false;
-            }
-        }
-    });
+document.addEventListener('DOMContentLoaded', function () {
+  // Attacher les événements de glisser-déposer à toutes les fenêtres existantes
+  document.querySelectorAll('.window').forEach(attachDragEventsToWindow);
 });
 
-document.querySelectorAll('.window').forEach(windowElement => {
-    windowElement.addEventListener('mousedown', (event) => {
-        if (isWindowDragging) {
-            return;
-        }
-        windowElement.style.zIndex = increaseAndGetZIndex();
-        event.stopPropagation();
-    });
-});

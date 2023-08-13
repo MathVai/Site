@@ -1,30 +1,55 @@
-function openWindow(windowId) {
-  // Get the template window by appending '-template' to the windowId
-  const templateWindow = document.getElementById(windowId + '-template');
-  if (templateWindow) {
-    // Clone the template window and give the clone the original windowId
-    const windowClone = templateWindow.cloneNode(true);
-    windowClone.id = windowId;
-    windowClone.classList.remove('hidden');
+import { increaseAndGetZIndex, initializeWindow } from './window-initialization.js';
+import { attachDragEventsToWindow } from './window-drag.js';
+import { attachResizeEventsToWindow } from './window-resize.js';
 
-    windowClone.style.zIndex = increaseAndGetZIndex();
+function openWindowAlt(windowId) {
+    console.log('Tentative d\'ouverture de la fenêtre:', windowId);
+    try {
+        console.log('Ouverture de la fenêtre:', windowId);
+        const templateWindow = document.getElementById(windowId + '-template');
+        if (templateWindow) {
+            console.log('Modèle de fenêtre trouvé.');
+            const windowClone = templateWindow.cloneNode(true);
+            console.log("Fenêtre clonée :", windowClone);
+            
+            attachDragEventsToWindow(windowClone);
+            console.log('Événements de drag attachés.');
+            attachResizeEventsToWindow(windowClone);
+            console.log('Événements de resize attachés.');
 
-    // Add the clone to the body
-    document.querySelector('.windows').appendChild(windowClone);
+            windowClone.id = windowId;
+            windowClone.classList.remove('hidden');
+            console.log('ID assigné et classe hidden retirée.');
 
-    // Add the necessary event listeners to the clone
-    initializeWindow(windowClone);
+            const newZIndex = increaseAndGetZIndex();
+            windowClone.style.zIndex = newZIndex;
+            console.log('z-index de la fenêtre après réglage:', windowClone.style.zIndex);
 
-    // Center the clone in the viewport
-    const windowWidth = windowClone.offsetWidth;
-    const windowHeight = windowClone.offsetHeight;
-    const viewportWidth = document.documentElement.clientWidth;
-    const viewportHeight = document.documentElement.clientHeight;
-    const initialX = (viewportWidth - windowWidth) / 2;
-    const initialY = (viewportHeight - windowHeight) / 2;
-    windowClone.style.left = `${initialX}px`;
-    windowClone.style.top = `${initialY}px`;
+            document.querySelector('.windows').appendChild(windowClone);
+            console.log('Fenêtre ajoutée au DOM.');
 
-    console.log('Open window: ' + windowId);
-  }
+            initializeWindow(windowClone);
+            console.log('Fenêtre initialisée.');
+
+            const windowWidth = windowClone.offsetWidth;
+            const windowHeight = windowClone.offsetHeight;
+            const viewportWidth = document.documentElement.clientWidth;
+            const viewportHeight = document.documentElement.clientHeight;
+            const initialX = (viewportWidth - windowWidth) / 2;
+            const initialY = (viewportHeight - windowHeight) / 2;
+            windowClone.style.left = `${initialX}px`;
+            windowClone.style.top = `${initialY}px`;
+            windowClone.setAttribute('data-x', initialX);
+            windowClone.setAttribute('data-y', initialY);
+            console.log('Fenêtre centrée.');
+
+            console.log('Open window: ' + windowId);
+        } else {
+            console.error('Modèle de fenêtre non trouvé.');
+        }
+    } catch (error) {
+        console.error("Erreur lors de l'ouverture de la fenêtre :", error);
+    }
 }
+
+export { openWindowAlt };

@@ -1,5 +1,5 @@
 var activeWindow = null;
-let highestZIndex = 0;
+let highestZIndex = 50;
 
 export function increaseAndGetZIndex() {
   document.querySelectorAll('.window').forEach((windowElement) => {
@@ -9,9 +9,17 @@ export function increaseAndGetZIndex() {
     }
   });
   highestZIndex++;
-  console.log("Increasing zIndex value", highestZIndex);
+  console.log('increaseAndGetZIndex:', highestZIndex); // <-- Ajoutez cette ligne
   return highestZIndex;
 }
+
+
+export const zIndexControl = {
+  value: 0,
+  increase: function() {
+      this.value++;
+  }
+};
 
 
 
@@ -40,6 +48,8 @@ window.addEventListener('load', (event) => {
 
 
 function initializeWindow(windowElement) {
+
+  console.log('Initialisation de la fenêtre:', windowElement.id);
   const header = windowElement.querySelector('.window-header');
   const closeButton = windowElement.querySelector('.close');
   const minimizeButton = windowElement.querySelector('.minimize');
@@ -58,7 +68,6 @@ function initializeWindow(windowElement) {
 
   // Gestion de l'action de minimisation
   minimizeButton.addEventListener('click', () => {
-    console.log('Minimize button clicked');
 
     if (windowElement.classList.contains('minimized')) {
         // Si la fenêtre est déjà minimisée, la restaurer
@@ -131,7 +140,6 @@ function initializeWindow(windowElement) {
             miniature.parentNode.removeChild(miniature);
 
             // Réglez le zIndex pour que la fenêtre restaurée apparaisse au premier plan
-            console.log("Setting zIndex on un-minimize", windowElement.id, increaseAndGetZIndex());
             windowElement.style.zIndex = increaseAndGetZIndex();
         });
 
@@ -139,3 +147,5 @@ function initializeWindow(windowElement) {
     }
 });
 }
+
+export { initializeWindow };

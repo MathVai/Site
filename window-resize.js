@@ -1,22 +1,7 @@
 let resizing = false;
 
-
-document.addEventListener('mousedown', function () {
-    const resizingElement = document.querySelector('.window');
-    if (resizingElement) {
-        resizing = true;
-    }
-});
-
-// document.addEventListener('mouseup', function() {
-//     if (resizing) {
-//         adjustWindowPosition(event.target);
-//         resizing = false;
-//     }
-// });
-
-document.querySelectorAll('.window:not(.fixed-size)').forEach(element => {
-    interact(element).resizable({
+function attachResizeEventsToWindow(windowElement) {
+    interact(windowElement).resizable({
         edges: {
             left: true,
             right: true,
@@ -54,11 +39,9 @@ document.querySelectorAll('.window:not(.fixed-size)').forEach(element => {
                 if (event.target.dataset.dragging === 'true') return;
                 resizing = true; // Définissez le redimensionnement sur true lors du démarrage du redimensionnement
             }
-        },
+        }
     });
-});
 
-document.querySelectorAll('.window').forEach(windowElement => {
     const maximizeButton = windowElement.querySelector('.maximize');
     const header = windowElement.querySelector('.window-header');
 
@@ -74,14 +57,14 @@ document.querySelectorAll('.window').forEach(windowElement => {
             return false;
         }
     });
+}
+
+document.addEventListener('mousedown', function () {
+    const resizingElement = document.querySelector('.window');
+    if (resizingElement) {
+        resizing = true;
+    }
 });
-
-
-// Ajoutez l'écouteur pour chaque fenêtre
-document.querySelectorAll('.window').forEach(windowElement => {
-    monitorDatasetChanges(windowElement);
-});
-
 
 function maximizeWindow(event) {
     const target = event.target.closest('.window');
@@ -112,8 +95,4 @@ function maximizeWindow(event) {
     }
 }
 
-
-
-
-
-
+export { attachResizeEventsToWindow };
