@@ -17,6 +17,13 @@ function openWindowAlt(windowId, iconElement = null) {
         }
     }
 
+    const existingWindowByIcon = document.querySelector(`.window[data-opened-by-icon-id="${iconId}"]`);
+const existingWindowById = document.querySelector(`.window#${windowId}`);
+    
+    if (existingWindowByIcon || existingWindowById) {
+        (existingWindowByIcon || existingWindowById).focus();
+        return;
+    }
     try {
         const templateWindow = document.getElementById(windowId + '-template');
         if (templateWindow) {
