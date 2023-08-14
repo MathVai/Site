@@ -1,5 +1,7 @@
 var activeWindow = null;
 let highestZIndex = 50;
+import { attachResizeEventsToWindow } from './window-resize.js';
+
 
 export function increaseAndGetZIndex() {
   document.querySelectorAll('.window').forEach((windowElement) => {
@@ -54,6 +56,13 @@ function initializeWindow(windowElement) {
   const closeButton = windowElement.querySelector('.close');
   const minimizeButton = windowElement.querySelector('.minimize');
   const maximizeButton = windowElement.querySelector('.maximize');
+
+// Vérifier si la fenêtre n'a PAS la classe 'fixed-size'
+if (!windowElement.classList.contains('fixed-size')) {
+  // Attacher les événements de redimensionnement à la fenêtre
+  attachResizeEventsToWindow(windowElement);
+}
+
 
   // Initialiser dataset.x et dataset.y à 0px si non défini
   windowElement.dataset.x = windowElement.style.left || '0px';

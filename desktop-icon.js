@@ -355,33 +355,43 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+function updateAvailablePositions() {
+  window.availablePositions = [];
+  const allIcons = document.querySelectorAll('.desktop-icon-container');
+  allIcons.forEach(icon => {
+      if (icon.getAttribute('data-recyclable') === 'true' || icon.classList.contains('placeholder')) {
+          const x = parseFloat(icon.style.left || 0);
+          const y = parseFloat(icon.style.top || 0);
+          window.availablePositions.push({ x, y });
+      }
+  });
+}
+
 window.resetDesktopIcons = function() {
-  const placeholders = document.querySelectorAll(
-    '.desktop-icon-container.placeholder'
-  );
-  placeholders.forEach((placeholder) => placeholder.remove());
+  const allIconContainers = document.querySelectorAll('.desktop-icon-container');
 
-  desktopIconContainers.forEach((iconContainer) => {
-    iconContainer.removeAttribute('data-moved');
+  // Supprimer tous les placeholders ou éléments recyclables.
+  allIconContainers.forEach((iconContainer) => {
+    if (iconContainer.getAttribute('data-recyclable') === 'true' || iconContainer.classList.contains('placeholder')) {
+      iconContainer.remove();
+    }
+  });
 
+  // Repositionner chaque icône à sa position initiale.
+  allIconContainers.forEach((iconContainer) => {
     const initX = iconContainer.getAttribute('data-init-x');
     const initY = iconContainer.getAttribute('data-init-y');
 
     iconContainer.style.left = initX;
     iconContainer.style.top = initY;
-    iconContainer.setAttribute('data-x', initX);
-    iconContainer.setAttribute('data-y', initY);
+
     initializeDesktopIcon(iconContainer);
   });
 
-  const allIconContainers = document.querySelectorAll(
-    '.desktop-icon-container'
-  );
-  allIconContainers.forEach((iconContainer) => {
-    initializeDesktopIcon(iconContainer);
-    initializeDesktopIcons();
-  });
+  // Assurez-vous que tous les icônes sont initialisés correctement.
+  initializeDesktopIcons();
 }
+
 
 document.addEventListener('click', function (event) {
   setTimeout(() => {
