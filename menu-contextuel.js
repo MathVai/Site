@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (event.target.id === 'delete-icon') {
                     console.log("Delete icon option clicked in context menu...");
                     const selectedDesktopIcons = Array.from(document.querySelectorAll('.desktop-icon-container.selected'));
-                    console.log("enculé",selectedDesktopIcons)
                     if(selectedDesktopIcons.length) {
                         selectedDesktopIcons.forEach(icon => {
                             window.deleteDesktopIcon(icon);

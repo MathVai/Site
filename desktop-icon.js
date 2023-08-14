@@ -384,6 +384,8 @@ window.resetDesktopIcons = function() {
 
     iconContainer.style.left = initX;
     iconContainer.style.top = initY;
+    iconContainer.setAttribute('data-x', initX);
+    iconContainer.setAttribute('data-y', initY);
 
     initializeDesktopIcon(iconContainer);
   });
