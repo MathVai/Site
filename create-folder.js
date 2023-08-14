@@ -1,6 +1,7 @@
 import { openWindowAlt } from './window-open.js';
 let folderIdCounter = 0;  // Compteur pour générer des ID uniques pour chaque dossier
 
+document.addEventListener('DOMContentLoaded', function() {
 function createNewFolder() {
   const recyclableIcon = document.querySelector('.desktop-icon-container[data-recyclable="true"]');
   let newFolder;
@@ -60,6 +61,4 @@ function initializeDesktopIcon(iconContainer) {
 
 window.createNewFolder = createNewFolder;
 
-document.getElementById('explorer-window-template').addEventListener('DOMNodeRemoved', function() {
-  console.error('Le modèle de fenêtre a été supprimé du DOM !');
 });

@@ -122,6 +122,29 @@
         </div>
     </div>
 
+    <div id="about-window-template" class="window hidden">
+        <div class="window-header">
+            <span class="window-title">Dossier</span>
+            <button class="minimize">-</button>
+            <button class="maximize">+</button>
+            <button class="close">×</button>
+        </div>
+        <div class="window-content">
+            Contenu du dossier
+        </div>
+    </div>
+
+    <div id="contact-window-template" class="window hidden">
+        <div class="window-header">
+            <span class="window-title">Dossier</span>
+            <button class="minimize">-</button>
+            <button class="maximize">+</button>
+            <button class="close">×</button>
+        </div>
+        <div class="window-content">
+            Contenu du dossier
+        </div>
+    </div>
 
 
 
@@ -158,8 +181,8 @@
         <div class="dropdown">
             <button class="dropbtn">Mathis Vaille</button>
             <div class="dropdown-content">
-                <a href="#" onclick="openWindow('about-window')">À Propos</a>
-                <a href="#" onclick="openWindow('contact-window')">Contact</a>
+                <a href="#" data-action="openAboutWindow">À Propos</a>
+                <a href="#" data-action="openContactWindow">Contact</a>
             </div>
         </div> 
         <div id="minimized-windows" class="minimized-window-container"></div>
@@ -182,6 +205,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"></script>
     <script type="module" src="script.js" defer></script>
+    <script type="module" src="create-folder.js" defer></script>
+
 
 
 

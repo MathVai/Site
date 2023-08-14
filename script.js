@@ -5,12 +5,18 @@ import './window-initialization.js';
 import './window-resize.js';
 import './desktop-icon.js';
 import './calculator.js';
-import './create-folder.js';
+
 import './delete-button.js';
 import './open-explorer-window.js';
 import './cursor.js';
 import './menu-contextuel.js';
 import './selection-box.js';
 
-let highestZIndex = 1000;
 
+document.querySelector('.navbar .dropdown-content a[href="#"]').addEventListener('click', function(event) {
+  event.preventDefault();
+  const action = event.target.getAttribute('data-action');
+  if (action && typeof window[action] === 'function') {
+      window[action]();
+  }
+});

@@ -1,4 +1,19 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const navbarLinks = document.querySelectorAll('.dropdown-content a[data-action]');
 
+    navbarLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();  // Empêche le comportement par défaut du lien
+
+            const action = e.target.getAttribute('data-action');
+            if (action === 'openAboutWindow') {
+                openWindowAlt('about-window');  // Remplacez 'about-window' par l'ID correct de votre fenêtre "À Propos"
+            } else if (action === 'openContactWindow') {
+                openWindowAlt('contact-window');  // Remplacez 'contact-window' par l'ID correct de votre fenêtre "Contact"
+            }
+        });
+    });
+});
 
 
 // ============== HORLOGE ====================
