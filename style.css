@@ -6,6 +6,11 @@
   cursor: none;
 }
 
+:root {
+  --virtual-pixel-size: 0.3vw;
+}
+
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -16,28 +21,15 @@ body {
   width: 100%;
   background: #e4e4e4;
   -ms-overflow-style: none;
-  scrollbar-width: none;
-  animation: changeColors 1s infinite;
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Safari */
-    -khtml-user-select: none;    /* Konqueror HTML */
-    -moz-user-select: none;      /* Old versions of Firefox */
-    -ms-user-select: none;       /* Internet Explorer/Edge */
-    user-select: none;           /* Non-prefixed version, currently supported by Chrome, Opera, and Firefox */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-/* @keyframes changeColors {
-  0%   { background-color: red; }
-  20%  { background-color: orange; }
-  40%  { background-color: yellow; }
-  60%  { background-color: green; }
-  80%  { background-color: blue; }
-  100% { background-color: purple; }
-}
 
-.animate-bg {
-animation: changeColors 1s infinite;
-} */
 
 body {
   display: flex;
