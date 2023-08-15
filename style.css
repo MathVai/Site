@@ -1,3 +1,4 @@
+/* Réinitialisation générale des styles */
 * {
   margin: 0;
   padding: 0;
@@ -6,15 +7,40 @@
   cursor: none;
 }
 
+/* Variables CSS globales pour la personnalisation des thèmes et des tailles */
 :root {
   --virtual-pixel-size: 0.3vw;
+  --bg-color: rgb(0, 0, 0);
+  --bg-color-hover: rgb(214, 214, 214);
+  --text-color: white;
+  --link-color: rgb(255, 255, 255);
+  --border-color: #fff;
+  --border-color-int: #c3c3c3;
+  --font-size-large: calc(6 * var(--virtual-pixel-size));
+  --font-size-medium: calc(4 * var(--virtual-pixel-size));
+  --font-size-small: calc(2 * var(--virtual-pixel-size));
+}
+
+/* Styles pour les liens */
+a {
+  color: var(--link-color);
+}
+
+.language-options {
+  z-index: 1000;
+}
+
+.language-dropdown {
+  z-index: 999;
 }
 
 
+/* Suppression de la barre de défilement pour les navigateurs Webkit */
 ::-webkit-scrollbar {
   display: none;
 }
 
+/* Configuration générale de html et body */
 html,
 body {
   height: 100%;
@@ -29,89 +55,9 @@ body {
   user-select: none;
 }
 
-
-
+/* Centrage du contenu dans le body */
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.windows {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-}
-
-.window {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border: 1px solid black;
-  background: white;
-  z-index: 20;
-}
-
-.window.active {
-  z-index: 30;
-}
-
-.window-header {
-  background: lightgray;
-  padding: 5px;
-  cursor: move;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.window-content {
-  padding: 5px;
-}
-
-button {
-  border: none;
-  padding: 2px 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: gray;
-}
-
-.minimized-windows {
-  display: flex;
-  /* Rest of your styles */
-}
-
-.window.maximized {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 30;
-}
-
-.app-windows {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.hidden {
-  display: none;
-}
-
-.calculator-template {
-  display: none;
-}
-
-#folder-window-template {
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  border: 1px solid black;
-  /* Ajoutez plus de styles ici pour personnaliser l'apparence de la fenêtre */
 }

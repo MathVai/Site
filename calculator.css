@@ -1,3 +1,7 @@
+.calculator-template {
+    display: none;
+  }
+
 .calculator {
     background-color: var(--bg-color);
     width: fit-content;

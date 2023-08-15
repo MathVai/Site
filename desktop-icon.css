@@ -28,8 +28,8 @@
   display: flex;
   flex-direction: column;  /* Assurez-vous que c'est une direction de colonne */
   align-items: center;     /* Centre horizontalement */
-  width: calc(28 * var(--virtual-pixel-size));
-  height: calc(35 * var(--virtual-pixel-size));
+  width: calc(24 * var(--virtual-pixel-size));
+  height: calc(32 * var(--virtual-pixel-size));
   z-index: 10;
 }
 
@@ -54,13 +54,13 @@
 /* Configuration de l'icône */
 .desktop-icon {
   position: relative;
-  width: calc(24 * var(--virtual-pixel-size));
-  height: calc(24 * var(--virtual-pixel-size));
+  width: calc(20 * var(--virtual-pixel-size));
+  height: calc(20 * var(--virtual-pixel-size));
   cursor: move;
   display: flex;
-  flex-direction: column; /* Alignement vertical */
-  align-items: center; /* Centre horizontalement */
-  justify-content: space-between; /* Maximise l'espace entre l'image et le label */
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: space-between; 
 }
 
 .desktop-icon-image {
@@ -89,11 +89,10 @@
 }
 
 .desktop-icon-label {
-/*  margin-top: calc(1 * var(--virtual-pixel-size)); */
   width: 100%; 
   white-space: nowrap; 
   text-align: center;
-  font-size: 2em;
+  font-size: calc(8 * var(--virtual-pixel-size));
   font-family: 'VT323', monospace;
   z-index: 1;
 }

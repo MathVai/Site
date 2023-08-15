@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mathis Vaille</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="navbar.css">
@@ -10,7 +14,16 @@
     <link rel="stylesheet" href="menu-contextuel.css">
     <link rel="stylesheet" href="cursor.css">
     <link rel="stylesheet" href="selection-box.css">
+    <link rel="stylesheet" href="windowsmanager.css">
+
+    <!-- Firebase App  -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebaseConfig.js"></script>
+
 </head>
+
 <body>
     <div id="cursor"></div>
     <div id="selection-box"></div>
@@ -22,155 +35,169 @@
 
             <div class="desktop-icon-container" data-init-x="0" data-init-y="0">
                 <div class="desktop-icon" data-window="calculator">
-                  <img class="desktop-icon-image" src="./Icons/Computer.png" alt="Application Icon">
-                  <p class="desktop-icon-label">Système</p>
+                    <img class="desktop-icon-image" src="./Icons/Computer.png" alt="Application Icon">
+                    <p class="desktop-icon-label">Système</p>
                 </div>
-              </div>
-              <div class="desktop-icon-container">
+            </div>
+            <div class="desktop-icon-container">
                 <div class="desktop-icon" data-window="explorer-window">
                     <img class="desktop-icon-image" src="./Icons/Folder-1.png" alt="Folder Icon">
                     <p class="desktop-icon-label">Folder</p>
                 </div>
-            </div>            
-              <div class="desktop-icon-container">
+            </div>
+            <div class="desktop-icon-container">
                 <div class="desktop-icon" data-window="calculator">
-                  <img class="desktop-icon-image" src="./Icons/Computer.png" alt="Application Icon">
-                  <p class="desktop-icon-label">Calculatrice</p>
+                    <img class="desktop-icon-image" src="./Icons/Computer.png" alt="Application Icon">
+                    <p class="desktop-icon-label">Calculatrice</p>
                 </div>
-              </div>
+            </div>
 
-        <div id="window1" class="window" data-icon="./Data-Icons/Window.png">
-            <div class="window-header">
-                <span class="window-title">Window 1</span>
-                <button class="minimize">-</button>
-                <button class="maximize">+</button>
-                <button class="close">×</button>
+            <div id="window1" class="window" data-icon="./Data-Icons/Window.png">
+                <div class="window-header">
+                    <span class="window-title">Window 1</span>
+                    <button class="minimize"></button>
+                    <button class="maximize"></button>
+                    <button class="close"></button>
+                </div>
+                <div class="window-content">
+                    Content of Window 1
+                </div>
             </div>
-            <div class="window-content">
-                Content of Window 1
+            <div id="window2" class="window">
+                <div class="window-header">
+                    <span class="window-title">Window 2</span>
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="maximize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    Content of Window 2
+                </div>
             </div>
-        </div>
-        <div id="window2" class="window">
-            <div class="window-header">
-                <span class="window-title">Window 2</span>
-                <button class="minimize">-</button>
-                <button class="maximize">+</button>
-                <button class="close">×</button>
+            <div id="window3" class="window fixed-size">
+                <div class="window-header">
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="maximize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    Content of Window 3
+                </div>
             </div>
-            <div class="window-content">
-                Content of Window 2
+
+            <div id="folder-window-template" class="window hidden">
+                <div class="window-header">
+                    <span class="window-title">Dossier</span>
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="maximize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    Contenu du dossier
+                </div>
             </div>
-        </div>
-        <div id="window3" class="window fixed-size">
-            <div class="window-header">
-                <span class="window-title">Window 3</span>
-                <button class="minimize">-</button>
-                <button class="close">×</button>
-            </div>
-            <div class="window-content">
-                Content of Window 3
+
+            <div id="calculator-template" class="window hidden fixed-size">
+                <div class="window-header">
+                    <span class="window-title" data-translate="calculatrice"></span>
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="maximize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <div class="calculator">
+                        <div class="input" id="input"></div>
+                        <div class="buttons">
+                            <div class="operators">
+                                <div>+</div>
+                                <div>-</div>
+                                <div>&times;</div>
+                                <div>&divide;</div>
+                            </div>
+                            <div class="numbers">
+                                <div>7</div>
+                                <div>8</div>
+                                <div>9</div>
+                                <div>4</div>
+                                <div>5</div>
+                                <div>6</div>
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                                <div>0</div>
+                                <div>.</div>
+                                <div id="clear">C</div>
+                            </div>
+                            <div class="equal" id="result">=</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="folder-window-template" class="window hidden">
+        <div id="about-window-template" class="window hidden">
             <div class="window-header">
                 <span class="window-title">Dossier</span>
-                <button class="minimize">-</button>
-                <button class="maximize">+</button>
-                <button class="close">×</button>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="maximize"></button>
+                    <button class="close"></button>
+                </div>
             </div>
             <div class="window-content">
                 Contenu du dossier
             </div>
         </div>
 
-        <div id="calculator-template" class="window hidden fixed-size">
+        <div id="contact-window-template" class="window hidden">
             <div class="window-header">
-                <span class="window-title">Window 2</span>
-                <button class="minimize">-</button>
-                <button class="maximize">+</button>
-                <button class="close">×</button>
+                <span class="window-title">Dossier</span>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="maximize"></button>
+                    <button class="close"></button>
+                </div>
             </div>
             <div class="window-content">
-                <div class="calculator">
-                    <div class="input" id="input"></div>
-                    <div class="buttons">
-                        <div class="operators">
-                            <div>+</div>
-                            <div>-</div>
-                            <div>&times;</div>
-                            <div>&divide;</div>
-                        </div>
-                        <div class="numbers">
-                            <div>7</div>
-                            <div>8</div>
-                            <div>9</div>
-                            <div>4</div>
-                            <div>5</div>
-                            <div>6</div>
-                            <div>1</div>
-                            <div>2</div>
-                            <div>3</div>
-                            <div>0</div>
-                            <div>.</div>
-                            <div id="clear">C</div>
-                        </div>
-                        <div class="equal" id="result">=</div>
-                    </div>
+                Contenu du dossier
+            </div>
+        </div>
+
+
+
+        <div id="explorer-window-template" class="window hidden">
+            <div class="window-header">
+                <span class="window-title">Explorateur</span>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="maximize"></button>
+                    <button class="close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="file-explorer-sidebar">
+                    <!-- Ici, nous pouvons ajouter des liens vers différents endroits de l'ordinateur -->
+                    <p>Mes Documents</p>
+                    <p>Images</p>
+                    <p>Downloads</p>
+                    <!-- ... -->
+                </div>
+                <div id="explorer-content" class="file-explorer-main">
+                    <!-- Les fichiers seront chargés ici -->
                 </div>
             </div>
         </div>
+
+
     </div>
-
-    <div id="about-window-template" class="window hidden">
-        <div class="window-header">
-            <span class="window-title">Dossier</span>
-            <button class="minimize">-</button>
-            <button class="maximize">+</button>
-            <button class="close">×</button>
-        </div>
-        <div class="window-content">
-            Contenu du dossier
-        </div>
-    </div>
-
-    <div id="contact-window-template" class="window hidden">
-        <div class="window-header">
-            <span class="window-title">Dossier</span>
-            <button class="minimize">-</button>
-            <button class="maximize">+</button>
-            <button class="close">×</button>
-        </div>
-        <div class="window-content">
-            Contenu du dossier
-        </div>
-    </div>
-
-
-
-    <div id="explorer-window-template" class="window hidden">
-        <div class="window-header">
-            <span class="window-title">Explorateur</span>
-            <button class="minimize">-</button>
-            <button class="maximize">+</button>
-            <button class="close">×</button>
-        </div>
-        <div class="window-body">
-            <div class="file-explorer-sidebar">
-                <!-- Ici, nous pouvons ajouter des liens vers différents endroits de l'ordinateur -->
-                <p>Mes Documents</p>
-                <p>Images</p>
-                <p>Downloads</p>
-                <!-- ... -->
-            </div>
-            <div id="explorer-content" class="file-explorer-main">
-                <!-- Les fichiers seront chargés ici -->
-            </div>
-        </div>
-    </div>
-    
-
-</div>
 
 
 
@@ -178,37 +205,56 @@
 
     <!-- ==================== NAVBAR ===================== -->
     <div class="navbar">
-        <div class="dropdown">
-            <button class="dropbtn">Mathis Vaille</button>
-            <div class="dropdown-content">
-                <a href="#" data-action="openAboutWindow">À Propos</a>
-                <a href="#" data-action="openContactWindow">Contact</a>
+        <div class="left-section">
+            <div class="dropdown">
+                <button class="dropbtn">Mathis Vaille</button>
+                <div class="dropdown-content principal-option">
+                    <a href="#" data-action="openAboutWindow">À Propos</a>
+                    <a href="#" data-action="openContactWindow">Contact</a>
+                </div>
             </div>
-        </div> 
-        <div id="minimized-windows" class="minimized-window-container"></div>
+            <span class="navbar-separator"></span>
+            <div id="minimized-windows" class="minimized-window-container"></div>
+        </div>
+        <div class="right-section">
+            <div class="dropdown language-dropdown">
+                <button class="dropbtn language" id="currentLanguage">FR</button>
+                <div class="dropdown-content language-options">
+                    <a href="#" data-lang="fr">FR</a>
+                    <a href="#" data-lang="en">EN</a>
+                </div>
+            </div>
+            <span class="navbar-separator"></span>
 
-        <div id="clock" class="clock"></div>
+            <button class="clock-btn" id="clock-button" data-action="openClockWindow">
+                <div id="clock" class="clock"></div>
+            </button>
+        </div>
     </div>
-    
-    
+
+
 
     <!-- ==================== MENU CONTEXTUEL ===================== -->
 
     <div id="context-menu" class="hidden context-menu">
     </div>
-    
 
-    
-      
 
-    
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"></script>
     <script type="module" src="script.js" defer></script>
     <script type="module" src="create-folder.js" defer></script>
+    <script src="traduction-data.js"></script>
+    <script src="traduction.js"></script>
+
 
 
 
 
 </body>
+
 </html>
