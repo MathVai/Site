@@ -1,8 +1,27 @@
-var activeWindow = null;
-let highestZIndex = 50;
-import { attachResizeEventsToWindow } from './window-resize.js';
+// --- Imports ---
+import {
+  attachResizeEventsToWindow
+} from './window-resize.js';
+
+import {
+  minimizedCount,
+  incrementMinimizedCount,
+  decrementMinimizedCount
+} from './script.js';
+
+import {
+  checkMinimizedWindowsOverflow
+} from './navbar.js';
+
+// --- Constantes et variables globales ---
+const MAX_MINIMIZED = 2;
+let highestZIndex = 0;
 
 
+
+// --- Fonctions principales ---
+
+// Fonction pour augmenter et obtenir le z-index
 export function increaseAndGetZIndex() {
   document.querySelectorAll('.window').forEach((windowElement) => {
     const zIndex = parseInt(window.getComputedStyle(windowElement).zIndex, 10);
@@ -16,15 +35,43 @@ export function increaseAndGetZIndex() {
 }
 
 
-export const zIndexControl = {
-  value: 0,
-  increase: function() {
-      this.value++;
+// Gestionnaire pour déminimiser une fenêtre
+function deminimizeWindow(windowElement) {
+  console.log("Tentative de déminimisation de la fenêtre");
+  // Si la fenêtre est déjà minimisée, la restaurer
+  windowElement.style.display = 'block';
+  windowElement.classList.remove('minimized');
+
+  // Restaurer la hauteur et la position de la fenêtre si elle n'était pas maximisée
+  if (windowElement.dataset.wasMaximized === 'false') {
+    windowElement.classList.remove('maximized');
+    windowElement.style.height = windowElement.dataset.height;
+    windowElement.style.width = windowElement.dataset.width;
+    windowElement.style.left = windowElement.dataset.x;
+    windowElement.style.top = windowElement.dataset.y;
   }
-};
+
+  // Supprimez la miniature
+  const miniature = document.querySelector(`#minimized-${windowElement.id}`);
+  if (miniature) {
+    miniature.parentNode.removeChild(miniature);
+  }
+
+  decrementMinimizedCount();
+  checkMinimizedWindowsOverflow();
+  console.log('Nombre de fenêtres minimisées après déminimisation:', minimizedCount);
+
+  // Vérifiez si le dropdown "..." est vide et, dans l'affirmative, masquez-le
+  const overflowDropdown = document.querySelector('#minimized-windows-overflow .dropdown-content');
+  if (!overflowDropdown.hasChildNodes()) {
+    console.log("Le dropdown est vide");
+    const overflowButton = document.getElementById('overflow-button'); // Remplacez par l'ID approprié de votre bouton "..."
+    overflowButton.style.display = 'none';
+  }
+}
 
 
-
+// Lorsque la page est chargée, initialisez toutes les fenêtres
 window.addEventListener('load', (event) => {
   document.querySelectorAll('.window').forEach((windowElement) => {
 
@@ -49,6 +96,7 @@ window.addEventListener('load', (event) => {
 });
 
 
+// Initialisation de chaque fenêtre
 function initializeWindow(windowElement) {
 
   console.log('Initialisation de la fenêtre:', windowElement.id);
@@ -57,104 +105,102 @@ function initializeWindow(windowElement) {
   const minimizeButton = windowElement.querySelector('.minimize');
   const maximizeButton = windowElement.querySelector('.maximize');
 
-// Vérifier si la fenêtre n'a PAS la classe 'fixed-size'
-if (!windowElement.classList.contains('fixed-size')) {
-  // Attacher les événements de redimensionnement à la fenêtre
-  attachResizeEventsToWindow(windowElement);
-}
-
+  // Vérifier si la fenêtre n'a PAS la classe 'fixed-size'
+  if (!windowElement.classList.contains('fixed-size')) {
+    // Attacher les événements de redimensionnement à la fenêtre
+    attachResizeEventsToWindow(windowElement);
+  }
 
   // Initialiser dataset.x et dataset.y à 0px si non défini
   windowElement.dataset.x = windowElement.style.left || '0px';
   windowElement.dataset.y = windowElement.style.top || '0px';
 
-
   closeButton.addEventListener('click', () => {
     windowElement.remove();
   });
 
-
-
   // Gestion de l'action de minimisation
   minimizeButton.addEventListener('click', () => {
+    console.log("Bouton de minimisation cliqué");
+    const minimizedWindowsContainer = document.getElementById('minimized-windows');
+    const overflowDropdown = document.querySelector('#minimized-windows-overflow .dropdown-content');
 
     if (windowElement.classList.contains('minimized')) {
-        // Si la fenêtre est déjà minimisée, la restaurer
-        windowElement.style.display = 'block';
-        windowElement.classList.remove('minimized');
+      // Si la fenêtre est déjà minimisée, la restaurer
+      windowElement.style.display = 'block';
+      windowElement.classList.remove('minimized');
 
-        // Restaurer la hauteur et la position de la fenêtre si elle n'était pas maximisée
-        if (windowElement.dataset.wasMaximized === 'false') {
-            windowElement.classList.remove('maximized');
-            windowElement.style.height = windowElement.dataset.height;
-            windowElement.style.width = windowElement.dataset.width;
-            windowElement.style.left = windowElement.dataset.x;
-            windowElement.style.top = windowElement.dataset.y;
-        }
+      // Restaurer la hauteur et la position de la fenêtre si elle n'était pas maximisée
+      if (windowElement.dataset.wasMaximized === 'false') {
+        windowElement.classList.remove('maximized');
+        windowElement.style.height = windowElement.dataset.height;
+        windowElement.style.width = windowElement.dataset.width;
+        windowElement.style.left = windowElement.dataset.x;
+        windowElement.style.top = windowElement.dataset.y;
+      }
 
-        // Supprimez la miniature
-        const miniature = document.querySelector(`#minimized-${windowElement.id}`);
-        if (miniature) {
-            miniature.parentNode.removeChild(miniature);
-        }
+      // Supprimez la miniature
+      const miniature = document.querySelector(`#minimized-${windowElement.id}`);
+      if (miniature) {
+        miniature.parentNode.removeChild(miniature);
+      }
 
     } else {
-        // Si la fenêtre n'est pas minimisée, la minimiser
-        windowElement.dataset.wasMaximized = windowElement.classList.contains('maximized') ? 'true' : 'false';
+      // Si la fenêtre n'est pas minimisée, la minimiser
+      windowElement.dataset.wasMaximized = windowElement.classList.contains('maximized') ? 'true' : 'false';
+      windowElement.dataset.height = windowElement.style.height;
+      windowElement.dataset.width = windowElement.style.width;
+      windowElement.dataset.x = windowElement.style.left;
+      windowElement.dataset.y = windowElement.style.top;
+      windowElement.style.display = 'none';
+      windowElement.classList.add('minimized');
 
-        windowElement.dataset.height = windowElement.style.height;
-        windowElement.dataset.width = windowElement.style.width;
-        windowElement.dataset.x = windowElement.style.left;
-        windowElement.dataset.y = windowElement.style.top;
-        windowElement.style.display = 'none';
-        windowElement.classList.add('minimized');
+      // Créer une miniature pour la fenêtre minimisée
+      const miniature = document.createElement('button');
+      miniature.id = `minimized-${windowElement.id}`;
 
-        // Créer une miniature pour la fenêtre minimisée
-        const minimizedWindows = document.getElementById('minimized-windows');
-        const miniature = document.createElement('button');
-        miniature.id = `minimized-${windowElement.id}`;
+      // Utilisez l'attribut data-icon pour définir l'icône
+      const iconPath = windowElement.dataset.icon;
+      if (iconPath) {
+        const iconImg = document.createElement('img');
+        iconImg.src = iconPath;
+        miniature.appendChild(iconImg);
+      }
 
-        // Utilisez l'attribut data-icon pour définir l'icône
-        const iconPath = windowElement.dataset.icon;
-        if (iconPath) {
-            const iconImg = document.createElement('img');
-            iconImg.src = iconPath;
-            miniature.appendChild(iconImg);
-        }
+      // Ajouter l'ID de la fenêtre comme texte à côté de l'icône
+      const textNode = document.createTextNode(windowElement.id);
+      miniature.appendChild(textNode);
 
-        // Ajouter l'ID de la fenêtre comme texte à côté de l'icône
-        const textNode = document.createTextNode(windowElement.id);
-        miniature.appendChild(textNode);
+      miniature.className = 'minimized-window';
 
-        miniature.className = 'minimized-window';
+      miniature.addEventListener('click', () => {
+        deminimizeWindow(windowElement);
+        // Réglez le zIndex pour que la fenêtre restaurée apparaisse au premier plan
+        windowElement.style.zIndex = increaseAndGetZIndex();
+      });
 
-        miniature.addEventListener('click', () => {
-            // Lorsque vous cliquez sur la miniature, restaurez la fenêtre
-            windowElement.style.display = 'block';
-            windowElement.classList.remove('minimized');
-
-            if (windowElement.dataset.wasMaximized === 'false') {
-                windowElement.classList.remove('maximized');
-                windowElement.style.height = windowElement.dataset.height;
-                windowElement.style.width = windowElement.dataset.width;
-                windowElement.style.left = windowElement.dataset.x;
-                windowElement.style.top = windowElement.dataset.y;
-            } else {
-                // Si la fenêtre était maximisée avant d'être minimisée, 
-                // assurez-vous qu'elle est toujours maximisée à la restauration
-                windowElement.classList.add('maximized');
-            }
-
-            // Supprimez la miniature après la restauration
-            miniature.parentNode.removeChild(miniature);
-
-            // Réglez le zIndex pour que la fenêtre restaurée apparaisse au premier plan
-            windowElement.style.zIndex = increaseAndGetZIndex();
-        });
-
-        minimizedWindows.appendChild(miniature);
+      incrementMinimizedCount();
+      if (minimizedCount > MAX_MINIMIZED) {
+        // Ajouter la fenêtre au menu déroulant du bouton ...
+        overflowDropdown.appendChild(miniature);
+      } else {
+        minimizedWindowsContainer.appendChild(miniature);
+      }
+      checkMinimizedWindowsOverflow();
     }
-});
+  });
 }
 
-export { initializeWindow };
+
+// --- Exports ---
+
+export {
+  initializeWindow
+};
+
+export const zIndexControl = {
+  value: 0,
+  increase: function () {
+    this.value++;
+  }
+};

@@ -1,3 +1,8 @@
+export { checkMinimizedWindowsOverflow };
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const navbarLinks = document.querySelectorAll('.dropdown-content a[data-action]');
 
@@ -36,3 +41,24 @@ updateClock();
 
 // Mise à jour toutes les secondes
 setInterval(updateClock, 1000);
+
+
+
+function checkMinimizedWindowsOverflow() {
+    const maxVisibleWindows = 2; // Ajustez ce nombre selon vos besoins
+    const minimizedWindows = document.querySelectorAll('.minimized-window');
+    const overflowContainer = document.getElementById('minimized-windows-overflow');
+
+    if (minimizedWindows.length > maxVisibleWindows) {
+        overflowContainer.style.display = 'block';
+        document.getElementById('overflow-button').style.display = 'block'; // Ajoutez cette ligne
+        for (let i = maxVisibleWindows; i < minimizedWindows.length; i++) {
+            overflowContainer.querySelector('.minimized-overflow-options').appendChild(minimizedWindows[i]);
+        }
+    } else {
+        overflowContainer.style.display = 'none';
+    }
+    console.log("Nombre de fenêtres minimisées: ", minimizedWindows.length);
+
+}
+

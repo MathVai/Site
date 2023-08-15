@@ -2,6 +2,7 @@ import { increaseAndGetZIndex, initializeWindow } from './window-initialization.
 import { attachDragEventsToWindow } from './window-drag.js';
 import { attachResizeEventsToWindow } from './window-resize.js';
 
+
 window.openWindowAlt = openWindowAlt;
 
 function generateUniqueWindowId() {

@@ -77,9 +77,10 @@
 
 .minimized-window-container {
   display: flex;
-  align-items: center;
+  align-items: bottom;
   gap: 8px;
   margin-right: auto;
+
 }
 
 
@@ -140,7 +141,7 @@
   font-size: var(--font-size-medium);
 }
 
-button, .navbar .dropbtn, .navbar .clock-btn, .navbar .language-dropdown button, .minimized-window {
+.navbar button, .navbar .dropbtn, .navbar .clock-btn, .navbar .language-dropdown button, .minimized-window {
   appearance: none;
   background: none;
   color: #000;
@@ -195,6 +196,17 @@ button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdo
   box-shadow: none;
   opacity: 0.8;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+#minimized-windows-overflow {
+  display: none;  /* caché par défaut */
+}
+
+.minimized-overflow-options a {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: black;
 }
 
 

@@ -11,6 +11,21 @@ import './cursor.js';
 import './menu-contextuel.js';
 import './selection-box.js';
 
+export let minimizedCount = 0;
+
+export function incrementMinimizedCount() {
+    minimizedCount++;
+}
+
+export function decrementMinimizedCount() {
+  minimizedCount--;
+  if (minimizedCount < 0) { // Pour s'assurer qu'il ne va pas en dessous de 0
+      minimizedCount = 0;
+  }
+}
+
+
+
 
 document.querySelector('.navbar .dropdown-content a[href="#"]').addEventListener('click', function(event) {
   event.preventDefault();

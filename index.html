@@ -215,6 +215,12 @@
             </div>
             <span class="navbar-separator"></span>
             <div id="minimized-windows" class="minimized-window-container"></div>
+            <div id="minimized-windows-overflow" class="dropdown">
+                <button id="overflow-button" class="dropbtn">...</button>
+                <div class="dropdown-content minimized-overflow-options">
+                    <!-- Les fenêtres minimisées en trop seront déplacées ici par JavaScript -->
+                </div>
+            </div>
         </div>
         <div class="right-section">
             <div class="dropdown language-dropdown">
@@ -225,12 +231,12 @@
                 </div>
             </div>
             <span class="navbar-separator"></span>
-
             <button class="clock-btn" id="clock-button" data-action="openClockWindow">
                 <div id="clock" class="clock"></div>
             </button>
         </div>
     </div>
+    
 
 
 
