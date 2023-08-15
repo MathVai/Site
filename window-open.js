@@ -1,8 +1,12 @@
 import { increaseAndGetZIndex, initializeWindow } from './window-initialization.js';
 import { attachDragEventsToWindow } from './window-drag.js';
 import { attachResizeEventsToWindow } from './window-resize.js';
+
 window.openWindowAlt = openWindowAlt;
 
+function generateUniqueWindowId() {
+    return 'window-' + Date.now();
+}
 
 function openWindowAlt(windowId, iconElement = null) {
     console.log('Tentative d\'ouverture de la fenêtre:', windowId);
@@ -18,20 +22,22 @@ function openWindowAlt(windowId, iconElement = null) {
     }
 
     const existingWindowByIcon = document.querySelector(`.window[data-opened-by-icon-id="${iconId}"]`);
-const existingWindowById = document.querySelector(`.window#${windowId}`);
-    
-    if (existingWindowByIcon || existingWindowById) {
-        (existingWindowByIcon || existingWindowById).focus();
+
+    if (existingWindowByIcon) {
+        existingWindowByIcon.focus();
         return;
     }
+
     try {
         const templateWindow = document.getElementById(windowId + '-template');
         if (templateWindow) {
             const windowClone = templateWindow.cloneNode(true);
 
+            const uniqueWindowId = generateUniqueWindowId();
+            windowClone.id = uniqueWindowId;
+
             attachDragEventsToWindow(windowClone);
             attachResizeEventsToWindow(windowClone);
-            windowClone.id = windowId;
             windowClone.classList.remove('hidden');
             const newZIndex = increaseAndGetZIndex();
             windowClone.style.zIndex = newZIndex;
@@ -39,6 +45,7 @@ const existingWindowById = document.querySelector(`.window#${windowId}`);
             if (iconId) {
                 windowClone.setAttribute('data-opened-by-icon-id', iconId);
             }
+
             document.querySelector('.windows').appendChild(windowClone);
 
             initializeWindow(windowClone);
