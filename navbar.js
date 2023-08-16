@@ -47,22 +47,73 @@ setInterval(updateClock, 1000);
 
 
 
+
+
+
+
+
+// function adjustSingleMinimizedWindow() {
+//     console.log("Adjusting minimized windows...");
+    
+//     let maxMinimizedWindows = getMaxMinimizedCount();
+//     maxMinimizedWindows = Math.max(0, maxMinimizedWindows); // Ensure it's not negative
+//     console.log("Max minimized windows allowed: ", maxMinimizedWindows);
+    
+//     const minimizedWindows = document.querySelectorAll('.minimized-window');
+//     console.log("Currently minimized windows: ", minimizedWindows.length);
+    
+//     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
+
+//     if (minimizedWindows.length > maxMinimizedWindows) {
+//         // If we have more windows than we can show, move the extras to overflow
+//         for (let i = maxMinimizedWindows; i < minimizedWindows.length; i++) {
+//             overflowOptions.appendChild(minimizedWindows[i]);
+//         }
+//     }
+//     else {
+//         // Si nous avons de l'espace pour plus de fenêtres dans la barre principale, déplacez-les du menu déroulant
+//         const overflowedWindows = overflowOptions.querySelectorAll('.minimized-window');
+//         for (let i = 0; i < (maxMinimizedWindows - minimizedWindows.length) && i < overflowedWindows.length; i++) {
+//             document.getElementById('minimized-windows').appendChild(overflowedWindows[i]);
+//         }
+//     }
+    
+// }
+
 function adjustSingleMinimizedWindow() {
-    const maxMinimizedWindows = getMaxMinimizedCount();
+    console.log("Adjusting minimized windows...");
+    
+    let maxMinimizedWindows = getMaxMinimizedCount();
+    maxMinimizedWindows = Math.max(0, maxMinimizedWindows); // Ensure it's not negative
+    console.log("Max minimized windows allowed: ", maxMinimizedWindows);
+    
     const minimizedWindows = document.querySelectorAll('.minimized-window');
+    console.log("Currently minimized windows: ", minimizedWindows.length);
+    
     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
+    const overflowedWindows = overflowOptions.querySelectorAll('.minimized-window');
 
-    // Déplacer toutes les fenêtres minimisées vers le menu déroulant d'overflow
-    minimizedWindows.forEach(window => {
-        overflowOptions.appendChild(window);
-    });
+    // Determine the number of windows that can be moved back to the main bar
+    const numWindowsToMoveBack = maxMinimizedWindows - minimizedWindows.length;
 
-    // Déplacer les fenêtres du menu déroulant vers la barre principale jusqu'à atteindre le maxMinimizedWindows
-    for (let i = 0; i < maxMinimizedWindows && overflowOptions.hasChildNodes(); i++) {
-        const firstOverflowedWindow = overflowOptions.firstChild;
-        document.getElementById('minimized-windows').appendChild(firstOverflowedWindow);
+    // Move the exact number of windows back from overflow to main bar
+    for (let i = 0; i < numWindowsToMoveBack; i++) {
+        if (overflowedWindows[i]) {
+            document.getElementById('minimized-windows').appendChild(overflowedWindows[i]);
+        }
+    }
+
+    // Now, recheck the minimized windows and move excess windows to overflow
+    const updatedMinimizedWindows = document.querySelectorAll('.minimized-window');
+    for (let i = maxMinimizedWindows; i < updatedMinimizedWindows.length; i++) {
+        overflowOptions.appendChild(updatedMinimizedWindows[i]);
     }
 }
+
+
+
+
+
 
 
 
@@ -85,30 +136,24 @@ function debounce(func, wait) {
 function handleWindowResize() {
     console.log("Handling window resize...");
 
-    let previousMinimizedCount;
-    let currentMinimizedCount = document.querySelectorAll('.minimized-window').length;
-
-    // Répétez l'ajustement jusqu'à ce que toutes les fenêtres soient correctement placées
-    do {
-        previousMinimizedCount = currentMinimizedCount;
-        adjustSingleMinimizedWindow();
-        currentMinimizedCount = document.querySelectorAll('.minimized-window').length;
-    } while (previousMinimizedCount !== currentMinimizedCount);
+    adjustSingleMinimizedWindow();
 
     // Vérifiez si le bouton d'overflow doit être affiché ou non
     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
-    if (overflowOptions.hasChildNodes()) {
+    const minimizedWindows = document.querySelectorAll('.minimized-window');
+
+    console.log("Windows in overflow: ", overflowOptions.childNodes.length);
+    
+    if (overflowOptions.hasChildNodes() && minimizedWindows.length > 0) {
+        console.log("Displaying overflow button...");
         document.getElementById('minimized-windows-overflow').style.display = 'block';
         document.getElementById('overflow-button').style.display = 'block'; 
     } else {
+        console.log("Hiding overflow button...");
         document.getElementById('minimized-windows-overflow').style.display = 'none';
         document.getElementById('overflow-button').style.display = 'none'; 
     }
 }
-
-
-
-
 
 function getMaxMinimizedCount() {
     const navbar = document.querySelector('.navbar');
@@ -130,28 +175,50 @@ function getMaxMinimizedCount() {
     return maxMinimizedWindows;
 }
 
-
-
 export {
     getMaxMinimizedCount
 };
-
 
 function checkMinimizedWindowsOverflow() {
     const maxVisibleWindows = getMaxMinimizedCount();
     const minimizedWindows = document.querySelectorAll('.minimized-window');
     const overflowContainer = document.getElementById('minimized-windows-overflow');
+    const overflowOptions = overflowContainer.querySelector('.minimized-overflow-options');
 
-    if (minimizedWindows.length > maxVisibleWindows) {
+    // Déplacez les fenêtres excédentaires vers le menu déroulant
+    while (minimizedWindows.length > maxVisibleWindows) {
+        overflowOptions.appendChild(minimizedWindows[maxVisibleWindows]);
+    }
+
+    // Déplacez les fenêtres du menu déroulant vers la barre principale si possible
+    while (minimizedWindows.length < maxVisibleWindows && overflowOptions.hasChildNodes()) {
+        document.getElementById('minimized-windows').appendChild(overflowOptions.firstChild);
+    }
+
+    // Affichez ou masquez le bouton de débordement en fonction de la présence de fenêtres dans le menu déroulant
+    if (overflowOptions.hasChildNodes()) {
         overflowContainer.style.display = 'block';
         document.getElementById('overflow-button').style.display = 'block';
-        for (let i = maxVisibleWindows; i < minimizedWindows.length; i++) {
-            overflowContainer.querySelector('.minimized-overflow-options').appendChild(minimizedWindows[i]);
-        }
     } else {
         overflowContainer.style.display = 'none';
+        document.getElementById('overflow-button').style.display = 'none';
     }
+
     console.log("Nombre de fenêtres minimisées: ", minimizedWindows.length);
 }
 
-window.addEventListener('resize', debounce(handleWindowResize, 50));
+document.addEventListener("DOMContentLoaded", function() {
+    handleWindowResize();
+    window.addEventListener('resize', debounce(handleWindowResize, 50));
+});
+
+
+// export function moveOneFromDropdownToMain() {
+//     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
+//     const minimizedWindowsContainer = document.getElementById('minimized-windows');
+
+//     if (overflowOptions.hasChildNodes()) {
+//         const firstOverflowedWindow = overflowOptions.firstChild;
+//         minimizedWindowsContainer.appendChild(firstOverflowedWindow);
+//     }
+// }

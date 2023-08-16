@@ -36,14 +36,13 @@ export function increaseAndGetZIndex() {
 }
 
 
-// Gestionnaire pour déminimiser une fenêtre
 function deminimizeWindow(windowElement) {
   console.log("Tentative de déminimisation de la fenêtre");
-  // Si la fenêtre est déjà minimisée, la restaurer
+  
+  // Restaurez la fenêtre
   windowElement.style.display = 'block';
   windowElement.classList.remove('minimized');
 
-  // Restaurer la hauteur et la position de la fenêtre si elle n'était pas maximisée
   if (windowElement.dataset.wasMaximized === 'false') {
     windowElement.classList.remove('maximized');
     windowElement.style.height = windowElement.dataset.height;
@@ -60,16 +59,17 @@ function deminimizeWindow(windowElement) {
 
   decrementMinimizedCount();
   checkMinimizedWindowsOverflow();
+
   console.log('Nombre de fenêtres minimisées après déminimisation:', minimizedCount);
 
-  // Vérifiez si le dropdown "..." est vide et, dans l'affirmative, masquez-le
   const overflowDropdown = document.querySelector('#minimized-windows-overflow .dropdown-content');
   if (!overflowDropdown.hasChildNodes()) {
     console.log("Le dropdown est vide");
-    const overflowButton = document.getElementById('overflow-button'); // Remplacez par l'ID approprié de votre bouton "..."
+    const overflowButton = document.getElementById('overflow-button');
     overflowButton.style.display = 'none';
   }
 }
+
 
 
 // Lorsque la page est chargée, initialisez toutes les fenêtres
@@ -138,6 +138,7 @@ function initializeWindow(windowElement) {
         windowElement.style.width = windowElement.dataset.width;
         windowElement.style.left = windowElement.dataset.x;
         windowElement.style.top = windowElement.dataset.y;
+        restoreFromOverflow();
       }
 
       // Supprimez la miniature
