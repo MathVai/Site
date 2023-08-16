@@ -44,17 +44,25 @@ function deminimizeWindow(windowElement) {
   windowElement.classList.remove('minimized');
 
   if (windowElement.dataset.wasMaximized === 'false') {
-    windowElement.classList.remove('maximized');
-    windowElement.style.height = windowElement.dataset.height;
-    windowElement.style.width = windowElement.dataset.width;
-    windowElement.style.left = windowElement.dataset.x;
-    windowElement.style.top = windowElement.dataset.y;
+      windowElement.classList.remove('maximized');
+      windowElement.style.height = windowElement.dataset.height;
+      windowElement.style.width = windowElement.dataset.width;
+      windowElement.style.left = windowElement.dataset.x;
+      windowElement.style.top = windowElement.dataset.y;
+  }
+
+  // Check if the window is fully inside the viewport
+  const rect = windowElement.getBoundingClientRect();
+  if (rect.top < 0 || rect.left < 0 || rect.bottom > window.innerHeight || rect.right > window.innerWidth) {
+      // Center the window if it's out of viewport
+      windowElement.style.left = (window.innerWidth - rect.width) / 2 + 'px';
+      windowElement.style.top = (window.innerHeight - rect.height) / 2 + 'px';
   }
 
   // Supprimez la miniature
   const miniature = document.querySelector(`#minimized-${windowElement.id}`);
   if (miniature) {
-    miniature.parentNode.removeChild(miniature);
+      miniature.parentNode.removeChild(miniature);
   }
 
   decrementMinimizedCount();
@@ -64,11 +72,12 @@ function deminimizeWindow(windowElement) {
 
   const overflowDropdown = document.querySelector('#minimized-windows-overflow .dropdown-content');
   if (!overflowDropdown.hasChildNodes()) {
-    console.log("Le dropdown est vide");
-    const overflowButton = document.getElementById('overflow-button');
-    overflowButton.style.display = 'none';
+      console.log("Le dropdown est vide");
+      const overflowButton = document.getElementById('overflow-button');
+      overflowButton.style.display = 'none';
   }
 }
+
 
 
 
@@ -140,6 +149,16 @@ function initializeWindow(windowElement) {
         windowElement.style.top = windowElement.dataset.y;
         restoreFromOverflow();
       }
+
+      // Vérifiez si la fenêtre est en dehors du viewport et recentrez-la si nécessaire
+  const rect = windowElement.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  if (rect.left < 0 || rect.right > viewportWidth || rect.top < 0 || rect.bottom > viewportHeight) {
+      windowElement.style.left = (viewportWidth - rect.width) / 2 + 'px';
+      windowElement.style.top = (viewportHeight - rect.height) / 2 + 'px';
+  }
 
       // Supprimez la miniature
       const miniature = document.querySelector(`#minimized-${windowElement.id}`);

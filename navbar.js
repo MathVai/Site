@@ -38,41 +38,6 @@ updateClock();
 setInterval(updateClock, 1000);
 
 
-
-
-
-
-
-
-
-// function adjustSingleMinimizedWindow() {
-//     console.log("Adjusting minimized windows...");
-
-//     let maxMinimizedWindows = getMaxMinimizedCount();
-//     maxMinimizedWindows = Math.max(0, maxMinimizedWindows); // Ensure it's not negative
-//     console.log("Max minimized windows allowed: ", maxMinimizedWindows);
-
-//     const minimizedWindows = document.querySelectorAll('.minimized-window');
-//     console.log("Currently minimized windows: ", minimizedWindows.length);
-
-//     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
-
-//     if (minimizedWindows.length > maxMinimizedWindows) {
-//         // If we have more windows than we can show, move the extras to overflow
-//         for (let i = maxMinimizedWindows; i < minimizedWindows.length; i++) {
-//             overflowOptions.appendChild(minimizedWindows[i]);
-//         }
-//     }
-//     else {
-//         // Si nous avons de l'espace pour plus de fenêtres dans la barre principale, déplacez-les du menu déroulant
-//         const overflowedWindows = overflowOptions.querySelectorAll('.minimized-window');
-//         for (let i = 0; i < (maxMinimizedWindows - minimizedWindows.length) && i < overflowedWindows.length; i++) {
-//             document.getElementById('minimized-windows').appendChild(overflowedWindows[i]);
-//         }
-//     }
-
-// }
-
 function handleMinimizedWindows() {
     console.log("Adjusting minimized windows...");
 
@@ -168,15 +133,3 @@ document.addEventListener("DOMContentLoaded", function () {
     handleWindowResize();
     window.addEventListener('resize', debounce(handleWindowResize, 50));
 });
-
-
-
-// export function moveOneFromDropdownToMain() {
-//     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
-//     const minimizedWindowsContainer = document.getElementById('minimized-windows');
-
-//     if (overflowOptions.hasChildNodes()) {
-//         const firstOverflowedWindow = overflowOptions.firstChild;
-//         minimizedWindowsContainer.appendChild(firstOverflowedWindow);
-//     }
-// }

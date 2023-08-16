@@ -9,7 +9,7 @@
 
 /* Variables CSS globales pour la personnalisation des thèmes et des tailles */
 :root {
-  --virtual-pixel-size: 0.3vw;
+  --virtual-pixel-size: 0.4vh;
   --bg-color: rgb(0, 0, 0);
   --bg-color-hover: rgb(214, 214, 214);
   --text-color: white;
