@@ -85,36 +85,33 @@ function handleMinimizedWindows() {
     const overflowOptions = document.querySelector('#minimized-windows-overflow .dropdown-content');
     const overflowedWindows = overflowOptions.querySelectorAll('.minimized-window');
 
-    // Move windows back from overflow to the main bar if there's space
-    const numWindowsToMoveBack = maxMinimizedWindows - minimizedWindows.length + 1;
-    for (let i = 0; i < numWindowsToMoveBack && overflowedWindows[i]; i++) {
-        document.getElementById('minimized-windows').appendChild(overflowedWindows[i]);
-    }
+    // Move all windows from overflow to the main bar first
+    overflowedWindows.forEach(window => {
+        document.getElementById('minimized-windows').appendChild(window);
+    });
 
-    // Move excess windows from the main bar to the overflow
+    // Now, if there are too many windows on the main bar, move the excess back to overflow
     const updatedMinimizedWindows = document.querySelectorAll('.minimized-window');
     for (let i = maxMinimizedWindows; i < updatedMinimizedWindows.length; i++) {
-        if (updatedMinimizedWindows[i]) {
-            overflowOptions.appendChild(updatedMinimizedWindows[i]);
-        }
-
+        overflowOptions.appendChild(updatedMinimizedWindows[i]);
     }
 
     // Display or hide the overflow button based on the presence of windows in the dropdown
     const overflowContainer = document.getElementById('minimized-windows-overflow');
-    if (overflowedWindows.length > 0 || minimizedWindows.length > getMaxMinimizedCount()) {    
+    if (overflowOptions.hasChildNodes() && minimizedWindows.length > maxMinimizedWindows) {
         console.log("Displaying overflow button...");
         overflowContainer.style.display = 'block';
-        document.getElementById('overflow-button').style.display = 'block';
+        document.getElementById('overflow-button').style.display = 'block'; 
     } else {
         console.log("Hiding overflow button...");
         overflowContainer.style.display = 'none';
-        document.getElementById('overflow-button').style.display = 'none';
+        document.getElementById('overflow-button').style.display = 'none'; 
     }
-
+    
 
     console.log("Number of minimized windows: ", document.querySelectorAll('.minimized-window').length);
 }
+
 
 
 
