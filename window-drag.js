@@ -1,4 +1,5 @@
 import { increaseAndGetZIndex } from './window-initialization.js';
+import { updateWindowDataAttributes } from './resize-management.js';
 
 const margin = 100;
 let originalDataX;
@@ -26,6 +27,9 @@ function updateDragPosition(event) {
   windowElement.style.top = y + 'px';
   windowElement.setAttribute('data-x', x);
   windowElement.setAttribute('data-y', y);
+
+  
+  updateWindowDataAttributes(windowElement, x, y);
 }
 
 

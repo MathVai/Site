@@ -10,6 +10,7 @@ import './open-explorer-window.js';
 import './cursor.js';
 import './menu-contextuel.js';
 import './selection-box.js';
+import './resize-management.js'
 
 export let minimizedCount = 0;
 
