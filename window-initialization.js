@@ -10,7 +10,7 @@ import {
 } from './script.js';
 
 import {
-  checkMinimizedWindowsOverflow,
+  handleMinimizedWindows,
   getMaxMinimizedCount
 } from './navbar.js';
 
@@ -58,7 +58,7 @@ function deminimizeWindow(windowElement) {
   }
 
   decrementMinimizedCount();
-  checkMinimizedWindowsOverflow();
+  handleMinimizedWindows();
 
   console.log('Nombre de fenêtres minimisées après déminimisation:', minimizedCount);
 
@@ -188,7 +188,7 @@ function initializeWindow(windowElement) {
       } else {
         minimizedWindowsContainer.appendChild(miniature);
       }
-      checkMinimizedWindowsOverflow();
+      handleMinimizedWindows();
     }
   });
 }
