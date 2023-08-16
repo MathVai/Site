@@ -17,6 +17,7 @@
 .left-section {
   display: flex;
   align-items: stretch;
+
 }
 
 .dropdown {
@@ -36,6 +37,15 @@
   border: none;
   cursor: none;
 }
+
+.principal {
+  width: 150px;
+}
+
+.overflow-btn {
+width: 50px;
+}
+
 
 .dropdown:hover .dropbtn {
   box-shadow: none;
@@ -104,6 +114,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 120px;
 }
 
 .clock {
@@ -119,6 +130,7 @@
   position: relative;
   display: inline-flex;
   align-items: stretch;
+  margin-left: 8px;
 }
 
 .language-dropdown button {
@@ -200,6 +212,8 @@ button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdo
 
 #minimized-windows-overflow {
   display: none;  /* caché par défaut */
+  margin-left: 8px; /* Ajustez la valeur selon vos besoins */
+  margin-right: 8px;
 }
 
 .minimized-overflow-options a {

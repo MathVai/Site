@@ -10,11 +10,12 @@ import {
 } from './script.js';
 
 import {
-  checkMinimizedWindowsOverflow
+  checkMinimizedWindowsOverflow,
+  getMaxMinimizedCount
 } from './navbar.js';
 
 // --- Constantes et variables globales ---
-const MAX_MINIMIZED = 2;
+const MAX_MINIMIZED = getMaxMinimizedCount();
 let highestZIndex = 0;
 
 
