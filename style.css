@@ -9,16 +9,17 @@
 
 /* Variables CSS globales pour la personnalisation des thèmes et des tailles */
 :root {
-  --virtual-pixel-size: 0.4vh;
-  --bg-color: rgb(0, 0, 0);
+  --vps: 0.45vh;
+  --bg-color: #edeae3;
   --bg-color-hover: rgb(214, 214, 214);
-  --text-color: white;
+  --desktop-text-color: white;
+  --text-color: black;
   --link-color: rgb(255, 255, 255);
   --border-color: #fff;
   --border-color-int: #c3c3c3;
-  --font-size-large: calc(6 * var(--virtual-pixel-size));
-  --font-size-medium: calc(4 * var(--virtual-pixel-size));
-  --font-size-small: calc(2 * var(--virtual-pixel-size));
+  --font-size-large: calc(6 * var(--vps));
+  --font-size-medium: calc(4 * var(--vps));
+  --font-size-small: calc(2 * var(--vps));
 }
 
 /* Styles pour les liens */
@@ -45,7 +46,7 @@ html,
 body {
   height: 100%;
   width: 100%;
-  background: #e4e4e4;
+  background: #6A7D8C;
   -ms-overflow-style: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;

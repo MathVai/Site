@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="selection-box.css">
     <link rel="stylesheet" href="windowsmanager.css">
     <link rel="stylesheet" href="clock-dashboard.css">
+    <link rel="stylesheet" href="three.css">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- Firebase App  -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -210,12 +214,7 @@
         </div>
         <div class="window-content clock-dashboard">
             <div class="analog-clock-container">
-            <div class="analog-clock">
-                <div class="face">
-                    <div class="hand hour-hand"></div>
-                    <div class="hand minute-hand"></div>
-                    <div class="hand second-hand"></div>
-                </div>
+                <canvas id="threeCanvas"></canvas>
             </div>     
         </div>       
             
@@ -293,6 +292,8 @@
     <script src="traduction-data.js"></script>
     <script src="traduction.js"></script>
     <script type="module" src="clock-dashboard.js"></script>
+    <script src="pixelate.js"></script>
+    
 
 
 

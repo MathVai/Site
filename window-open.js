@@ -76,6 +76,8 @@ function openWindowAlt(windowId, iconElement = null) {
             windowClone.style.top = `${initialY}px`;
             windowClone.setAttribute('data-x', initialX);
             windowClone.setAttribute('data-y', initialY);
+
+            initializeThreeJS();
         } else {
             console.error('Modèle de fenêtre non trouvé.');
         }

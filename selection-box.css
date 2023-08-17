@@ -1,7 +1,7 @@
 
 
 .selection-rectangle {
-  border: var(--virtual-pixel-size) dashed #d5d5d5;
+  border: var(--vps) dashed #d5d5d5;
   position: absolute;
   z-index: 5; 
   pointer-events: none; 
