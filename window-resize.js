@@ -1,6 +1,9 @@
 let resizing = false;
 
 function attachResizeEventsToWindow(windowElement) {
+    if (windowElement.classList.contains('fixed-size')) {
+        return; // Si l'élément a la classe 'fixed-size', ne faites rien
+    }
     interact(windowElement).resizable({
         edges: {
             left: true,
@@ -68,6 +71,7 @@ document.addEventListener('mousedown', function () {
 
 function maximizeWindow(event) {
     const target = event.target.closest('.window');
+    if (!target || target.classList.contains('fixed-size')) return; // Ajout de la vérification pour 'fixed-size'
     if (!target) return;
 
     if (target.classList.contains('maximized')) {
