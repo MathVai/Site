@@ -17,6 +17,7 @@
 .left-section {
   display: flex;
   align-items: stretch;
+  margin-left: 15px;
 
 }
 
@@ -39,7 +40,7 @@
 }
 
 .principal {
-  width: 150px;
+  width: 200px;
 }
 
 .overflow-btn {
@@ -93,6 +94,9 @@ width: 50px;
 
 }
 
+.navbar .minimized-window {
+  justify-content: flex-start;
+}
 
 
 .minimized-window img {
@@ -104,6 +108,7 @@ width: 50px;
 .right-section {
   display: flex;
   align-items: stretch;
+  margin-right: 15px;
 }
 
 .clock-btn {
@@ -121,9 +126,7 @@ width: 50px;
   font-family: 'VT323', monospace;
   font-size: var(--font-size-large);
   color: rgb(0, 0, 0);
-  padding: 5px 10px;
   border-radius: 3px;
-  margin-left: auto;
 }
 
 .language-dropdown {
@@ -150,7 +153,7 @@ width: 50px;
 }
 
 .language, .language-options a {
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-large);
 }
 
 .navbar button, .navbar .dropbtn, .navbar .clock-btn, .navbar .language-dropdown button, .minimized-window {
@@ -174,12 +177,12 @@ width: 50px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 200px;
 }
 
 .minimized-window {
   display: flex;
-  justify-content: left;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
   width: 150px;
@@ -197,6 +200,10 @@ button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdo
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.dropdown-content a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 /* Pour les boutons des menus déroulants */
 .dropdown:hover .dropbtn {
   box-shadow: none;
@@ -208,6 +215,10 @@ button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdo
   box-shadow: none;
   opacity: 0.8;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.navbar button:hover:not(.dropbtn) {
+  padding: 16px 16px; /* Ajustez selon vos préférences */
 }
 
 #minimized-windows-overflow {

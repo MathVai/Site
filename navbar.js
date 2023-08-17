@@ -1,19 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navbarLinks = document.querySelectorAll('.dropdown-content a[data-action]');
+    const navbarLinks = document.querySelectorAll('.dropdown-content a[data-action], #clock-button');
+
+    
 
     navbarLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault(); // Empêche le comportement par défaut du lien
-
-            const action = e.target.getAttribute('data-action');
-            if (action === 'openAboutWindow') {
-                openWindowAlt('about-window'); // Remplacez 'about-window' par l'ID correct de votre fenêtre "À Propos"
+        
+            const action = e.currentTarget.getAttribute('data-action');
+            console.log("Action détectée:", action); 
+    
+            if (action === 'data-window') {
+                openWindowAlt('about-window'); 
             } else if (action === 'openContactWindow') {
-                openWindowAlt('contact-window'); // Remplacez 'contact-window' par l'ID correct de votre fenêtre "Contact"
+                openWindowAlt('contact-window'); 
+            } else if (action === 'openClockWindow') {
+                console.log("Tentative d'ouverture de la fenêtre d'horloge");
+                openWindowAlt('clock-window'); 
             }
         });
     });
+    
+    
 });
+
+document.getElementById('clock-button').addEventListener('click', function() {
+    console.log("Bouton de l'horloge cliqué");
+});
+
 
 
 // ============== HORLOGE ====================
@@ -66,13 +80,13 @@ function handleMinimizedWindows() {
     if (overflowOptions.hasChildNodes() && minimizedWindows.length > maxMinimizedWindows) {
         console.log("Displaying overflow button...");
         overflowContainer.style.display = 'block';
-        document.getElementById('overflow-button').style.display = 'block'; 
+        document.getElementById('overflow-button').style.display = 'block';
     } else {
         console.log("Hiding overflow button...");
         overflowContainer.style.display = 'none';
-        document.getElementById('overflow-button').style.display = 'none'; 
+        document.getElementById('overflow-button').style.display = 'none';
     }
-    
+
 
     console.log("Number of minimized windows: ", document.querySelectorAll('.minimized-window').length);
 }
@@ -109,9 +123,9 @@ function getMaxMinimizedCount() {
 
     const isOverflowButtonVisible = getComputedStyle(overflowButton).display !== "none";
     const overflowButtonWidth = isOverflowButtonVisible ? overflowButton.offsetWidth + 8 : 0; // +8 for the margin
-    const rightWidth = 212 + overflowButtonWidth;
+    const rightWidth = 227 + overflowButtonWidth;
 
-    const leftPermanentWidth = 176;
+    const leftPermanentWidth = 241;
     const marginBetweenButtons = 8; // margin between minimized windows
     let minimizedWindowWidth = 150 + marginBetweenButtons; // default value
 

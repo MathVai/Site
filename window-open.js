@@ -14,17 +14,28 @@ function openWindowAlt(windowId, iconElement = null) {
     let iconId;
     if (iconElement) {
         iconId = iconElement.getAttribute('data-icon-id');
+        
+        // Si iconId est null, vérifiez l'élément parent
+        if (!iconId) {
+            const parentElement = iconElement.parentElement;
+            if (parentElement) {
+                iconId = parentElement.getAttribute('data-icon-id');
+                console.log('Icon ID from parentElement:', iconId);
+            }
+        } else {
+            console.log('Icon ID from iconElement:', iconId);
+        }
+
         const existingWindow = document.querySelector(`.window[data-opened-by-icon-id="${iconId}"]`);
         if (existingWindow) {
+            console.log('Fenêtre existante trouvée pour:', iconId);
             existingWindow.focus();
             return;
+        } else {
+            console.log('Aucune fenêtre existante trouvée pour:', iconId);
         }
-    }
-
-    const existingWindowByIcon = document.querySelector(`.window[data-opened-by-icon-id="${iconId}"]`);
-    if (existingWindowByIcon) {
-        existingWindowByIcon.focus();
-        return;
+    } else {
+        console.log('Aucun élément icône fourni.');
     }
 
     try {
