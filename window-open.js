@@ -2,7 +2,6 @@ import { increaseAndGetZIndex, initializeWindow } from './window-initialization.
 import { attachDragEventsToWindow } from './window-drag.js';
 import { attachResizeEventsToWindow } from './window-resize.js';
 
-
 window.openWindowAlt = openWindowAlt;
 
 function generateUniqueWindowId() {
@@ -23,7 +22,6 @@ function openWindowAlt(windowId, iconElement = null) {
     }
 
     const existingWindowByIcon = document.querySelector(`.window[data-opened-by-icon-id="${iconId}"]`);
-
     if (existingWindowByIcon) {
         existingWindowByIcon.focus();
         return;
@@ -36,6 +34,12 @@ function openWindowAlt(windowId, iconElement = null) {
 
             const uniqueWindowId = generateUniqueWindowId();
             windowClone.id = uniqueWindowId;
+
+            // Associez cet ID à l'icône du bureau (si elle existe) :
+            if (iconElement) {
+                iconElement.setAttribute('data-window-id', uniqueWindowId);
+                console.log("data-window-id set to", uniqueWindowId, "for icon", iconElement);
+            }
 
             attachDragEventsToWindow(windowClone);
             attachResizeEventsToWindow(windowClone);

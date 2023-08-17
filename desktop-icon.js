@@ -292,50 +292,7 @@ document.addEventListener('click', function (event) {
   }
 });
 
-function centerWindow(windowElement) {
-  const windowWidth = windowElement.offsetWidth;
-  const windowHeight = windowElement.offsetHeight;
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
 
-  const initialX = (viewportWidth - windowWidth) / 2;
-  const initialY = (viewportHeight - windowHeight) / 2;
-
-  windowElement.style.transform = `translate(${initialX}px, ${initialY}px)`;
-  windowElement.dataset.x = initialX;
-  windowElement.dataset.y = initialY;
-}
-
-function openWindow(windowId) {
-  let windowElement = document.getElementById(windowId);
-  if (windowElement) {
-    windowElement.classList.remove('hidden');
-  } else {
-    const windowTemplate = document.getElementById(`${windowId}-template`);
-    if (windowTemplate) {
-      windowElement = windowTemplate.cloneNode(true);
-      windowElement.id = windowId;
-      windowElement.classList.remove('hidden');
-      document.body.appendChild(windowElement);
-    } else {
-      return;
-    }
-  }
-
-  zIndexControl.increase();
-  windowElement.style.zIndex = zIndexControl.value;
-  centerWindow(windowElement);
-
-
-  // Select the close button inside the new window
-  const closeButton = windowElement.querySelector('.close');
-
-  // Attach an event listener to the close button
-  closeButton.addEventListener('click', () => {
-
-    windowElement.classList.add('hidden');
-  });
-}
 
 document.addEventListener('DOMContentLoaded', function () {
   updateDesktopIcons();
@@ -356,17 +313,17 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-function updateAvailablePositions() {
-  window.availablePositions = [];
-  const allIcons = document.querySelectorAll('.desktop-icon-container');
-  allIcons.forEach(icon => {
-      if (icon.getAttribute('data-recyclable') === 'true' || icon.classList.contains('placeholder')) {
-          const x = parseFloat(icon.style.left || 0);
-          const y = parseFloat(icon.style.top || 0);
-          window.availablePositions.push({ x, y });
-      }
-  });
-}
+// function updateAvailablePositions() {
+//   window.availablePositions = [];
+//   const allIcons = document.querySelectorAll('.desktop-icon-container');
+//   allIcons.forEach(icon => {
+//       if (icon.getAttribute('data-recyclable') === 'true' || icon.classList.contains('placeholder')) {
+//           const x = parseFloat(icon.style.left || 0);
+//           const y = parseFloat(icon.style.top || 0);
+//           window.availablePositions.push({ x, y });
+//       }
+//   });
+// }
 
 window.resetDesktopIcons = function() {
   const allIconContainers = document.querySelectorAll('.desktop-icon-container');
