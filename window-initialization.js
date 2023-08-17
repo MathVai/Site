@@ -188,9 +188,23 @@ function initializeWindow(windowElement) {
         miniature.appendChild(iconImg);
       }
 
-      // Ajouter l'ID de la fenêtre comme texte à côté de l'icône
-      const textNode = document.createTextNode(windowElement.id);
-      miniature.appendChild(textNode);
+
+
+
+      // Récupérez l'élément du titre de la fenêtre
+const windowTitleElement = windowElement.querySelector('.window-title');
+if (windowTitleElement) {
+    // Utilisez le texte du titre de la fenêtre comme le texte à côté de l'icône
+    const textNode = document.createTextNode(windowTitleElement.textContent);
+    miniature.appendChild(textNode);
+} else {
+    console.error("Élément du titre de la fenêtre non trouvé pour la fenêtre:", windowElement.id);
+}
+
+
+
+
+
 
       miniature.className = 'minimized-window';
 
