@@ -42,6 +42,14 @@ function deleteDesktopIcon(desktopIconContainer) {
         console.log("Aucun ID d'icône associé trouvé.");
     }
 
+    // Supprimer la miniature de la navbar si elle existe
+const navbarMiniature = document.getElementById(`minimized-${associatedWindowId}`);
+if (navbarMiniature) {
+    navbarMiniature.remove();
+    console.log("Miniature dans la navbar supprimée.");
+}
+
+
     console.log("Suppression de l'icône du bureau terminée.");
 }
 
