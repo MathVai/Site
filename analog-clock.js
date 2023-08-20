@@ -41,49 +41,34 @@ function handleWindowOpenedEvent(e) {
 }
 
 function addEventListeners() {
-    window.addEventListener('resize', handleResize, false); // Utilisez handleResize ici
+    window.addEventListener('resize', onWindowResize);; // Utilisez handleResize ici
 }
 
-function handleResize() {
-    setTimeout(() => {
-        const container = document.querySelector('.analog-clock-container');
-        
-        if (!container) {
-            console.error("Conteneur d'horloge non trouvé lors du redimensionnement.");
-            return;
-        }
+window.addEventListener('resize', onWindowResize);
 
-        // Vérifier si le conteneur est visible
-        if (container.style.display === "none") {
-            console.log("Conteneur d'horloge masqué lors du redimensionnement.");
-            return;
-        }
+function onWindowResize() {
+    const clonedContainer = document.querySelector('.window[data-id="clock-window"] .analog-clock-container');
+    if (!clonedContainer) {
+        console.error("Conteneur cloné pour l'horloge analogique non trouvé lors du redimensionnement.");
+        return;
+    }
 
-        const rect = container.getBoundingClientRect();
-        console.log("Dimensions du conteneur:", rect.width, rect.height);
-        
-        const canvasWidth = rect.width;
-        const canvasHeight = rect.height;
+    const rect = clonedContainer.getBoundingClientRect();
+    console.log("Rect du conteneur:", rect);
+    
+    if (rect.width <= 0 || rect.height <= 0) {
+        console.log("Dimensions du conteneur non valides, ne redimensionne pas.");
+        return;
+    }
 
-        if (canvasWidth <= 0 || canvasHeight <= 0) {
-            console.error("Dimensions de canvas invalides:", canvasWidth, canvasHeight);
-            return;
-        }
+    camera.aspect = rect.width / rect.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(rect.width, rect.height);
 
-        console.log("Taille canvas:", canvasWidth, canvasHeight);
-
-        camera.aspect = canvasWidth / canvasHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(canvasWidth, canvasHeight);
-
-        if (dummyTexture) {
-            dummyTexture.setSize(canvasWidth / 4, canvasHeight / 4);
-        }
-    }, 100);  // Introduire un délai pour permettre à la page de se mettre à jour après le redimensionnement
+    if (dummyTexture) {
+        dummyTexture.setSize(rect.width / 4, rect.height / 4);
+    }
 }
-
-
 
 
 document.body.addEventListener('click', function(event) {
@@ -104,16 +89,11 @@ function initializeThreeJS(container) {
         return;
     }
 
-    const { clientWidth: width, clientHeight: height } = container;
-
     const containerWidth = container.clientWidth;
     const containerHeight = container.clientHeight;
-    
-
-    console.log("Taille du conteneur:", container.clientWidth, container.clientHeight);
+    console.log("Taille du conteneur:", containerWidth, containerHeight);
 
     console.log("Dimensions de WebGLRenderTarget:", containerWidth / 4, containerHeight / 4);
-    
 
     dummyTexture = new THREE.WebGLRenderTarget(
         containerWidth / 4,
@@ -124,10 +104,9 @@ function initializeThreeJS(container) {
         }
     );
 
+    console.log("Taille du conteneur :", containerWidth, containerHeight);
 
-console.log("Taille du conteneur :", container.clientWidth, container.clientHeight);
-
-setupRenderer(container, containerWidth, containerHeight);
+    setupRenderer(container, containerWidth, containerHeight);
 
 
 
@@ -162,8 +141,8 @@ setupRenderer(container, containerWidth, containerHeight);
     }
 
     setupCamera(containerWidth, containerHeight);
-    createClockHands(containerWidth);
     createHourMarkers(containerWidth);
+    createClockHands(containerWidth);
     addEventListeners();
 
     isRendering = true;
@@ -180,11 +159,18 @@ function setupRenderer(container, width, height) {
 }
 
 function setupCamera(containerWidth, containerHeight) {
-    const aspectRatio = containerWidth / containerHeight;
-    camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-    camera.position.z = 5;
+    const left = -containerWidth / 2;
+    const right = containerWidth / 2;
+    const top = containerHeight / 2;
+    const bottom = -containerHeight / 2;
+    const near = 0.1;
+    const far = 1000;
+
+    camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
+    camera.position.z = 5;  // Positionnez la caméra de manière à ce qu'elle pointe vers la scène.
     return camera;
 }
+
 
 function animate() {
     if (!shouldRender) {
@@ -207,22 +193,24 @@ function animate() {
 // =======================
 
 function createClockHands(containerWidth) {
-    const radius = containerWidth / 100;
+    const radius = containerWidth / 2;
 
     // Aiguille des secondes
-    const secondHandLength = radius;
-    const secondHandWidth = 0.05;
+    const secondHandLength = 0.8 * radius;
+    const secondHandWidth = 4.5;
     const secondHandGeometry = new THREE.PlaneGeometry(secondHandWidth, secondHandLength);
     const secondHandMaterial = new THREE.MeshBasicMaterial({
-        color: 0xFF0000
+        color: 0xFF0000,
+        depthTest: false,
+        depthWrite: false
     });
     secondHand = new THREE.Mesh(secondHandGeometry, secondHandMaterial);
     secondHand.geometry.translate(0, secondHandLength / 2, 0);
     clockGroup.add(secondHand);
 
     // Aiguille des minutes
-    const minuteHandLength = 0.8 * radius;
-    const minuteHandWidth = 0.05;
+    const minuteHandLength = 0.65 * radius;
+    const minuteHandWidth = 4.5;
     const minuteHandGeometry = new THREE.PlaneGeometry(minuteHandWidth, minuteHandLength);
     const minuteHandMaterial = new THREE.MeshBasicMaterial({
         color: 0xFFFFFF
@@ -232,8 +220,8 @@ function createClockHands(containerWidth) {
     clockGroup.add(minuteHand);
 
     // Aiguille des heures
-    const hourHandLength = 0.65 * radius;
-    const hourHandWidth = 0.05;
+    const hourHandLength = 0.55 * radius;
+    const hourHandWidth = 4.5;
     const hourHandGeometry = new THREE.PlaneGeometry(hourHandWidth, hourHandLength);
     const hourHandMaterial = new THREE.MeshBasicMaterial({
         color: 0xFFFFFF
@@ -242,18 +230,18 @@ function createClockHands(containerWidth) {
     hourHand.geometry.translate(0, hourHandLength / 2, 0);
     clockGroup.add(hourHand);
 
-    secondHand.position.z = 0.05; // Placez ceci au-dessus des autres éléments
-    minuteHand.position.z = 0.02;
-    hourHand.position.z = 0.03;
+    secondHand.position.z = 0.5; // Placez ceci au-dessus des autres éléments
+    minuteHand.position.z = 0.4;
+    hourHand.position.z = 0.3;
 
 
 }
 
 function createHourMarkers(containerWidth) {
-    const radius = containerWidth / 100;
-    const markerSize = 0.04 * radius;
+    const radius = containerWidth / 2;
+    const markerSize = 4;
     const markerOffset = markerSize / 2;
-    const markerPositionRadius = radius - markerOffset;
+    const markerPositionRadius = 0.8*radius - markerOffset;
 
     for (let hour = 0; hour < 12; hour++) {
         const angle = (hour * Math.PI / 6) - Math.PI / 2;
@@ -267,8 +255,6 @@ function createHourMarkers(containerWidth) {
         marker.position.set(x, y, 0.1);
         clockGroup.add(marker);
     }
-
-    secondHand.position.z = 0.2;  // ou une autre valeur supérieure à 0.1
 
 }
 
