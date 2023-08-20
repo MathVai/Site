@@ -151,11 +151,12 @@ function attachDoubleClickEvent() {
     desktopIcon.addEventListener('dblclick', () => {
       console.log('Double-click detected on', desktopIcon);
       const windowId = desktopIcon.dataset.window;
-      openWindowAlt(windowId, desktopIcon); 
+      openWindowAlt(windowId, desktopIcon);
       unselectAll();
     });
   });
 }
+
 
 
 function handleIconSelection(iconContainer) {

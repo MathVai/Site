@@ -8,6 +8,7 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 20px;
+    z-index: 20;
   }
 
   .window-header button {
@@ -68,7 +69,7 @@
     height: fit-content;
     min-width: calc(40 * var(--vps));
     min-height: calc(40 * var(--vps));
-    z-index: 2;
+    z-index: 15;
     border: 2px solid var(--border-color);
     font-family: 'VT323', monospace;
     background-color: var(--bg-color);

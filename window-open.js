@@ -10,32 +10,24 @@ function generateUniqueWindowId() {
 
 function openWindowAlt(windowId, iconElement = null) {
     console.log('Tentative d\'ouverture de la fenêtre:', windowId);
-
-    let iconId;
+    
+    let dataId;
     if (iconElement) {
-        iconId = iconElement.getAttribute('data-icon-id');
-        
-        // Si iconId est null, vérifiez l'élément parent
-        if (!iconId) {
-            const parentElement = iconElement.parentElement;
-            if (parentElement) {
-                iconId = parentElement.getAttribute('data-icon-id');
-                console.log('Icon ID from parentElement:', iconId);
-            }
-        } else {
-            console.log('Icon ID from iconElement:', iconId);
-        }
-
-        const existingWindow = document.querySelector(`.window[data-opened-by-icon-id="${iconId}"]`);
-        if (existingWindow) {
-            console.log('Fenêtre existante trouvée pour:', iconId);
-            existingWindow.focus();
-            return;
-        } else {
-            console.log('Aucune fenêtre existante trouvée pour:', iconId);
-        }
+        dataId = iconElement.getAttribute('data-id');
+        console.log('Data ID:', dataId);
     } else {
         console.log('Aucun élément icône fourni.');
+    }
+
+    // Recherche d'une fenêtre ouverte avec le data-id correspondant
+    const existingWindow = document.querySelector(`.window[data-id="${dataId}"]`);
+    
+    if (existingWindow) {
+        console.log('Fenêtre existante trouvée pour:', dataId || windowId);
+        existingWindow.focus();
+        return;
+    } else {
+        console.log('Aucune fenêtre existante trouvée pour:', dataId || windowId);
     }
 
     try {
@@ -46,10 +38,9 @@ function openWindowAlt(windowId, iconElement = null) {
             const uniqueWindowId = generateUniqueWindowId();
             windowClone.id = uniqueWindowId;
 
-            // Associez cet ID à l'icône du bureau (si elle existe) :
-            if (iconElement) {
-                iconElement.setAttribute('data-window-id', uniqueWindowId);
-                console.log("data-window-id set to", uniqueWindowId, "for icon", iconElement);
+            // Ajout de l'attribut data-id à la fenêtre
+            if (dataId) {
+                windowClone.setAttribute('data-id', dataId);
             }
 
             attachDragEventsToWindow(windowClone);
@@ -57,10 +48,6 @@ function openWindowAlt(windowId, iconElement = null) {
             windowClone.classList.remove('hidden');
             const newZIndex = increaseAndGetZIndex();
             windowClone.style.zIndex = newZIndex;
-            
-            if (iconId) {
-                windowClone.setAttribute('data-opened-by-icon-id', iconId);
-            }
 
             document.querySelector('.windows').appendChild(windowClone);
 
@@ -77,7 +64,11 @@ function openWindowAlt(windowId, iconElement = null) {
             windowClone.setAttribute('data-x', initialX);
             windowClone.setAttribute('data-y', initialY);
 
-            initializeThreeJS();
+            var event = new Event('windowOpened');
+        event.windowId = windowId; // Ajoutez l'ID de la fenêtre à l'événement pour une utilisation future
+        document.dispatchEvent(event);
+        
+
         } else {
             console.error('Modèle de fenêtre non trouvé.');
         }
@@ -85,5 +76,8 @@ function openWindowAlt(windowId, iconElement = null) {
         console.error("Erreur lors de l'ouverture de la fenêtre :", error);
     }
 }
+
+
+
 
 export { openWindowAlt };

@@ -203,9 +203,6 @@ if (windowTitleElement) {
 
 
 
-
-
-
       miniature.className = 'minimized-window';
 
       miniature.addEventListener('click', () => {

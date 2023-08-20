@@ -1,32 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     const navbarLinks = document.querySelectorAll('.dropdown-content a[data-action], #clock-button');
 
-    
-
     navbarLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault(); // Empêche le comportement par défaut du lien
-        
+
             const action = e.currentTarget.getAttribute('data-action');
             console.log("Action détectée:", action); 
-    
-            if (action === 'data-window') {
-                openWindowAlt('about-window'); 
-            } else if (action === 'openContactWindow') {
-                openWindowAlt('contact-window'); 
-            } else if (action === 'openClockWindow') {
-                console.log("Tentative d'ouverture de la fenêtre d'horloge");
-                openWindowAlt('clock-window'); 
+
+            const windowId = e.currentTarget.getAttribute('data-window');
+            if (windowId) {
+                console.log("Tentative d'ouverture de la fenêtre:", windowId);
+                openWindowAlt(windowId, e.currentTarget); // Passez également l'élément actuel
             }
         });
     });
-    
-    
 });
 
-document.getElementById('clock-button').addEventListener('click', function() {
-    console.log("Bouton de l'horloge cliqué");
-});
+
 
 
 
@@ -51,6 +42,9 @@ updateClock();
 // Mise à jour toutes les secondes
 setInterval(updateClock, 1000);
 
+
+
+// ===================================================== Overflow =================================================================
 
 function handleMinimizedWindows() {
     console.log("Adjusting minimized windows...");

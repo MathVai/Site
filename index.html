@@ -31,32 +31,38 @@
 
 <body>
     <div id="cursor"></div>
-    <div id="selection-box"></div>
+
 
 
     <div class="windows">
 
-        <div class="desktop">
 
-            <div class="desktop-icon-container" data-init-x="0" data-init-y="0" data-icon-id="calculator">
-                <div class="desktop-icon" data-window="calculator">
+
+        <div class="desktop">
+            <div id="selection-box"></div>
+
+            <!-- Desktop Icons  -->
+            <div class="desktop-icon-container" data-init-x="0" data-init-y="0">
+                <div class="desktop-icon" data-window="calculator" data-id="calculator">
                     <img class="desktop-icon-image" src="./Icons/Computer.png" alt="Application Icon">
                     <p class="desktop-icon-label">Système</p>
                 </div>
             </div>
-            <div class="desktop-icon-container" data-icon-id="explorer-window">
-                <div class="desktop-icon" data-window="explorer-window">
+            <div class="desktop-icon-container">
+                <div class="desktop-icon" data-window="explorer-window" data-id="explorer-window">
                     <img class="desktop-icon-image" src="./Icons/Folder-1.png" alt="Folder Icon">
                     <p class="desktop-icon-label">Folder</p>
                 </div>
             </div>
-            <div class="desktop-icon-container" data-icon-id="calculator">
-                <div class="desktop-icon" data-window="calculator">
+            <div class="desktop-icon-container">
+                <div class="desktop-icon" data-window="calculator" data-id="calculator">
                     <img class="desktop-icon-image" src="./Icons/Computer.png" alt="Application Icon">
                     <p class="desktop-icon-label">Calculatrice</p>
                 </div>
             </div>
 
+
+            <!-- Starting Windows  -->
             <div id="window1" class="window" data-icon="./Data-Icons/Window.png">
                 <div class="window-header">
                     <span class="window-title">Window 1</span>
@@ -85,7 +91,6 @@
                 <div class="window-header">
                     <div class="window-controls">
                         <button class="minimize"></button>
-                        <button class="maximize"></button>
                         <button class="close"></button>
                     </div>
                 </div>
@@ -94,6 +99,8 @@
                 </div>
             </div>
 
+
+            <!-- App Windows  -->
             <div id="folder-window-template" class="window hidden">
                 <div class="window-header">
                     <span class="window-title">Dossier</span>
@@ -147,6 +154,30 @@
             </div>
         </div>
 
+        <div id="explorer-window-template" class="window hidden">
+            <div class="window-header">
+                <span class="window-title">Explorateur</span>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="maximize"></button>
+                    <button class="close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="file-explorer-sidebar">
+                    <!-- Ici, nous pouvons ajouter des liens vers différents endroits de l'ordinateur -->
+                    <p>Mes Documents</p>
+                    <p>Images</p>
+                    <p>Downloads</p>
+                    <!-- ... -->
+                </div>
+                <div id="explorer-content" class="file-explorer-main">
+                    <!-- Les fichiers seront chargés ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar Windows  -->
         <div id="about-window-template" class="window hidden">
             <div class="window-header">
                 <span class="window-title">Dossier</span>
@@ -175,49 +206,22 @@
             </div>
         </div>
 
-
-
-        <div id="explorer-window-template" class="window hidden">
+        <div id="clock-window-template" class="window hidden fixed-size">
             <div class="window-header">
-                <span class="window-title">Explorateur</span>
+                <span class="window-title">Horloge</span>
                 <div class="window-controls">
                     <button class="minimize"></button>
-                    <button class="maximize"></button>
                     <button class="close"></button>
                 </div>
             </div>
-            <div class="window-body">
-                <div class="file-explorer-sidebar">
-                    <!-- Ici, nous pouvons ajouter des liens vers différents endroits de l'ordinateur -->
-                    <p>Mes Documents</p>
-                    <p>Images</p>
-                    <p>Downloads</p>
-                    <!-- ... -->
+            <div class="window-content clock-dashboard">
+                <div class="analog-clock-container">
                 </div>
-                <div id="explorer-content" class="file-explorer-main">
-                    <!-- Les fichiers seront chargés ici -->
+
+                
                 </div>
             </div>
-        </div>
 
-
-    </div>
-
-
-    <div id="clock-window-template" class="window hidden fixed-size">
-        <div class="window-header">
-            <span class="window-title">Horloger</span>
-            <div class="window-controls">
-                <button class="minimize"></button>
-                <button class="close"></button>
-            </div>
-        </div>
-        <div class="window-content clock-dashboard">
-            <div class="analog-clock-container">
-                <canvas id="threeCanvas"></canvas>
-            </div>     
-        </div>       
-            
             <div class="digital-clock">
                 <!-- Horloge numérique ici -->
             </div>
@@ -235,7 +239,7 @@
             </div>
         </div>
     </div>
-    
+    </div>
 
 
     <!-- ==================== NAVBAR ===================== -->
@@ -244,8 +248,10 @@
             <div class="dropdown">
                 <button class="dropbtn principal">Mathis Vaille</button>
                 <div class="dropdown-content principal-option">
-                    <a href="#" data-action="openAboutWindow">À Propos</a>
-                    <a href="#" data-action="openContactWindow">Contact</a>
+                    <a href="#" data-action="openAboutWindow" data-window="about-window" data-id="navbar-about-window">À
+                        Propos</a>
+                    <a href="#" data-action="openContactWindow" data-window="contact-window"
+                        data-id="navbar-contact-window">Contact</a>
                 </div>
             </div>
             <span class="navbar-separator"></span>
@@ -266,12 +272,12 @@
                 </div>
             </div>
             <span class="navbar-separator"></span>
-            <button class="clock-btn" id="clock-button" data-action="openClockWindow">
+            <button class="clock-btn" id="clock-button" data-action="openClockWindow" data-window="clock-window" data-id="clock-window">
                 <div id="clock" class="clock"></div>
             </button>
         </div>
     </div>
-    
+
 
 
 
@@ -291,9 +297,9 @@
     <script type="module" src="create-folder.js" defer></script>
     <script src="traduction-data.js"></script>
     <script src="traduction.js"></script>
-    <script type="module" src="clock-dashboard.js"></script>
-    <script src="pixelate.js"></script>
-    
+    <script src="analog-clock.js" defer></script>
+
+
 
 
 

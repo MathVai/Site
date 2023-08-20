@@ -30,7 +30,7 @@
   align-items: center;     /* Centre horizontalement */
   width: calc(24 * var(--vps));
   height: calc(32 * var(--vps));
-  z-index: 10;
+  z-index: 1;
 }
 
 .desktop-icon-container[data-moved='true'] {
@@ -61,6 +61,7 @@
   flex-direction: column; 
   align-items: center; 
   justify-content: space-between; 
+  z-index: 1;
 }
 
 .desktop-icon-image {
@@ -69,6 +70,7 @@
   image-rendering: optimizeSpeed;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
+  z-index: 1;
 }
 
 .icon-content {
