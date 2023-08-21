@@ -9,6 +9,7 @@ let isRendering = false;
 let dummyTexture;
 
 
+
 // =======================
 // Gestionnaires d'événements
 // =======================
@@ -17,8 +18,8 @@ document.addEventListener('windowOpened', handleWindowOpenedEvent);
 
 function handleWindowOpenedEvent(e) {
     console.log("Événement 'windowOpened' déclenché pour la fenêtre:", e.windowId);
-    
-    if(e.windowId !== "clock-window") {
+
+    if (e.windowId !== "clock-window") {
         console.log("Événement 'windowOpened' n'est pas pour 'clock-window'. Ignoré.");
         return;
     }
@@ -49,13 +50,12 @@ window.addEventListener('resize', onWindowResize);
 function onWindowResize() {
     const clonedContainer = document.querySelector('.window[data-id="clock-window"] .analog-clock-container');
     if (!clonedContainer) {
-        console.error("Conteneur cloné pour l'horloge analogique non trouvé lors du redimensionnement.");
         return;
     }
 
     const rect = clonedContainer.getBoundingClientRect();
     console.log("Rect du conteneur:", rect);
-    
+
     if (rect.width <= 0 || rect.height <= 0) {
         console.log("Dimensions du conteneur non valides, ne redimensionne pas.");
         return;
@@ -65,13 +65,31 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(rect.width, rect.height);
 
+    // Récupération de la valeur vps
+    const vpsValue = getComputedStyle(document.documentElement).getPropertyValue('--vps').trim();
+
+    // Calcul de vps en pixels
+    let vpsInPixels;
+    if (vpsValue.endsWith('vh')) {
+        vpsInPixels = parseFloat(vpsValue) * window.innerHeight / 100;
+    } else if (vpsValue.endsWith('px')) {
+        vpsInPixels = parseFloat(vpsValue);
+    }
+
+    // Calcul de la résolution
+    const resolutionX = Math.max(1, Math.round(rect.width / vpsInPixels));
+    const resolutionY = Math.max(1, Math.round(rect.height / vpsInPixels));
+
+    // Mise à jour de la taille de dummyTexture
     if (dummyTexture) {
-        dummyTexture.setSize(rect.width / 4, rect.height / 4);
+        dummyTexture.setSize(resolutionX, resolutionY);
     }
 }
 
 
-document.body.addEventListener('click', function(event) {
+
+
+document.body.addEventListener('click', function (event) {
     if (event.target.matches('.close') && event.target.closest('.window[data-id="clock-window"]')) {
         shouldRender = false;
         console.log("Bouton de fermeture de l'horloge cliqué. Rendu arrêté.");
@@ -95,14 +113,37 @@ function initializeThreeJS(container) {
 
     console.log("Dimensions de WebGLRenderTarget:", containerWidth / 4, containerHeight / 4);
 
-    dummyTexture = new THREE.WebGLRenderTarget(
-        containerWidth / 4,
-        containerHeight / 4, {
-            minFilter: THREE.LinearFilter,
-            magFilter: THREE.NearestFilter,
-            format: THREE.RGBFormat
-        }
-    );
+
+// Récupération de la valeur vps
+const vpsValue = getComputedStyle(document.documentElement).getPropertyValue('--vps').trim();
+
+// Calcul de vps en pixels
+let vpsInPixels;
+if (vpsValue.endsWith('vh')) {
+    vpsInPixels = parseFloat(vpsValue) * window.innerHeight / 100;
+} else if (vpsValue.endsWith('px')) {
+    vpsInPixels = parseFloat(vpsValue);
+}
+
+// Calcul de la résolution
+const resolutionX = Math.max(1, Math.round(containerWidth / vpsInPixels));
+const resolutionY = Math.max(1, Math.round(containerHeight / vpsInPixels));
+
+console.log(vpsValue, resolutionX, resolutionY);
+
+dummyTexture = new THREE.WebGLRenderTarget(
+    resolutionX,
+    resolutionY, {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.NearestFilter,
+        format: THREE.RGBFormat
+    }
+);
+
+    
+
+    console.log("Résolution :", resolutionX, resolutionY);
+
 
     console.log("Taille du conteneur :", containerWidth, containerHeight);
 
@@ -152,7 +193,9 @@ function initializeThreeJS(container) {
 function setupRenderer(container, width, height) {
     console.log("Début de setupRenderer");
     scene = new THREE.Scene();
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({
+        antialias: true
+    });
     renderer.setSize(width, height);
     container.appendChild(renderer.domElement);
     console.log("Fin de setupRenderer");
@@ -167,15 +210,15 @@ function setupCamera(containerWidth, containerHeight) {
     const far = 1000;
 
     camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
-    camera.position.z = 5;  // Positionnez la caméra de manière à ce qu'elle pointe vers la scène.
+    camera.position.z = 5; // Positionnez la caméra de manière à ce qu'elle pointe vers la scène.
     return camera;
 }
 
 
 function animate() {
     if (!shouldRender) {
-        isRendering = false;  // Réinitialiser la variable de rendu
-        return;  // Arrêtez la boucle de rendu si shouldRender est false
+        isRendering = false; // Réinitialiser la variable de rendu
+        return; // Arrêtez la boucle de rendu si shouldRender est false
     }
     requestAnimationFrame(animate);
 
@@ -241,7 +284,7 @@ function createHourMarkers(containerWidth) {
     const radius = containerWidth / 2;
     const markerSize = 4;
     const markerOffset = markerSize / 2;
-    const markerPositionRadius = 0.8*radius - markerOffset;
+    const markerPositionRadius = 0.8 * radius - markerOffset;
 
     for (let hour = 0; hour < 12; hour++) {
         const angle = (hour * Math.PI / 6) - Math.PI / 2;
@@ -299,20 +342,3 @@ function setAnalogClock() {
     // console.log("Minutes (degrés et radians):", minutesDegree, minRadians);
     // console.log("Heures (degrés et radians):", hoursDegree, hourRadians);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

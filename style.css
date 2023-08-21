@@ -28,6 +28,12 @@
   --font-size-small: calc(2 * var(--vps));
 }
 
+@media (max-height: 500px) {
+  :root {
+      --vps: 2.25px; /* 0.45 * 500 / 100 = 2.25 */
+  }
+}
+
 /* Styles pour les liens */
 a {
   color: var(--link-color);
