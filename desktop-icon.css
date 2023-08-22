@@ -94,7 +94,7 @@
   width: 100%; 
   white-space: nowrap; 
   text-align: center;
-  font-size: calc(8 * var(--vps));
+  font-size: var(--font-size-large);
   font-family: 'VT323', monospace;
   z-index: 1;
   color: white ;

@@ -77,8 +77,12 @@ function onWindowResize() {
     }
 
     // Calcul de la résolution
-    const resolutionX = Math.max(1, Math.round(rect.width / vpsInPixels));
-    const resolutionY = Math.max(1, Math.round(rect.height / vpsInPixels));
+    let resolutionX = Math.max(1, Math.round(rect.width / vpsInPixels));
+    let resolutionY = Math.max(1, Math.round(rect.height / vpsInPixels));
+
+    // Assurez-vous que les résolutions sont impaires
+    if (resolutionX % 2 === 0) resolutionX += 1;
+    if (resolutionY % 2 === 0) resolutionY += 1;
 
     // Mise à jour de la taille de dummyTexture
     if (dummyTexture) {
@@ -115,6 +119,7 @@ function initializeThreeJS(container) {
 
 
 // Récupération de la valeur vps
+// Récupération de la valeur vps
 const vpsValue = getComputedStyle(document.documentElement).getPropertyValue('--vps').trim();
 
 // Calcul de vps en pixels
@@ -126,8 +131,12 @@ if (vpsValue.endsWith('vh')) {
 }
 
 // Calcul de la résolution
-const resolutionX = Math.max(1, Math.round(containerWidth / vpsInPixels));
-const resolutionY = Math.max(1, Math.round(containerHeight / vpsInPixels));
+let resolutionX = Math.max(1, Math.round(containerWidth / vpsInPixels));
+let resolutionY = Math.max(1, Math.round(containerHeight / vpsInPixels));
+
+// Assurez-vous que les résolutions sont impaires
+if (resolutionX % 2 === 0) resolutionX += 1;
+if (resolutionY % 2 === 0) resolutionY += 1;
 
 console.log(vpsValue, resolutionX, resolutionY);
 
@@ -139,6 +148,7 @@ dummyTexture = new THREE.WebGLRenderTarget(
         format: THREE.RGBFormat
     }
 );
+
 
     
 
@@ -238,9 +248,31 @@ function animate() {
 function createClockHands(containerWidth) {
     const radius = containerWidth / 2;
 
+    // Aiguille des heures
+    const hourHandLength = 0.55 * radius;
+    const hourHandWidth = 4;
+    const hourHandGeometry = new THREE.PlaneGeometry(hourHandWidth, hourHandLength);
+    const hourHandMaterial = new THREE.MeshBasicMaterial({
+        color: 0xFFFFFF
+    });
+    hourHand = new THREE.Mesh(hourHandGeometry, hourHandMaterial);
+    hourHand.geometry.translate(0, hourHandLength / 2, 0);
+    clockGroup.add(hourHand);
+
+    // Aiguille des minutes
+    const minuteHandLength = 0.65 * radius;
+    const minuteHandWidth = 4;
+    const minuteHandGeometry = new THREE.PlaneGeometry(minuteHandWidth, minuteHandLength);
+    const minuteHandMaterial = new THREE.MeshBasicMaterial({
+        color: 0xFFFFFF
+    });
+    minuteHand = new THREE.Mesh(minuteHandGeometry, minuteHandMaterial);
+    minuteHand.geometry.translate(0, minuteHandLength / 2, 0);
+    clockGroup.add(minuteHand);
+
     // Aiguille des secondes
     const secondHandLength = 0.8 * radius;
-    const secondHandWidth = 4.5;
+    const secondHandWidth = 4;
     const secondHandGeometry = new THREE.PlaneGeometry(secondHandWidth, secondHandLength);
     const secondHandMaterial = new THREE.MeshBasicMaterial({
         color: 0xFF0000,
@@ -250,35 +282,8 @@ function createClockHands(containerWidth) {
     secondHand = new THREE.Mesh(secondHandGeometry, secondHandMaterial);
     secondHand.geometry.translate(0, secondHandLength / 2, 0);
     clockGroup.add(secondHand);
-
-    // Aiguille des minutes
-    const minuteHandLength = 0.65 * radius;
-    const minuteHandWidth = 4.5;
-    const minuteHandGeometry = new THREE.PlaneGeometry(minuteHandWidth, minuteHandLength);
-    const minuteHandMaterial = new THREE.MeshBasicMaterial({
-        color: 0xFFFFFF
-    });
-    minuteHand = new THREE.Mesh(minuteHandGeometry, minuteHandMaterial);
-    minuteHand.geometry.translate(0, minuteHandLength / 2, 0);
-    clockGroup.add(minuteHand);
-
-    // Aiguille des heures
-    const hourHandLength = 0.55 * radius;
-    const hourHandWidth = 4.5;
-    const hourHandGeometry = new THREE.PlaneGeometry(hourHandWidth, hourHandLength);
-    const hourHandMaterial = new THREE.MeshBasicMaterial({
-        color: 0xFFFFFF
-    });
-    hourHand = new THREE.Mesh(hourHandGeometry, hourHandMaterial);
-    hourHand.geometry.translate(0, hourHandLength / 2, 0);
-    clockGroup.add(hourHand);
-
-    secondHand.position.z = 0.5; // Placez ceci au-dessus des autres éléments
-    minuteHand.position.z = 0.4;
-    hourHand.position.z = 0.3;
-
-
 }
+
 
 function createHourMarkers(containerWidth) {
     const radius = containerWidth / 2;

@@ -1,13 +1,15 @@
 /*=== WINDOW STYLES ===*/
 
 .window-header {
-    background: rgb(126, 126, 126);
-    padding: 5px;
+    flex: 0 0 auto;
+    background: var(--gradient);
+    padding: calc(2 * var(--vps));
+    padding-top: var(--vps);
+    padding-bottom: var(--vps);
     cursor: move;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 20px;
     z-index: 20;
   }
 
@@ -30,8 +32,11 @@
     background-image: url('./Icons/close.png');
     color: white;
     border: none;
-    padding: 5px 10px;
     cursor: none;
+    box-shadow: 
+    calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
+    calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
+    0 0 0 calc(0.5 * var(--vps)) var(--bg-color); 
 }
 
 .minimize {
@@ -40,8 +45,12 @@
     background-image: url('./Icons/minimize.png');
     color: white;
     border: none;
-    padding: 5px 10px;
     cursor: none;
+    box-shadow: 
+    calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
+    calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
+    0 0 0 calc(0.5 * var(--vps)) var(--bg-color); 
+    
 }
 
 .maximize {
@@ -50,13 +59,16 @@
     background-image: url('./Icons/maximize.png');
     color: white;
     border: none;
-    padding: 5px 10px;
     cursor: none;
+    box-shadow: 
+    calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
+    calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
+    0 0 0 calc(0.5 * var(--vps)) var(--bg-color); 
 }
 
 .window-controls {
     display: flex;
-    gap: 5px; /* Pour donner un petit espace entre les boutons */
+    gap: var(--vps); 
 }
 
 .window-title{
@@ -64,18 +76,35 @@
 }
 
 .window {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     width: fit-content;
     height: fit-content;
-    min-width: calc(40 * var(--vps));
-    min-height: calc(40 * var(--vps));
+    min-width: calc(50 * var(--vps));
+    min-height: calc(50 * var(--vps));
     z-index: 15;
-    border: 2px solid var(--border-color);
+    border: var(--vps) solid var(--bg-color);
     font-family: 'VT323', monospace;
     background-color: var(--bg-color);
     color: white;
-    animation: fadeInOut 2s;
-    animation: windowFade 0.1s;
+    box-shadow: 
+    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+    0 0 0 calc(1 * var(--vps)) var(--bg-color);  /* Couleur de fond ajoutée */
+
+}
+
+.window-content {
+ box-shadow: 
+        calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight) inset,
+        calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow) inset;
+    
+    flex: 1 1 auto; /* Cela signifie que le contenu de la fenêtre grandira pour prendre tout l'espace restant. */
+    overflow: auto;
+    padding: var(--vps);
+    margin-top: var(--vps);
+
 }
 
 #window {
@@ -143,9 +172,7 @@
     z-index: 30;
   }
   
-  .window-content {
-    padding: 5px;
-  }
+
   
 
   

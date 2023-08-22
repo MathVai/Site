@@ -173,7 +173,8 @@ width: calc(12 * var(--vps));
   box-sizing: border-box;
   box-shadow: 
     calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow);
+    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+    0 0 0 calc(1 * var(--vps)) var(--bg-color);
   margin: calc(1 * var(--vps));
   white-space: nowrap;
   overflow: hidden;

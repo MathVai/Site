@@ -10,10 +10,10 @@
 /* Variables CSS globales pour la personnalisation des thèmes et des tailles */
 :root {
   --vps: 0.45vh;
-  --bg-color: #edeae3;
+  --bg-color: #D9D6CE;
   --bg-color-hover: rgb(214, 214, 214);
-  --highlight:rgba(255,255,255,0.7);
-  --shadow: rgba(0,0,0,0.4);  
+  --highlight:rgba(255,255,255,0.8);
+  --shadow: rgba(0,0,0,0.45);  
   --semi-transparent: rgba(247, 244, 248, 0.5);
   --desktop-text-color: white;
   --text-color: black;
@@ -22,6 +22,8 @@
   --border-color-int: #c3c3c3;
   --gray1: #4B4D4F;
   --gray2: #85898D;
+
+  --gradient: linear-gradient(to right, #6D91A9, #83AFA1 );
 
   --font-size-large: calc(6 * var(--vps));
   --font-size-medium: calc(4 * var(--vps));
