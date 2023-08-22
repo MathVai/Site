@@ -15,16 +15,21 @@ function initializeCalculator(windowElement) {
     clear = windowElement.querySelector('#clear'),
     resultDisplayed = false;
 
-  for (var i = 0; i < number.length; i++) {
-    number[i].addEventListener("click", function (e) {
-      var currentString = input.innerHTML;
-      var lastChar = currentString[currentString.length - 1];
-      if (e.target.innerHTML === '.' && lastChar === '.') return;
-      if (e.target.innerHTML === '.' && currentString.split(/[\+\-\×\÷]/).pop().includes('.')) return;
-      if (currentString.length >= 15) return;
-      input.innerHTML += e.target.innerHTML;
-    });
-  }
+    for (var i = 0; i < number.length; i++) {
+      number[i].addEventListener("click", function (e) {
+        var currentString = input.innerHTML;
+        if (currentString === 'NaN' || currentString === 'ERR') {
+          input.innerHTML = ''; // Réinitialise si la valeur est NaN ou ERR
+          currentString = '';
+        }
+        var lastChar = currentString[currentString.length - 1];
+        if (e.target.innerHTML === '.' && lastChar === '.') return;
+        if (e.target.innerHTML === '.' && currentString.split(/[\+\-\×\÷]/).pop().includes('.')) return;
+        if (currentString.length >= 15) return;
+        input.innerHTML += e.target.innerHTML;
+      });
+    }
+    
 
   for (var i = 0; i < operator.length; i++) {
     operator[i].addEventListener("click", function (e) {
