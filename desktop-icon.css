@@ -31,6 +31,7 @@
   width: calc(24 * var(--vps));
   height: calc(32 * var(--vps));
   z-index: 1;
+  cursor: none;
 }
 
 .desktop-icon-container[data-moved='true'] {
@@ -56,7 +57,7 @@
   position: relative;
   width: calc(20 * var(--vps));
   height: calc(20 * var(--vps));
-  cursor: move;
+  cursor: none;
   display: flex;
   flex-direction: column; 
   align-items: center; 

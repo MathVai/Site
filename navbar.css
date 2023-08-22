@@ -190,28 +190,28 @@ width: calc(12 * var(--vps));
 }
 
 /* Pour les boutons nécessitant un clic */
-button:hover:not(.dropbtn), .navbar .clock-btn:hover, .navbar .language-dropdown button:hover {
+.navbar button:hover:not(.dropbtn), .navbar .clock-btn:hover, .navbar .language-dropdown button:hover {
   box-shadow: none;
   background-color: var(--shadow);
 }
 
-button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdown button:active {
+.navbar button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdown button:active {
   box-shadow: none;
   background-color: var(--shadow);
 }
 
-.dropdown-content a:hover {
+.navbar .dropdown-content a:hover {
   box-shadow: none;
   background-color: var(--shadow);
 }
 
 /* Pour les boutons des menus déroulants */
-.dropdown:hover .dropbtn {
+.navbar .dropdown:hover .dropbtn {
   box-shadow: none;
   background-color: var(--shadow);
 }
 
-.language-dropdown:hover .language {
+.navbar .language-dropdown:hover .language {
   box-shadow: none;
   background-color: var(--shadow);
 }
@@ -219,6 +219,7 @@ button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdo
 .navbar button:hover:not(.dropbtn) {
   padding: calc(2 * var(--vps)) calc(2 * var(--vps)); 
 }
+
 
 #minimized-windows-overflow {
   display: none;  

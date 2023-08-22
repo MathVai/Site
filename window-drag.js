@@ -2,6 +2,7 @@ import { increaseAndGetZIndex } from './window-initialization.js';
 import { updateWindowDataAttributes } from './resize-management.js';
 
 const margin = 100;
+
 let originalDataX;
 let originalDataY;
 let isWindowDragging = false;
@@ -38,27 +39,31 @@ export function attachDragEventsToWindow(windowElement) {
   if (!header) return;
 
   interact(header).draggable({
-      listeners: {
-          start(event) {
-              isWindowDragging = true;
-              const parentWindow = event.target.closest('.window');
-              originalDataX = parentWindow.getAttribute('data-x');
-              originalDataY = parentWindow.getAttribute('data-y');
-              parentWindow.style.zIndex = increaseAndGetZIndex();
-          },
-          move(event) {
-              updateDragPosition(event);
-          },
-          end(event) {
-              const parentWindow = event.target.closest('.window');
-              if (parentWindow.classList.contains('maximized')) {
-                  parentWindow.setAttribute('data-x', originalDataX);
-                  parentWindow.setAttribute('data-y', originalDataY);
-              }
-              isWindowDragging = false;
-          }
-      }
-  });
+    cursorChecker: function (action, interactable, element, interacting) {
+        return 'none'; // Force le curseur à être 'none'
+    },
+    listeners: {
+        start(event) {
+            isWindowDragging = true;
+            const parentWindow = event.target.closest('.window');
+            originalDataX = parentWindow.getAttribute('data-x');
+            originalDataY = parentWindow.getAttribute('data-y');
+            parentWindow.style.zIndex = increaseAndGetZIndex();
+        },
+        move(event) {
+            updateDragPosition(event);
+        },
+        end(event) {
+            const parentWindow = event.target.closest('.window');
+            if (parentWindow.classList.contains('maximized')) {
+                parentWindow.setAttribute('data-x', originalDataX);
+                parentWindow.setAttribute('data-y', originalDataY);
+            }
+            isWindowDragging = false;
+        }
+    }
+});
+
 
   windowElement.addEventListener('mousedown', (event) => {
       if (isWindowDragging) {

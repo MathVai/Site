@@ -18,14 +18,16 @@ function createNewFolder() {
 
   const newFolderIcon = document.createElement('div');
   newFolderIcon.classList.add('desktop-icon');
+  newFolderIcon.setAttribute('data-id', 'folder-' + folderIdCounter);
   newFolderIcon.dataset.window = 'explorer-window';
   newFolderIcon.innerHTML = `
       <img class="desktop-icon-image" src="./Icons/Folder-1.png" alt="Folder Icon">
       <p class="desktop-icon-label">New Folder</p>
   `;
 
-  folderIdCounter++;  // Augmentez le compteur chaque fois qu'un nouveau dossier est créé
-  newFolder.setAttribute('data-icon-id', 'folder-' + folderIdCounter);  // Attribuez un ID unique à chaque dossier
+  folderIdCounter++;
+  newFolder.setAttribute('data-icon-id', 'folder-' + folderIdCounter);
+  newFolder.setAttribute('data-id', 'folder-' + folderIdCounter);
 
   newFolder.appendChild(newFolderIcon);
 

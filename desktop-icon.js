@@ -34,6 +34,9 @@ function initializeDesktopIcons() {
   });
   dragAboutToStart = false;
   interact('.desktop-icon-container').draggable({
+    cursorChecker: function (action, interactable, element, interacting) {
+      return 'none'; // Force le curseur à être 'none'
+  },
     listeners: {
       start(event) {
         dragAboutToStart = true;

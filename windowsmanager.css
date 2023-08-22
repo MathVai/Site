@@ -1,79 +1,6 @@
-/*=== WINDOW STYLES ===*/
-
-.window-header {
-    flex: 0 0 auto;
-    background: var(--gradient);
-    padding: calc(2 * var(--vps));
-    padding-top: var(--vps);
-    padding-bottom: var(--vps);
-    cursor: move;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 20;
-  }
-
-  .window-header button {
-    width: calc(5 * var(--vps));
-    height: calc(5 * var(--vps));
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    background-size: cover;
-    background-repeat: no-repeat;
-    image-rendering: optimizeSpeed;
-    image-rendering: pixelated;
-    -ms-interpolation-mode: nearest-neighbor;
-  }
-
-.close {
-    color: rgb(255, 255, 255);
-    margin-left: auto;
-    background-image: url('./Icons/close.png');
-    color: white;
-    border: none;
-    cursor: none;
-    box-shadow: 
-    calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
-    calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
-    0 0 0 calc(0.5 * var(--vps)) var(--bg-color); 
-}
-
-.minimize {
-    color: rgb(255, 255, 255);
-    margin-left: auto;
-    background-image: url('./Icons/minimize.png');
-    color: white;
-    border: none;
-    cursor: none;
-    box-shadow: 
-    calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
-    calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
-    0 0 0 calc(0.5 * var(--vps)) var(--bg-color); 
-    
-}
-
-.maximize {
-    color: rgb(255, 255, 255);
-    margin-left: auto;
-    background-image: url('./Icons/maximize.png');
-    color: white;
-    border: none;
-    cursor: none;
-    box-shadow: 
-    calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
-    calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
-    0 0 0 calc(0.5 * var(--vps)) var(--bg-color); 
-}
-
-.window-controls {
-    display: flex;
-    gap: var(--vps); 
-}
-
-.window-title{
-    font-size: var(--font-size-large);
-}
+/*====================
+    WINDOW STYLES 
+=====================*/
 
 .window {
     display: flex;
@@ -88,32 +15,161 @@
     font-family: 'VT323', monospace;
     background-color: var(--bg-color);
     color: white;
-    box-shadow: 
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
-    0 0 0 calc(1 * var(--vps)) var(--bg-color);  /* Couleur de fond ajoutée */
+    box-shadow:
+        calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+        calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+        0 0 0 calc(1 * var(--vps)) var(--bg-color);
+}
 
+.window-header {
+    flex: 0 0 auto;
+    background: var(--gradient);
+    padding: calc(2 * var(--vps));
+    padding-top: var(--vps);
+    padding-bottom: var(--vps);
+    cursor: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
 }
 
 .window-content {
- box-shadow: 
+    box-shadow:
         calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight) inset,
         calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow) inset;
-    
-    flex: 1 1 auto; /* Cela signifie que le contenu de la fenêtre grandira pour prendre tout l'espace restant. */
+    flex: 1 1 auto;
     overflow: auto;
     padding: var(--vps);
     margin-top: var(--vps);
-
 }
 
-#window {
-    width: fit-content;
-    height: auto;
-    background-color: var(--bg-color);
-    border: 2px solid var(--border-color);
-    z-index: 5;
+
+.window-controls {
+    display: flex;
+    gap: calc(2 * var(--vps));
+    cursor: none;
 }
+
+.window-title {
+    font-size: var(--font-size-large);
+}
+
+
+
+
+/*====================
+    WINDOW HEADER BUTTONS STYLES 
+=====================*/
+
+.window-header button {
+    width: calc(5 * var(--vps));
+    height: calc(5 * var(--vps));
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+    image-rendering: optimizeSpeed;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+.close {
+    color: rgb(255, 255, 255);
+    margin-left: auto;
+    background: url('./Icons/close.png') var(--bg-color);
+    color: white;
+    border: none;
+    cursor: none;
+    box-shadow:
+        calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
+        calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
+        0 0 0 calc(0.5 * var(--vps)) var(--bg-color);
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+    --custom-cursor: var(--pointer-cursor);
+}
+
+.minimize {
+    color: rgb(255, 255, 255);
+    margin-left: auto;
+    background: url('./Icons/minimize.png') var(--bg-color);
+    color: white;
+    border: none;
+    cursor: none;
+    box-shadow:
+        calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
+        calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
+        0 0 0 calc(0.5 * var(--vps)) var(--bg-color);
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+    --custom-cursor: var(--pointer-cursor);
+}
+
+.maximize {
+    color: rgb(255, 255, 255);
+    margin-left: auto;
+    background: url('./Icons/maximize.png') var(--bg-color);
+    color: white;
+    border: none;
+    cursor: none;
+    box-shadow:
+        calc(-0.25 * var(--vps)) calc(-0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--highlight),
+        calc(0.25 * var(--vps)) calc(0.25 * var(--vps)) 0 calc(0.25 * var(--vps)) var(--shadow),
+        0 0 0 calc(0.5 * var(--vps)) var(--bg-color);
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+    --custom-cursor: var(--pointer-cursor);
+}
+
+.close:hover {
+    background-color: var(--bg-color-hover);
+    background-blend-mode: multiply;
+    cursor: none;
+}
+
+.minimize:hover,
+.maximize:hover {
+    background-color: var(--bg-color-hover);
+    background-blend-mode: multiply;
+    cursor: none;
+}
+
+.minimize:active,
+.maximize:active {
+    box-shadow: none;
+    cursor: none;
+}
+
+.close:active {
+    box-shadow: none;
+    cursor: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #windowB {
     position: absolute;
@@ -128,24 +184,45 @@
 #windowC {
 
     display: inline-block;
-    width: fit-content; 
+    width: fit-content;
 }
 
 @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes windowFade {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @keyframes fadeInOut {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 .window-bottom {
@@ -157,55 +234,50 @@
     height: 200px;
     background-color: white;
     border: 1px solid black;
-  }
+}
 
-  .windows {
+.windows {
     position: relative;
     width: 100%;
     height: 100%;
     z-index: 10;
-  }
-  
+}
 
-  
-  .window.active {
-    z-index: 30;
-  }
-  
 
-  
 
-  
-  button:hover {
-    background: gray;
-  }
-  
-  .minimized-windows {
+
+
+
+
+
+
+
+.minimized-windows {
     display: flex;
-  }
-  
-  .window.maximized {
+}
+
+.window.maximized {
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 30;
-  }
-  
-  .app-windows {
+}
+
+.app-windows {
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: 1;
-  }
-  
-  .hidden {
+}
+
+.hidden {
     display: none;
-  }
+}
 
 /*=== TITLE AND SUBTITLE STYLES ===*/
 
-.titleA, .subtitleA {
+.titleA,
+.subtitleA {
     line-height: 1em;
     color: var(--text-color);
     font-size: 30px;
@@ -229,16 +301,31 @@
 }
 
 @keyframes typing {
-    0% { max-width: 0; border-right: .15em solid white; }
-    100% { max-width: 100%; border-right: .15em solid transparent; }
+    0% {
+        max-width: 0;
+        border-right: .15em solid white;
+    }
+
+    100% {
+        max-width: 100%;
+        border-right: .15em solid transparent;
+    }
 }
 
 @keyframes blink {
-    0%, 100% { border-color: transparent; }
-    50% { border-color: white; }
+
+    0%,
+    100% {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: white;
+    }
 }
 
-.titleB, .subtitleB {
+.titleB,
+.subtitleB {
     line-height: 1em;
     color: var(--text-color);
     font-size: 30px;

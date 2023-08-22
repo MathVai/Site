@@ -28,6 +28,8 @@
   --font-size-large: calc(6 * var(--vps));
   --font-size-medium: calc(4 * var(--vps));
   --font-size-small: calc(2 * var(--vps));
+
+  --pointer-cursor: "url('./Icons/Souris2.svg')";
 }
 
 @media (max-height: 500px) {
@@ -35,6 +37,11 @@
       --vps: 2.25px; /* 0.45 * 500 / 100 = 2.25 */
   }
 }
+
+body.resizing {
+  cursor: none !important; /* Masque le curseur du navigateur */
+}
+
 
 /* Styles pour les liens */
 a {

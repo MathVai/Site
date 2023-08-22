@@ -32,7 +32,8 @@ function initializeCalculator(windowElement) {
       var lastChar = currentString[currentString.length - 1];
       if (lastChar === "+" || lastChar === "-" || lastChar === "×" || lastChar === "÷") {
         input.innerHTML = currentString.substring(0, currentString.length - 1) + e.target.innerHTML;
-      } else if (currentString.length !== 0) {
+      } 
+      else if (currentString.length !== 0 && !currentString.match(/[+\-×÷]/)) {
         input.innerHTML += e.target.innerHTML;
       }
     });

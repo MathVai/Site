@@ -29,7 +29,6 @@
     font-size: var(--font-size-large);
     color: var(--text-color);
     overflow-x: auto;
-    transition: all .2s ease-in-out;
     cursor: none;
 }
   
@@ -61,7 +60,7 @@
     margin: var(--vps) var(--vps) var(--vps) var(--vps);
     cursor: pointer;
     background-color: var(--bg-color);
-    transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s;
+    transition: all .1s ease-in-out;
     cursor: none;
 }
   

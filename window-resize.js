@@ -4,6 +4,7 @@ function attachResizeEventsToWindow(windowElement) {
     if (windowElement.classList.contains('fixed-size')) {
         return; // Si l'élément a la classe 'fixed-size', ne faites rien
     }
+
     interact(windowElement).resizable({
         edges: {
             left: true,
@@ -42,7 +43,9 @@ function attachResizeEventsToWindow(windowElement) {
                 if (event.target.dataset.dragging === 'true') return;
                 resizing = true; // Définissez le redimensionnement sur true lors du démarrage du redimensionnement
             }
-        }
+        },
+//        cursorChecker: () => 'none'
+        
     });
 
     const maximizeButton = windowElement.querySelector('.maximize');
