@@ -1,100 +1,66 @@
 "use strict";
 
-var input = document.getElementById('input'),
-  number = document.querySelectorAll('.numbers div'),
-  operator = document.querySelectorAll('.operators div'),
-  result = document.getElementById('result'),
-  clear = document.getElementById('clear'),
-  resultDisplayed = false;
+document.addEventListener('windowOpened', function (event) {
+  if (event.windowId === "calculator") {
+    var calculatorWindow = document.querySelector(`.window[data-id="${event.windowId}"]`);
+    initializeCalculator(calculatorWindow);
+  }
+});
+
+function initializeCalculator(windowElement) {
+  var input = windowElement.querySelector('#input'),
+    number = windowElement.querySelectorAll('.numbers div'),
+    operator = windowElement.querySelectorAll('.operators div'),
+    result = windowElement.querySelector('#result'),
+    clear = windowElement.querySelector('#clear'),
+    resultDisplayed = false;
 
   for (var i = 0; i < number.length; i++) {
-    number[i].addEventListener("click", function(e) {
+    number[i].addEventListener("click", function (e) {
       var currentString = input.innerHTML;
       var lastChar = currentString[currentString.length - 1];
-  
-      if (e.target.innerHTML === '.' && lastChar === '.') {
-        return;
-      }
-  
-      if (currentString.length >= 15) {
-        return;  // Ignore click if the input is already at max length
-      }
-  
-      if (resultDisplayed === false) {
-        input.innerHTML += e.target.innerHTML;
-      } else if (resultDisplayed === true && lastChar === "+" || lastChar === "-" || lastChar === "×" || lastChar === "÷") {
-        resultDisplayed = false;
-        input.innerHTML += e.target.innerHTML;
-      } else {
-        resultDisplayed = false;
-        input.innerHTML = "";
+      if (e.target.innerHTML === '.' && lastChar === '.') return;
+      if (e.target.innerHTML === '.' && currentString.split(/[\+\-\×\÷]/).pop().includes('.')) return;
+      if (currentString.length >= 15) return;
+      input.innerHTML += e.target.innerHTML;
+    });
+  }
+
+  for (var i = 0; i < operator.length; i++) {
+    operator[i].addEventListener("click", function (e) {
+      var currentString = input.innerHTML;
+      var lastChar = currentString[currentString.length - 1];
+      if (lastChar === "+" || lastChar === "-" || lastChar === "×" || lastChar === "÷") {
+        input.innerHTML = currentString.substring(0, currentString.length - 1) + e.target.innerHTML;
+      } else if (currentString.length !== 0) {
         input.innerHTML += e.target.innerHTML;
       }
     });
   }
-  
 
-for (var i = 0; i < operator.length; i++) {
-  operator[i].addEventListener("click", function(e) {
-    var currentString = input.innerHTML;
-    var lastChar = currentString[currentString.length - 1];
-
+  result.addEventListener("click", function () {
+    var inputString = input.innerHTML;
+    var lastChar = inputString[inputString.length - 1];
     if (lastChar === "+" || lastChar === "-" || lastChar === "×" || lastChar === "÷") {
-      var newString = currentString.substring(0, currentString.length - 1) + e.target.innerHTML;
-      input.innerHTML = newString;
-    } else if (currentString.length == 0) {
-      console.log("enter a number first");
-    } else {
-      input.innerHTML += e.target.innerHTML;
+      input.innerHTML = 'ERR';
+      return;
     }
+    var numbers = inputString.split(/\+|\-|\×|\÷/g);
+    var operators = inputString.replace(/[0-9]|\./g, "").split("");
+    ['÷', '×', '-', '+'].forEach(function(op, index) {
+      var operatorIndex = operators.indexOf(op);
+      while (operatorIndex != -1) {
+        numbers.splice(operatorIndex, 2, eval(numbers[operatorIndex] + ['/', '*', '-', '+'][index] + numbers[operatorIndex + 1]));
+        operators.splice(operatorIndex, 1);
+        operatorIndex = operators.indexOf(op);
+      }
+    });
+    var output = parseFloat(numbers[0]);
+    input.innerHTML = (output % 1 === 0) ? output : parseFloat(output.toFixed(4)).toString();
+    resultDisplayed = true;
+  });
+
+  clear.addEventListener("click", function () {
+    input.innerHTML = "";
   });
 }
-
-result.addEventListener("click", function() {
-  var inputString = input.innerHTML;
-  var lastChar = inputString[inputString.length - 1];
-
-  if (lastChar === "+" || lastChar === "-" || lastChar === "×" || lastChar === "÷") {
-    input.innerHTML = 'ERR';
-    return;
-  }
-
-  var numbers = inputString.split(/\+|\-|\×|\÷/g);
-  var operators = inputString.replace(/[0-9]|\./g, "").split("");
-
-  var divide = operators.indexOf("÷");
-  while (divide != -1) {
-    numbers.splice(divide, 2, numbers[divide] / numbers[divide + 1]);
-    operators.splice(divide, 1);
-    divide = operators.indexOf("÷");
-  }
-
-  var multiply = operators.indexOf("×");
-  while (multiply != -1) {
-    numbers.splice(multiply, 2, numbers[multiply] * numbers[multiply + 1]);
-    operators.splice(multiply, 1);
-    multiply = operators.indexOf("×");
-  }
-
-  var subtract = operators.indexOf("-");
-  while (subtract != -1) {
-    numbers.splice(subtract, 2, numbers[subtract] - numbers[subtract + 1]);
-    operators.splice(subtract, 1);
-    subtract = operators.indexOf("-");
-  }
-
-  var add = operators.indexOf("+");
-  while (add != -1) {
-    numbers.splice(add, 2, parseFloat(numbers[add]) + parseFloat(numbers[add + 1]));
-    operators.splice(add, 1);
-    add = operators.indexOf("+");
-  }
-
-  var output = parseFloat(numbers[0]);
-  input.innerHTML = (output % 1 === 0) ? output : parseFloat(output.toFixed(9)).toString();
-  resultDisplayed = true;
-});
-
-clear.addEventListener("click", function() {
-  input.innerHTML = "";
-});

@@ -11,7 +11,7 @@
 :root {
   --vps: 0.45vh;
   --bg-color: #D9D6CE;
-  --bg-color-hover: rgb(214, 214, 214);
+  --bg-color-hover: #C3C1B9;
   --highlight:rgba(255,255,255,0.8);
   --shadow: rgba(0,0,0,0.45);  
   --semi-transparent: rgba(247, 244, 248, 0.5);

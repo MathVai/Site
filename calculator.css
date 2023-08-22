@@ -6,36 +6,38 @@
     background-color: var(--bg-color);
     width: fit-content;
     height: fit-content;
-    max-width: 290px;
+    max-width: calc(60 * var(--vps));
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: none;
 }
   
 .input {
-    border: 2px solid var(--border-color);
-    height: 50px;
-    padding-right: 15px;
-    padding-top: 10px;
+    box-shadow: 
+    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+    0 0 0 calc(1 * var(--vps)) var(--bg-color),
+    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight) inset,
+    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow) inset;
+    height: calc(14 * var(--vps));
+    padding-right: calc(3 * var(--vps));
+    padding-top: calc(2 * var(--vps));
     text-align: right;
-    margin: 4px 4px;
-    font-size: 2.5rem;
+    margin: var(--vps) var(--vps);
+    font-size: var(--font-size-large);
     color: var(--text-color);
     overflow-x: auto;
     transition: all .2s ease-in-out;
-}
-
-.input:hover {
-    border: 2px solid var(--border-color);
-    list-style-type: none;
-    overflow-x: auto;
+    cursor: none;
 }
   
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
+    cursor: none;
 }
 
 .operators, .numbers {
@@ -47,25 +49,30 @@
     justify-content: center;
     align-items: center;
     color: var(--text-color);
-    border: 2px solid var(--border-color-int);
-    height: 40px;
-    width: 40px;
+    box-shadow: 
+    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+    0 0 0 calc(1 * var(--vps)) var(--bg-color); 
+    height: calc(12 * var(--vps));
+    width: calc(12 * var(--vps));
     text-align: center;
-    font-size: 30px;
-    padding: 10px;
-    margin: 4px 4px 4px 4px;
+    font-size: var(--font-size-large);
+    padding: calc(3 * var(--vps));
+    margin: var(--vps) var(--vps) var(--vps) var(--vps);
     cursor: pointer;
     background-color: var(--bg-color);
     transition: border-color .2s ease-in-out, background-color .2s, box-shadow .2s;
+    cursor: none;
 }
   
-.operators div:hover, .numbers div:hover {
+.operators div:hover, div.equal:hover, .numbers div:hover {
     background-color: var(--bg-color-hover);
-    border-color: 2px solid var(--border-color-int);
+    cursor: none;
 }
   
-.operators div:active, .numbers div:active {
-    font-weight: bold;
+.operators div:active, div.equal:active, .numbers div:active {
+    box-shadow: none;
+    cursor: none;
 }
   
 .leftPanel {
@@ -73,27 +80,23 @@
 }
   
 div.equal {
-    grid-row: 2 / 6; /* Span from the 2nd row to the 6th row */
-    grid-column: 4; /* Position on the 4th column */
+    grid-row: 2 / 6; 
+    grid-column: 4; 
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid var(--border-color-int);
+    box-shadow: 
+    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+    0 0 0 calc(1 * var(--vps)) var(--bg-color); 
     text-align: center;
-    font-size: 30px;
+    font-size: var(--font-size-large);
     vertical-align: top;
     cursor: pointer;
     color: var(--text-color);
     background-color: var(--bg-color);
-    transition: all .2s ease-in-out;
-    margin: 4px;
+    transition: all .1s ease-in-out;
+    margin: var(--vps)
 }
   
-div.equal:hover {
-    background-color: var(--bg-color-hover);
-    border-color: var(--border-color);
-}
   
-div.equal:active {
-    font-weight: bold;
-}
