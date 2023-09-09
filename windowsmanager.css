@@ -23,7 +23,6 @@
 
 .window-header {
     flex: 0 0 auto;
-    background: var(--gradient);
     padding: calc(2 * var(--vps));
     padding-top: var(--vps);
     padding-bottom: var(--vps);

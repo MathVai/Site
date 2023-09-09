@@ -11,6 +11,7 @@ import './cursor.js';
 import './menu-contextuel.js';
 import './selection-box.js';
 import './resize-management.js'
+import './update-header.js'
 
 export let minimizedCount = 0;
 

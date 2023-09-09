@@ -17,13 +17,19 @@
   --semi-transparent: rgba(247, 244, 248, 0.5);
   --desktop-text-color: white;
   --text-color: black;
+  --text-white: white;
   --link-color: rgb(255, 255, 255);
   --border-color: #fff;
   --border-color-int: #c3c3c3;
   --gray1: #4B4D4F;
   --gray2: #85898D;
+  --orange: #FFA400;
+  --blue1: #AFC3DD;
+  --blue2: #5A74A3;
+  --blue3: #3F5270;
 
   --gradient: linear-gradient(to right, #6D91A9, #83AFA1 );
+  --gradient-inactive: linear-gradient(to right, #B0B0B0, #D0D0D0);
 
   --font-size-large: calc(6 * var(--vps));
   --font-size-medium: calc(4 * var(--vps));

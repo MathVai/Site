@@ -94,7 +94,6 @@ width: calc(12 * var(--vps));
   align-items: bottom;
   gap: calc(2 * var(--vps));
   margin-right: auto;
-
 }
 
 .navbar .minimized-window {
@@ -103,8 +102,8 @@ width: calc(12 * var(--vps));
 
 
 .minimized-window img {
-  width: calc(9 * var(--vps));
-  height: calc(9 * var(--vps));
+  width: calc(7 * var(--vps));
+  height: calc(7 * var(--vps));
   margin-right: calc(1 * var(--vps));
   image-rendering: optimizeSpeed;
   image-rendering: pixelated;
@@ -160,7 +159,7 @@ width: calc(12 * var(--vps));
   appearance: none;
   background: none;
   color: var(--text-color);
-  background-color: var(--bg-color);
+
   border: none;
   cursor: pointer;
   font-family: 'VT323', monospace;

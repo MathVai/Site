@@ -1,6 +1,7 @@
 import { increaseAndGetZIndex, initializeWindow } from './window-initialization.js';
 import { attachDragEventsToWindow } from './window-drag.js';
 import { attachResizeEventsToWindow } from './window-resize.js';
+import { updateWindowHeaderGradients } from './update-header.js';
 
 window.openWindowAlt = openWindowAlt;
 
@@ -38,7 +39,6 @@ function openWindowAlt(windowId, iconElement = null) {
             const uniqueWindowId = generateUniqueWindowId();
             windowClone.id = uniqueWindowId;
 
-            // Ajout de l'attribut data-id à la fenêtre
             if (dataId) {
                 windowClone.setAttribute('data-id', dataId);
             }
@@ -48,6 +48,21 @@ function openWindowAlt(windowId, iconElement = null) {
             windowClone.classList.remove('hidden');
             const newZIndex = increaseAndGetZIndex();
             windowClone.style.zIndex = newZIndex;
+
+            // Gestionnaire d'événements pour mettre à jour le focus et le gradient de la fenêtre
+            windowClone.addEventListener('mousedown', function() {
+                // Mettez à jour toutes les fenêtres pour qu'elles soient inactives
+                const allWindows = document.querySelectorAll('.window');
+                allWindows.forEach(win => {
+                    win.classList.remove('active'); 
+                });
+            
+                // Donnez le focus à la fenêtre actuelle et ajoutez-lui la classe 'active'
+                windowClone.classList.add('active');
+            
+                // Mettez à jour le gradient de l'en-tête de la fenêtre
+                updateWindowHeaderGradients();
+            });
 
             document.querySelector('.windows').appendChild(windowClone);
 
@@ -65,10 +80,8 @@ function openWindowAlt(windowId, iconElement = null) {
             windowClone.setAttribute('data-y', initialY);
 
             var event = new Event('windowOpened');
-        event.windowId = windowId; // Ajoutez l'ID de la fenêtre à l'événement pour une utilisation future
-        document.dispatchEvent(event);
-        
-
+            event.windowId = windowId; 
+            document.dispatchEvent(event);
         } else {
             console.error('Modèle de fenêtre non trouvé.');
         }

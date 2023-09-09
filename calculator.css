@@ -25,9 +25,10 @@
     padding-right: calc(3 * var(--vps));
     padding-top: calc(2 * var(--vps));
     text-align: right;
+    background-color: var(--blue3);
     margin: var(--vps) var(--vps);
     font-size: var(--font-size-large);
-    color: var(--text-color);
+    color: var(--text-white);
     overflow-x: auto;
     cursor: none;
 }
@@ -93,7 +94,7 @@ div.equal {
     vertical-align: top;
     cursor: pointer;
     color: var(--text-color);
-    background-color: var(--bg-color);
+    background-color: var(--orange);
     transition: all .1s ease-in-out;
     margin: var(--vps)
 }
