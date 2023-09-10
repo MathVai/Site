@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="three.css">
     <link rel="stylesheet" href="kaboomcraze.css">
 
+    <script src="vps.js" defer></script>
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
@@ -197,13 +198,13 @@
             </div>
             <div class="window-content">
                 <div id="status-bar">
-                    <span id="timer">00:00</span>
-                    <span id="mine-count">15</span>
-                    <span id="game-message"></span>
+                    <button id="reset-button"><img src="./KaboomCraze/Reset.png" alt="Reset"></button>
+                    <div id="timer">00:00</div>
+                    <div id="mine-count">15</div>
                 </div>
+
                 <div id="minefield"></div>
             </div>
-            <button id="reveal-grid-btn">Révéler la grille</button>
         </div>
 
         <div id="end-game-modal" class="modal hidden">
@@ -266,22 +267,6 @@
 
 
                 </div>
-            </div>
-
-            <div class="digital-clock">
-                <!-- Horloge numérique ici -->
-            </div>
-            <div class="date">
-                <!-- Date ici -->
-            </div>
-            <div class="chronometer">
-                <!-- Chronomètre ici -->
-            </div>
-            <div class="timer">
-                <!-- Minuteur ici -->
-            </div>
-            <div class="annual-calendar">
-                <!-- Calendrier annuel ici -->
             </div>
         </div>
     </div>

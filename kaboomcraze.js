@@ -8,6 +8,15 @@ let timerId = null;
 let elapsedTime;
 let elapsedTimeInSeconds = (elapsedTime / 1000).toFixed(2);
 
+let styles = getComputedStyle(document.documentElement);
+let blue = String(styles.getPropertyValue('--brightblue1')).trim();
+let green = String(styles.getPropertyValue('--green3')).trim();
+let red = String(styles.getPropertyValue('--red2')).trim();
+let orange = String(styles.getPropertyValue('--orange1')).trim();
+let pink = String(styles.getPropertyValue('--pink1')).trim();
+let beige = String(styles.getPropertyValue('--beige2')).trim();
+let gray = String(styles.getPropertyValue('--gray1')).trim();
+
 var timerDisplay = document.getElementById('timer');
 var mineCountDisplay = document.getElementById('mine-count');
 var gameMessageDisplay = document.getElementById('game-message');
@@ -34,7 +43,19 @@ document.addEventListener('windowOpened', function (event) {
 
             if (minefieldInOpenedWindow) {
                 console.log('Champ de mines trouvé dans la fenêtre Kaboom Craze.');
-                attachEventHandlersToMinefield(minefieldInOpenedWindow);
+                minefield = minefieldInOpenedWindow; // Mise à jour de la référence à minefield
+                createMinefield(); // Création du champ de mines
+                attachEventHandlersToMinefield(minefield); // Attachement des gestionnaires d'événements
+
+                // Ici, attachez l'écouteur d'événements au bouton reset-button du clone
+                const resetButton = kaboomCrazeWindow.querySelector('#reset-button');
+                if (resetButton) {
+                    resetButton.addEventListener('click', function () {
+                        console.log("Reset button clicked in cloned window!");
+                        resetGame();
+                    });
+                }
+
             } else {
                 console.log('Champ de mines NON trouvé dans la fenêtre Kaboom Craze.');
             }
@@ -48,6 +69,8 @@ document.addEventListener('windowOpened', function (event) {
 
 
 
+
+
 function attachEventHandlersToMinefield(minefieldElement) {
     minefieldElement.addEventListener('click', handleCellClick);
     minefieldElement.addEventListener('contextmenu', handleCellRightClick);
@@ -56,18 +79,23 @@ function attachEventHandlersToMinefield(minefieldElement) {
 
 const createMinefield = () => {
     let kaboomCrazeWindow = document.querySelector('.window[data-id="kaboomcraze"]');
-if (kaboomCrazeWindow) {
-    minefield = kaboomCrazeWindow.querySelector('#minefield');
-} else {
-    minefield = document.getElementById('minefield');
-}
+    if (kaboomCrazeWindow) {
+        console.log("kaboomCrazeWindow trouvé !");
+        minefield = kaboomCrazeWindow.querySelector('#minefield');
+        mineCountDisplay = kaboomCrazeWindow.querySelector('#mine-count');
+        console.log("mineCountDisplay:", mineCountDisplay);
+    } else {
+        console.log("kaboomCrazeWindow non trouvé. Utilisation du document principal.");
+        minefield = document.getElementById('minefield');
+        mineCountDisplay = document.getElementById('mine-count');
+    }
+
     console.log('Minefield element:', minefield);
     minefield.innerHTML = '';
     grid = [];
     revealedCount = 0;
     flagCount = 0;
     minesRemaining = mineCount;
-    mineCountDisplay.textContent = minesRemaining;
     let minePositions = new Set();
     while (minePositions.size < mineCount) {
         minePositions.add(Math.floor(Math.random() * 100));
@@ -98,7 +126,6 @@ if (kaboomCrazeWindow) {
             isFlagged: false
         });
     }
-    gameMessageDisplay.textContent = ''
     cells = document.querySelectorAll('.minefield-cell');
     console.log("Taille de la grille lors de la création:", grid.length);
 
@@ -144,8 +171,7 @@ const handleCellClick = (e) => {
     }
     if (isMine) {
         console.log('Mine found!'); // Log if mine is found
-        cell.textContent = '💣';
-        cell.style.backgroundColor = 'red';
+        cell.classList.add('bombed'); // Ajoute la classe "bombed"
         revealMines(minefieldOfClickedCell);
         gameOver(false);
     } else {
@@ -176,10 +202,10 @@ const handleCellRightClick = (e) => {
         return;
     }
     if (isFlagged) {
-        cell.textContent = '';
+        cell.classList.remove('flagged'); // Supprime la classe "flagged"
         flagCount--;
     } else {
-        cell.textContent = '🚩';
+        cell.classList.add('flagged'); // Ajoute la classe "flagged"
         flagCount++;
     }
     grid[index].isFlagged = !isFlagged;
@@ -187,29 +213,30 @@ const handleCellRightClick = (e) => {
     mineCountDisplay.textContent = minesRemaining;
 }
 
+
 const revealMines = (minefieldOfClickedCell) => {
     grid.forEach((cell, index) => {
         if (cell.isMine) {
             let cellElement = minefieldOfClickedCell.children[index];
-            cellElement.textContent = '💣';
-            cellElement.style.backgroundColor = 'red';
+            cellElement.classList.add('bombed'); // Ajoute la classe "bombed" à la cellule
         }
     });
 }
+
 
 const revealCell = (index, minefieldOfClickedCell) => {
     if (index < 0 || index >= 100) {
         return;
     }
     let cell = grid[index];
-    if (cell.isRevealed || cell.isFlagged) {
+    if (cell.isRevealed || cell.isFlagged || cell.isMine) {
         return;
     }
     let cellElement = minefieldOfClickedCell.children[index];
     cell.isRevealed = true;
     revealedCount++;
+    cellElement.classList.add('revealed');
     if (cell.surroundingMines === 0) {
-        cellElement.style.backgroundColor = '#313131';
         for (let dx = -1; dx <= 1; dx++) {
             for (let dy = -1; dy <= 1; dy++) {
                 revealCell(index + dx + dy * 10, minefieldOfClickedCell);
@@ -217,31 +244,30 @@ const revealCell = (index, minefieldOfClickedCell) => {
         }
     } else {
         cellElement.textContent = cell.surroundingMines;
-        cellElement.style.backgroundColor = '#313131';
         switch (cell.surroundingMines) {
             case 1:
-                cellElement.style.color = '#0095ff';
+                cellElement.style.color = blue;
                 break;
             case 2:
-                cellElement.style.color = '#04ff00';
+                cellElement.style.color = green;
                 break;
             case 3:
-                cellElement.style.color = '#ff0000';
+                cellElement.style.color = red;
                 break;
             case 4:
-                cellElement.style.color = '#b7b7ff';
+                cellElement.style.color = orange;
                 break;
             case 5:
-                cellElement.style.color = '#ff00dd';
+                cellElement.style.color = pink;
                 break;
             case 6:
-                cellElement.style.color = '#00ffff';
+                cellElement.style.color = beige;
                 break;
             case 7:
-                cellElement.style.color = '#000000';
+                cellElement.style.color = gray;
                 break;
             case 8:
-                cellElement.style.color = '#ffea00';
+                cellElement.style.color = '#000000';
                 break;
         }
     }
@@ -390,16 +416,8 @@ function updateLeaderboard(playerName) {
     });
 }
 
-// start first game
-let kaboomCrazeWindow = document.querySelector('.window[data-id="kaboomcraze"]');
-if (kaboomCrazeWindow) {
-    minefield = kaboomCrazeWindow.querySelector('#minefield');
-}
-createMinefield();
-attachEventHandlersToMinefield(minefield);
-console.log('Number of cells:', minefield.children.length);
-
 window.addEventListener('beforeunload', stopTimer);
+
 
 
 firebase.firestore().collection('scores').orderBy('time').onSnapshot(function (querySnapshot) {
@@ -412,18 +430,3 @@ firebase.firestore().collection('scores').orderBy('time').onSnapshot(function (q
         rank++; // Increment the rank counter for each score
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

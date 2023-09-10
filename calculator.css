@@ -32,6 +32,8 @@
     overflow-x: auto;
     cursor: none;
 }
+
+
   
 .buttons {
     display: grid;
@@ -65,10 +67,16 @@
     cursor: none;
 }
   
-.operators div:hover, div.equal:hover, .numbers div:hover {
+.operators div:hover, .numbers div:hover {
     background-color: var(--bg-color-hover);
     cursor: none;
 }
+
+div.equal:hover {
+    background-color: var(--orange2);
+    cursor: none;
+}
+
   
 .operators div:active, div.equal:active, .numbers div:active {
     box-shadow: none;
@@ -94,7 +102,7 @@ div.equal {
     vertical-align: top;
     cursor: pointer;
     color: var(--text-color);
-    background-color: var(--orange);
+    background-color: var(--orange1);
     transition: all .1s ease-in-out;
     margin: var(--vps)
 }

@@ -55,8 +55,8 @@
 /* Configuration de l'icône */
 .desktop-icon {
   position: relative;
-  width: calc(20 * var(--vps));
-  height: calc(20 * var(--vps));
+  width: calc(24 * var(--vps));
+  height: calc(24 * var(--vps));
   cursor: none;
   display: flex;
   flex-direction: column; 

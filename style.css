@@ -9,7 +9,6 @@
 
 /* Variables CSS globales pour la personnalisation des thèmes et des tailles */
 :root {
-  --vps: 0.45vh;
   --bg-color: #D9D6CE;
   --bg-color-hover: #C3C1B9;
   --highlight:rgba(255,255,255,0.8);
@@ -23,10 +22,17 @@
   --border-color-int: #c3c3c3;
   --gray1: #4B4D4F;
   --gray2: #85898D;
-  --orange: #FFA400;
+  --orange1: #FFA400;
+  --orange2: #FF8900;
   --blue1: #AFC3DD;
   --blue2: #5A74A3;
   --blue3: #3F5270;
+  --green3: #33A143;
+  --red2: #EC2939;
+  --brightblue1: #1E8FFF;
+  --pink1: #ff69b3;
+  --pink2: #9300d2;
+  --beige2: #d1b38b;
 
   --gradient: linear-gradient(to right, #6D91A9, #83AFA1 );
   --gradient-inactive: linear-gradient(to right, #B0B0B0, #D0D0D0);
