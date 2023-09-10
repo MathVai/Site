@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="windowsmanager.css">
     <link rel="stylesheet" href="clock-dashboard.css">
     <link rel="stylesheet" href="three.css">
+    <link rel="stylesheet" href="kaboomcraze.css">
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -32,7 +33,7 @@
 <body>
     <div id="cursor"></div>
 
-    
+
 
 
 
@@ -60,6 +61,12 @@
                 <div class="desktop-icon" data-window="calculator" data-id="calculator">
                     <img class="desktop-icon-image" src="./Icons/Calculator.png" alt="Application Icon">
                     <p class="desktop-icon-label">Calculatrice</p>
+                </div>
+            </div>
+            <div class="desktop-icon-container">
+                <div class="desktop-icon" data-window="kaboomcraze" data-id="kaboomcraze">
+                    <img class="desktop-icon-image" src="./Icons/Calculator.png" alt="Application Icon">
+                    <p class="desktop-icon-label">Kaboom Craze</p>
                 </div>
             </div>
 
@@ -180,48 +187,84 @@
             </div>
         </div>
 
-        <!-- Navbar Windows  -->
-        <div id="about-window-template" class="window hidden">
+        <div id="kaboomcraze-template" class="window hidden fixed-size" data-icon="./Data-Icons/Calculator.png">
             <div class="window-header">
-                <span class="window-title">Dossier</span>
+                <span class="window-title">Kaboom Craze</span>
                 <div class="window-controls">
                     <button class="minimize"></button>
-                    <button class="maximize"></button>
                     <button class="close"></button>
                 </div>
             </div>
             <div class="window-content">
-                Contenu du dossier
+                <div id="status-bar">
+                    <span id="timer">00:00</span>
+                    <span id="mine-count">15</span>
+                    <span id="game-message"></span>
+                </div>
+                <div id="minefield"></div>
             </div>
+            <button id="reveal-grid-btn">Révéler la grille</button>
         </div>
 
-        <div id="contact-window-template" class="window hidden">
-            <div class="window-header">
-                <span class="window-title">Dossier</span>
-                <div class="window-controls">
-                    <button class="minimize"></button>
-                    <button class="maximize"></button>
-                    <button class="close"></button>
+        <div id="end-game-modal" class="modal hidden">
+            <div class="modal-content">
+                <div id="left-side">
+                    <p id="end-game-message"></p>
+                    <p id="player-time"></p>
+                    <input id="player-name-input" type="text" placeholder="Entrez votre nom">
+                    <div id="buttons">
+                        <button id="submit-button">Soumettre</button>
+                        <button id="restart-button">Rejouer</button>
+                    </div>
+                </div>
+                <div id="right-side" class="hidden">
+                    <h2>Classement</h2>
+                    <ul id="leaderboard-list"></ul>
                 </div>
             </div>
-            <div class="window-content">
-                Contenu du dossier
-            </div>
-        </div>
 
-        <div id="clock-window-template" class="window hidden fixed-size">
-            <div class="window-header">
-                <span class="window-title">Horloge</span>
-                <div class="window-controls">
-                    <button class="minimize"></button>
-                    <button class="close"></button>
+            <!-- Navbar Windows  -->
+            <div id="about-window-template" class="window hidden">
+                <div class="window-header">
+                    <span class="window-title">Dossier</span>
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="maximize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    Contenu du dossier
                 </div>
             </div>
-            <div class="window-content clock-dashboard">
-                <div class="analog-clock-container">
-                </div>
 
-                
+            <div id="contact-window-template" class="window hidden">
+                <div class="window-header">
+                    <span class="window-title">Dossier</span>
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="maximize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    Contenu du dossier
+                </div>
+            </div>
+
+            <div id="clock-window-template" class="window hidden fixed-size">
+                <div class="window-header">
+                    <span class="window-title">Horloge</span>
+                    <div class="window-controls">
+                        <button class="minimize"></button>
+                        <button class="close"></button>
+                    </div>
+                </div>
+                <div class="window-content clock-dashboard">
+                    <div class="analog-clock-container">
+                    </div>
+
+
                 </div>
             </div>
 
@@ -275,7 +318,8 @@
                 </div>
             </div>
             <span class="navbar-separator"></span>
-            <button class="clock-btn" id="clock-button" data-action="openClockWindow" data-window="clock-window" data-id="clock-window">
+            <button class="clock-btn" id="clock-button" data-action="openClockWindow" data-window="clock-window"
+                data-id="clock-window">
                 <div id="clock" class="clock"></div>
             </button>
         </div>
@@ -301,11 +345,6 @@
     <script src="traduction-data.js"></script>
     <script src="traduction.js"></script>
     <script src="analog-clock.js" defer></script>
-
-
-
-
-
 
 
 

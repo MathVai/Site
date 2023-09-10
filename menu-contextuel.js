@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     window.createNewFolder();
                 }
 
-                contextMenu.style.display = 'none';  // Close the context menu
+                contextMenu.style.display = 'none'; 
             });
         });
     });
