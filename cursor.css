@@ -14,3 +14,7 @@
     0% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
     100% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
 }
+
+.disable-interaction * {
+    pointer-events: none;
+}

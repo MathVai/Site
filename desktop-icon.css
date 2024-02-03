@@ -19,17 +19,17 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-content: flex-start;
-  padding: calc(4 * var(--vps));
+  padding: calc(11 * var(--vps));
 }
 
 /* Configuration du conteneur d'icône */
 .desktop-icon-container {
   position: relative;
   display: flex;
-  flex-direction: column;  /* Assurez-vous que c'est une direction de colonne */
-  align-items: center;     /* Centre horizontalement */
-  width: calc(24 * var(--vps));
-  height: calc(32 * var(--vps));
+  flex-direction: column;
+  align-items: center; 
+  width: calc(30 * var(--vps));
+  height: calc(36 * var(--vps));
   z-index: 1;
   cursor: none;
 }

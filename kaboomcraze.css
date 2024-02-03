@@ -57,28 +57,20 @@
 
 
 #status-bar {
-    box-shadow: 
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
-    0 0 0 calc(1 * var(--vps)) var(--bg-color),
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight) inset,
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow) inset;
+    box-shadow: var(--contour-in);
     height: calc(14 * var(--vps));
     margin: var(--vps) var(--vps) var(--vps) var(--vps);
     display: grid;
-    grid-template-columns: auto 1fr auto; /* bouton, minuteur, compteur */
+    grid-template-columns: auto 1fr auto; 
     align-items: center;
 }
 
 #timer {
     font-size: var(--font-size-large);
     color: var(--text-color);
-    width: calc(30 * var(--vps)); /* Largeur fixe, ajustez selon vos besoins */
-    text-align: center; /* Pour centrer le texte à l'intérieur */
-    box-shadow: 
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
-    0 0 0 calc(1 * var(--vps)) var(--bg-color); 
+    width: calc(30 * var(--vps)); 
+    text-align: center; 
+    box-shadow: var(--contour-out);
     padding: calc(1 * var(--vps));
     justify-self: center;
 }
@@ -91,10 +83,7 @@
     height: calc(10 * var(--vps)); 
     justify-content: center;
     align-items: center;
-    box-shadow: 
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
-    0 0 0 calc(1 * var(--vps)) var(--bg-color); 
+    box-shadow: var(--contour-out);
     margin-right: calc(3 * var(--vps));
 }
 
@@ -102,15 +91,13 @@
 
 
 #reset-button {
-    background-color: var(--bg-color); /* ou toute autre couleur de fond */
+    background-color: var(--bg-color);
     border: none;
     cursor: pointer;
     width: calc(10 * var(--vps)); 
     height: calc(10 * var(--vps)); 
-    box-shadow: 
-        calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-        calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow);
-    margin-left: calc(3 * var(--vps)); /* pour une petite marge entre le bouton et le timer */
+    box-shadow: var(--contour-out);
+    margin-left: calc(3 * var(--vps));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -181,12 +168,9 @@
 .modal-content {
     background-color: var(--bg-color);
     color: var(--text-color);
-    box-shadow: 
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
-    0 0 0 calc(1 * var(--vps)) var(--bg-color);
-    padding: 30px;
-    max-width: 560px;
+    box-shadow: var(--contour-out);
+    padding: calc(5 * var(--vps));;
+    max-width: calc(150 * var(--vps));;
     width: fit-content;
     font-family: 'VT323', monospace;
     text-align: center;
@@ -198,23 +182,21 @@
 
 
 #left-side {
+    box-shadow: var(--contour-out);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
+    padding: calc(5 * var(--vps));
+    margin-right: calc(5 * var(--vps));
 }
 
 
 #right-side {
-    border-left: 1px solid var(--border-color);
+    padding: calc(5 * var(--vps));
+    box-shadow: var(--contour-out);
 }
 
-#right-side h2 {
-    text-align: center;
-    font-size: var(--font-size-large);
-    font-weight: normal;
-}
 
 
 
@@ -223,10 +205,7 @@
     justify-content: center;
     align-items: center;
     color: var(--text-color);
-    box-shadow: 
-    calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
-    calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
-    0 0 0 calc(1 * var(--vps)) var(--bg-color); 
+    box-shadow: var(--contour-out);
     text-align: center;
     font-size: var(--font-size-large);
     cursor: pointer;
@@ -257,7 +236,10 @@
     color: var(--text-color);
     font-size: var(--font-size-large);
     font-family: 'VT323', monospace;
-    margin-top: 10px;
+    margin-top: calc(10 * var(--vps));
+    margin-bottom: calc(5 * var(--vps));
+    box-shadow: var(--contour-in);
+    padding: calc(2 * var(--vps));
 }
 
 #buttons {
@@ -270,11 +252,29 @@
     background-color: var(--bg-color-hover);
 }
 
+.classement {
+
+    text-align: center;
+    font-size: var(--font-size-large);
+    font-weight: normal;
+}
+
 #leaderboard-list {
     list-style-type: none;
-    height: 200px;
+    height: calc(50 * var(--vps));
+    overflow-y: auto;
+    padding: calc(5 * var(--vps));
+    margin-top: calc(5 * var(--vps));
+    box-shadow: var(--contour-in);
+    width: calc(50 * var(--vps));;
+}
+
+#leaderboard-list .inner-container {
+    margin-bottom: calc(5 * var(--vps)); 
+    height: calc(50 * var(--vps));
     overflow-y: auto;
 }
+
 
 #leaderboard-list li {
     display: flex;
@@ -287,7 +287,7 @@
 }
 
 #leaderboard-list::-webkit-scrollbar {
-    width: 10px; 
+    width: calc(2 * var(--vps)); 
 }
 
 #leaderboard-list::-webkit-scrollbar-thumb {

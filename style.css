@@ -37,18 +37,26 @@
   --gradient: linear-gradient(to right, #6D91A9, #83AFA1 );
   --gradient-inactive: linear-gradient(to right, #B0B0B0, #D0D0D0);
 
-  --font-size-large: calc(6 * var(--vps));
-  --font-size-medium: calc(4 * var(--vps));
-  --font-size-small: calc(2 * var(--vps));
+  --font-size-large: calc(9 * var(--vps));
+  --font-size-medium: calc(6 * var(--vps));
+  --font-size-small: calc(3 * var(--vps));
+
+  --contour-in: 
+        calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+        calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+        0 0 0 calc(1 * var(--vps)) var(--bg-color),
+        calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight) inset,
+        calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow) inset;
+
+  --contour-out: 
+        calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
+        calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
+        0 0 0 calc(1 * var(--vps)) var(--bg-color); 
+        
 
   --pointer-cursor: "url('./Icons/Souris2.svg')";
 }
 
-@media (max-height: 500px) {
-  :root {
-      --vps: 2.25px; /* 0.45 * 500 / 100 = 2.25 */
-  }
-}
 
 body.resizing {
   cursor: none !important; /* Masque le curseur du navigateur */
@@ -94,4 +102,53 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="number"],
+input[type="date"],
+input[type="tel"],
+input[type="url"],
+textarea {
+    /* Supprimer les bordures et ombres */
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    /* Supprimer les marges et paddings */
+    margin: 0;
+    padding: 0;
+
+    /* Supprimer les apparences par défaut (important pour certains navigateurs) */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Autres réinitialisations de style que vous pourriez vouloir ajouter... */
+    background-color: transparent;
+    font-size: 16px;
+}
+
+/* Supprimer l'ombre intérieure dans WebKit */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+
+/* Supprimer les styles pour les inputs de type "button" ou "submit" */
+input[type="button"],
+input[type="submit"] {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
 }

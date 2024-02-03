@@ -368,29 +368,181 @@ document.getElementById('restart-button').addEventListener('click', function () 
     document.getElementById('end-game-modal').classList.add('hidden');
 });
 
+// Fonction pour supprimer les caractères répétés
+function removeRepeatedChars(word) {
+    return word.replace(/(.)\1{2,}/g, '$1');
+}
+
 document.getElementById('submit-button').addEventListener('click', function () {
     let playerNameInput = document.getElementById('player-name-input');
-    let playerName = playerNameInput.value;
-    if (!gameover || (playerName === '' && gameover)) {
-        return; // Don't do anything if the game is not over or the player name is not entered
+    let playerName = playerNameInput.value.trim();  // Trim pour supprimer les espaces inutiles
+
+    // Liste de mots bannis
+    const bannedWords = [
+        // Mots inappropriés en anglais
+        /f[uùûüú][cç][kq]/i,
+        /s[h#][1iìîïí]t/i,
+        /b[i1ìîïí][t7][cç][h#]/i,
+        /n[i1ìîïí][g9]{2}[e3èéêë][r5]/i,
+        /w[h#][o0òóôõö][r5][e3èéêë]/i,
+        /d[a4@]mn/i,
+        /h[e3èéêë][l1][l1]/i,
+        /b[a4@]st[a4@]rd/i,
+        /[a4@]ss/i,
+        /sl[uùûüú]t/i,
+        /wh[o0òóôõö][r5][e3èéêë]/i,
+        /p[i1ìîïí]ss/i,
+        /d[i1ìîïí]cçk/i,
+        /cr[a4@]p/i,
+        /s[o0òóôõö]n[0òóôõö]fb[i1ìîïí]t[cç]h/i,
+        /tw[a4@]t/i,
+        /j[e3èéêë]rk/i,
+        /p[uùûüú]ss[y]/i,
+        /m[o0òóôõö]r[o0òóôõö]n/i,
+        /idi[o0òóôõö]t/i,
+        /b[i1ìîïí]mb[o0òóôõö]/i,
+        /n[i1ìîïí]pp[l1][e3èéêë]/i,
+        /f[a4@]gg[o0òóôõö][t7]/i,
+        /dyk[e3èéêë]/i,
+        /g[i1ìîïí]mp/i,
+        /r[e3èéêë]t[a4@]rd/i,
+        /h[o0òóôõö]m[o0òóôõö]/i,
+        /m[uùûüú]ff/i,
+        /c[uùûüú]nt/i,
+        /scr[o0òóôõö]t[uùûüú]m/i,
+        /c[o0òóôõö]ck/i,
+        /b[a4@]lls[a4@]cçk/i,
+        /t[i1ìîïí]ts/i,
+        /b[o0òóôõö][o0òóôõö]bs/i,
+        /f[a4@]p/i,
+        /[^a-zA-Z]69[^a-zA-Z]/,
+        /v[a4@]g/i,
+        /[a4@]n[a4@][l1]/i,
+        /cl[i1ìîïí]t/i,
+        /h[o0òóôõö][e3èéêë]r/i,
+        /m[a4@]st[uùûüú]rb[a4@][t7][e3èéêë]/i,
+        /n[uùûüú]ts[a4@]cçk/i,
+        /p[e3èéêë]rv/i,
+        /b[o0òóôõö]ng/i,
+        /t[o0òóôõö]k[e3èéêë]/i,
+        /sp[i1ìîïí]nk/i,
+        /b[o0òóôõö][o0òóôõö]z[i1ìîïí]ng[i1ìîïí]ng/i,
+        /p[o0òóôõö]rn/i,
+        /p[o0òóôõö][o0òóôõö]t/i,
+        /l[e3èéêë]z/i,
+        /f[e3èéêë]ll[a4@][t7][i1ìîïí][o0òóôõö]/i,
+        /b[o0òóôõö][l1][l1][o0òóôõö]cçk/i,
+        /[t7]w[i1ìîïí]nk[i1ìîïí][e3èéêë]/i,
+        /sk[a4@]nk/i,
+        /sl[a4@]g/i,
+        /sn[a4@]t[cç]h/i,
+        /wh[o0òóôõö]r[e3èéêë]b[a4@]g/i,
+        /f[a4@]gg[i1ìîïí]ty/i,
+        /fl[i1ìîïí]p/i,
+        /bl[o0òóôõö]wj[o0òóôõö]b/i,
+        /[a4@]ssh[o0òóôõö][l1][e3èéêë]/i,
+        /b[e3èéêë][a4@][t7][cç][h#]/i,
+        /c[o0òóôõö]mm[i1ìîïí][e3èéêë]/i,
+        /ch[o0òóôõö]d[e3èéêë]/i,
+        
+    
+        // Mots inappropriés en français
+        /m[e3èéêë][r5][d5][e3èéêë]/i,
+        /p[uùûüú][t7][e3èéêë]/i,
+        /c[o0òóôõö][nñ]/i,
+        /s[aàáâãä][l1][e3èéêë][aàáâãä][r5][aàáâãä][b6][e3èéêë]/i,
+        /n[e3èéêë][g9]{2}[e3èéêë][r5]/i,
+        /f[i1ìîïí]l[s5][o0òóôõö]f[e3èéêë]/i,
+        /b[r5][a4@]nl[e3èéêë]/i,
+        /c[o0òóôõö]nn[a4@]rd/i,
+        /s[aàáâãä][l1][o0òóôõö]p[e3èéêë]/i,
+        /tr[o0òóôõö]u[dcç]/i,
+        /b[i1ìîïí]t[e3èéêë]/i,
+        /c[o0òóôõö]u[i1ìîïí]ll[e3èéêë]/i,
+        /b[o0òóôõö]uff[o0òóôõö]nn[e3èéêë]/i,
+        /p[e3èéêë]d[e3èéêë]/i,
+        /c[o0òóôõö]nn[a4@]rd/i,
+        /encul[e3èéêë]/i,
+        /f[o0òóôõö]utr[e3èéêë]/i,
+        /tr[o0òóôõö]ud[uùûüú]cç/i,
+        /p[e3èéêë]d[e3èéêë]/i,
+        /s[o0òóôõö]d[o0òóôõö]m/i,
+        /p[o0òóôõö]uf[i1ìîïí][a4@]ss[e3èéêë]/i,
+        /s[a4@]l[o0òóôõö]p[e3èéêë]/i,
+        /br[a4@]nl[e3èéêë]/i,
+        /b[o0òóôõö]uf[o0òóôõö]n[i1ìîïí]/i,
+        /d[e3èéêë]b[i1ìîïí][l1][e3èéêë]/i,
+        /abr[uùûüú]t[i1ìîïí]/i,
+        /c[o0òóôõö]nn[e3èéêë]r[i1ìîïí]/i,
+        /c[o0òóôõö]ch[o0òóôõö]nn[e3èéêë]/i,
+        /b[o0òóôõö]rd[e3èéêë][l1]/i,
+        /n[i1ìîïí]qu[e3èéêë]/i,
+        /p[uùûüú]t[e3èéêë]r[i1ìîïí]/i,
+        /g[r5][o0òóôõö]ss[e3èéêë][r5]/i,
+        /b[i1ìîïí]tch/i,
+        /p[o0òóôõö]rc[i1ìîïí]n[i1ìîïí]k/i,
+        /m[o0òóôõö]ul[e3èéêë]/i,
+        /f[i1ìîïí]ll[e3èéêë]/i,
+        /c[a4@]ss[o0òóôõö][uùûüú]r[e3èéêë]/i,
+        /r[o0òóôõö]ux/i,
+        /r[a4@]cl[uùûüú]r[e3èéêë]/i,
+        /c[o0òóôõö]u[i1ìîïí]ll[e3èéêë]onn[i1ìîïí][e3èéêë]/i,
+        /b[o0òóôõö]urd[e3èéêë][l1]/i,
+        /n[i1ìîïí]gr[o0òóôõö][i1ìîïí]tud[e3èéêë]/i,
+        /p[e3èéêë]d[a4@][l1]/i,
+        /f[o0òóôõö]ut[i1ìîïí][s5]/i,
+        /s[o0òóôõö]uc[e3èéêë]/i,
+        /v[i1ìîïí]c[i1ìîïí][e3èéêë]ux/i,
+        /m[e3èéêë]rd[i1ìîïí]ll[e3èéêë]ux/i,
+        /p[e3èéêë]p[e3èéêë]r[e3èéêë]/i,
+        /ch[i1ìîïí]enn[e3èéêë]p[a4@]n[i1ìîïí]s/i,
+        /encul[o0òóôõö]t[e3èéêë]/i,
+        /tr[uùûüú]nn[e3èéêë]/i,
+        /c[o0òóôõö]nch[i1ìîïí][e3èéêë]nn[i1ìîïí]/i,
+        /c[o0òóôõö]ll[a4@]b[o0òóôõö]/i,
+        /c[a4@]ss[o0òóôõö]s[e3èéêë]/i,
+        /m[i1ìîïí]t[o0òóôõö]/i,
+        /abr[uùûüú]t[i1ìîïí]/i,
+        /p[e3èéêë]t[a4@]ss[e3èéêë]/i,
+
+          
+    ];
+
+    if (!gameover || !playerName) {
+        return; // Ne faites rien si le jeu n'est pas terminé ou si le nom du joueur n'est pas entré
     }
-    if (playerName !== '') {
-        let newScoreRef = firebase.firestore().collection('scores').doc();
-        newScoreRef.set({
-            name: playerName,
-            time: elapsedTimeInSeconds
-        }).then(function () {
-            // After the score is added, update and display the leaderboard
-            updateLeaderboard(playerName);
-            document.getElementById('submit-button').disabled = true; // Disable the submit button
-        }).catch(function (error) {
-            console.error('Error writing new score to database', error);
-        });
-        playerNameInput.value = ''; // Clear the input field
-    } else {
-        resetGame();
+
+    // Vérifier si le nom du joueur dépasse 12 caractères
+    if (playerName.length > 12) {
+        alert("Votre nom ne doit pas dépasser 12 caractères.");
+        return;
     }
+
+    // Vérification de la présence de mots bannis dans le nom du joueur
+    const cleanedName = removeRepeatedChars(playerName);
+    if (bannedWords.some(pattern => pattern.test(cleanedName))) {
+        alert("Veuillez choisir un nom approprié.");
+        return;
+    }
+
+    // Ajoute le score à la base de données
+    let newScoreRef = firebase.firestore().collection('scores').doc();
+    newScoreRef.set({
+        name: playerName,
+        time: elapsedTimeInSeconds
+    })
+    .then(() => {
+        updateLeaderboard(playerName);
+        document.getElementById('submit-button').disabled = true; // Désactive le bouton de soumission
+    })
+    .catch(error => {
+        console.error('Error writing new score to database', error);
+    });
+
+    playerNameInput.value = ''; // Réinitialise le champ de saisie
 });
+
+
 
 document.getElementById('restart-button').addEventListener('click', function () {
     resetGame();
@@ -398,7 +550,7 @@ document.getElementById('restart-button').addEventListener('click', function () 
 });
 
 function updateLeaderboard(playerName) {
-    let leaderboardList = document.getElementById('leaderboard-list');
+    let leaderboardListContainer = document.querySelector('#leaderboard-list .inner-container');
     leaderboardList.innerHTML = ''; // Clear the leaderboard
     firebase.firestore().collection('scores').orderBy('time').get().then(function (querySnapshot) {
         let rank = 1; // Initialize the rank counter
@@ -421,7 +573,7 @@ window.addEventListener('beforeunload', stopTimer);
 
 
 firebase.firestore().collection('scores').orderBy('time').onSnapshot(function (querySnapshot) {
-    let leaderboardList = document.getElementById('leaderboard-list');
+    let leaderboardListContainer = document.querySelector('#leaderboard-list .inner-container');
     leaderboardList.innerHTML = ''; // Clear the leaderboard
     let rank = 1; // Initialize the rank counter
     querySnapshot.forEach(function (doc) {

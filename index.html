@@ -34,13 +34,7 @@
 <body>
     <div id="cursor"></div>
 
-
-
-
-
     <div class="windows">
-
-
 
         <div class="desktop">
             <div id="selection-box"></div>
@@ -66,7 +60,7 @@
             </div>
             <div class="desktop-icon-container">
                 <div class="desktop-icon" data-window="kaboomcraze" data-id="kaboomcraze">
-                    <img class="desktop-icon-image" src="./Icons/Calculator.png" alt="Application Icon">
+                    <img class="desktop-icon-image" src="./Icons/Kaboom.png" alt="Application Icon">
                     <p class="desktop-icon-label">Kaboom Craze</p>
                 </div>
             </div>
@@ -76,9 +70,11 @@
             <div id="window1" class="window" data-icon="./Data-Icons/Window.png">
                 <div class="window-header">
                     <span class="window-title">Window 1</span>
+                    <div class="window-controls">
                     <button class="minimize"></button>
                     <button class="maximize"></button>
                     <button class="close"></button>
+                    </div>
                 </div>
                 <div class="window-content">
                     Content of Window 1
@@ -219,8 +215,9 @@
                     </div>
                 </div>
                 <div id="right-side" class="hidden">
-                    <h2>Classement</h2>
+                    <h2 class="classement">Classement</h2>
                     <ul id="leaderboard-list"></ul>
+                    <div class="inner-container">
                 </div>
             </div>
 

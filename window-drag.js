@@ -8,7 +8,7 @@ let originalDataY;
 let isWindowDragging = false;
 
 function updateDragPosition(event) {
-  const windowElement = event.target.closest('.window');  // Trouver l'élément .window parent
+  const windowElement = event.target.closest('.window');
   let x = (parseFloat(windowElement.getAttribute('data-x')) || 0) + event.dx;
   let y = (parseFloat(windowElement.getAttribute('data-y')) || 0) + event.dy;
 
@@ -29,10 +29,8 @@ function updateDragPosition(event) {
   windowElement.setAttribute('data-x', x);
   windowElement.setAttribute('data-y', y);
 
-  
   updateWindowDataAttributes(windowElement, x, y);
 }
-
 
 export function attachDragEventsToWindow(windowElement) {
   const header = windowElement.querySelector('.window-header');
@@ -45,6 +43,8 @@ export function attachDragEventsToWindow(windowElement) {
     listeners: {
         start(event) {
             isWindowDragging = true;
+            document.body.classList.add('disable-interaction'); // Désactiver les interactions globales
+            event.stopPropagation(); // Empêcher la propagation pour éviter la selection box
             const parentWindow = event.target.closest('.window');
             originalDataX = parentWindow.getAttribute('data-x');
             originalDataY = parentWindow.getAttribute('data-y');
@@ -54,28 +54,26 @@ export function attachDragEventsToWindow(windowElement) {
             updateDragPosition(event);
         },
         end(event) {
+            document.body.classList.remove('disable-interaction'); // Réactiver les interactions globales
+            isWindowDragging = false;
             const parentWindow = event.target.closest('.window');
             if (parentWindow.classList.contains('maximized')) {
                 parentWindow.setAttribute('data-x', originalDataX);
                 parentWindow.setAttribute('data-y', originalDataY);
             }
-            isWindowDragging = false;
         }
     }
-});
-
+  });
 
   windowElement.addEventListener('mousedown', (event) => {
       if (isWindowDragging) {
           return;
       }
       windowElement.style.zIndex = increaseAndGetZIndex();
-      event.stopPropagation();
+      event.stopPropagation(); // Empêcher la propagation pour éviter la selection box
   });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Attacher les événements de glisser-déposer à toutes les fenêtres existantes
   document.querySelectorAll('.window').forEach(attachDragEventsToWindow);
 });
-

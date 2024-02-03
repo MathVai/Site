@@ -119,7 +119,6 @@ function initializeThreeJS(container) {
 
 
 // Récupération de la valeur vps
-// Récupération de la valeur vps
 const vpsValue = getComputedStyle(document.documentElement).getPropertyValue('--vps').trim();
 
 // Calcul de vps en pixels
