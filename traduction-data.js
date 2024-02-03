@@ -2,14 +2,14 @@ const translations = {
 
   fr: {
     calculatrice: "Calculatrice",
-    goodbye: "Au revoir"
-    // ... autres chaînes en français
+    computer: "Système",
+    folder: "Dossier"
   },
 
   en: {
     calculatrice: "Calculator",
-    goodbye: "Goodbye"
-    // ... autres chaînes en anglais
+    computer: "Computer",
+    folder: "Folder"
   }
 
 };

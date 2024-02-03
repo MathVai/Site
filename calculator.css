@@ -6,7 +6,7 @@
     background-color: var(--bg-color);
     width: fit-content;
     height: fit-content;
-    max-width: calc(60 * var(--vps));
+    max-width: calc(80 * var(--vps));
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@
     0 0 0 calc(1 * var(--vps)) var(--bg-color),
     calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight) inset,
     calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow) inset;
-    height: calc(14 * var(--vps));
+    height: calc(18 * var(--vps));
     padding-right: calc(3 * var(--vps));
     padding-top: calc(2 * var(--vps));
     text-align: right;
@@ -55,8 +55,8 @@
     calc(-0.5 * var(--vps)) calc(-0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--highlight),
     calc(0.5 * var(--vps)) calc(0.5 * var(--vps)) 0 calc(0.5 * var(--vps)) var(--shadow),
     0 0 0 calc(1 * var(--vps)) var(--bg-color); 
-    height: calc(12 * var(--vps));
-    width: calc(12 * var(--vps));
+    height: calc(18 * var(--vps));
+    width: calc(18 * var(--vps));
     text-align: center;
     font-size: var(--font-size-large);
     padding: calc(3 * var(--vps));

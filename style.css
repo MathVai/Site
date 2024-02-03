@@ -37,7 +37,7 @@
   --gradient: linear-gradient(to right, #6D91A9, #83AFA1 );
   --gradient-inactive: linear-gradient(to right, #B0B0B0, #D0D0D0);
 
-  --font-size-large: calc(9 * var(--vps));
+  --font-size-large: calc(8 * var(--vps));
   --font-size-medium: calc(6 * var(--vps));
   --font-size-small: calc(3 * var(--vps));
 

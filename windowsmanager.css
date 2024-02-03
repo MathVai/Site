@@ -8,8 +8,8 @@
     position: fixed;
     width: fit-content;
     height: fit-content;
-    min-width: calc(50 * var(--vps));
-    min-height: calc(50 * var(--vps));
+    min-width: calc(80 * var(--vps));
+    min-height: calc(80 * var(--vps));
     z-index: 15;
     border: var(--vps) solid var(--bg-color);
     font-family: 'VT323', monospace;
@@ -24,8 +24,8 @@
 .window-header {
     flex: 0 0 auto;
     padding: calc(2 * var(--vps));
-    padding-top: var(--vps);
-    padding-bottom: var(--vps);
+    padding-top: calc(2 * var(--vps));
+    padding-bottom: calc(2 * var(--vps));
     cursor: none;
     display: flex;
     justify-content: space-between;
@@ -62,8 +62,8 @@
 =====================*/
 
 .window-header button {
-    width: calc(5 * var(--vps));
-    height: calc(5 * var(--vps));
+    width: calc(7 * var(--vps));
+    height: calc(7 * var(--vps));
     background-color: transparent;
     border: none;
     cursor: pointer;

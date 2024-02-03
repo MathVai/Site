@@ -12,6 +12,6 @@
     padding: 20px; */
 
     position: relative;
-    width: calc(70 * var(--vps));
-    height: calc(70 * var(--vps));
+    width: calc(100 * var(--vps));
+    height: calc(100 * var(--vps));
 }

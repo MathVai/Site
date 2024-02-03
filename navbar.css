@@ -5,7 +5,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: calc(15 * var(--vps));
+  height: calc(20 * var(--vps));
   background-color: var(--bg-color);
   z-index: 50;
   padding-top: calc(1 * var(--vps));
@@ -43,7 +43,7 @@
 }
 
 .principal {
-  width: calc(45 * var(--vps));
+  width: calc(55 * var(--vps));
 }
 
 .overflow-btn {
@@ -120,7 +120,7 @@ width: calc(12 * var(--vps));
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(30 * var(--vps));
+  width: calc(35 * var(--vps));
 }
 
 .clock {
@@ -138,7 +138,7 @@ width: calc(12 * var(--vps));
 
 .language-dropdown button {
   height: 100%;
-  width: calc(13 * var(--vps));
+  width: calc(18 * var(--vps));
   display: flex;
   align-items: center;
 }

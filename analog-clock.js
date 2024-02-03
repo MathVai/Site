@@ -219,15 +219,15 @@ function setupCamera(containerWidth, containerHeight) {
     const far = 1000;
 
     camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
-    camera.position.z = 5; // Positionnez la caméra de manière à ce qu'elle pointe vers la scène.
+    camera.position.z = 5;
     return camera;
 }
 
 
 function animate() {
     if (!shouldRender) {
-        isRendering = false; // Réinitialiser la variable de rendu
-        return; // Arrêtez la boucle de rendu si shouldRender est false
+        isRendering = false;
+        return;
     }
     requestAnimationFrame(animate);
 
@@ -235,7 +235,7 @@ function animate() {
 
     renderer.setRenderTarget(dummyTexture);
     renderer.render(scene, camera);
-    renderer.setRenderTarget(null); // Réinitialiser le rendu cible pour rendre à l'écran ensuite
+    renderer.setRenderTarget(null);
     renderer.render(displayScene, displayCamera);
 }
 
@@ -342,7 +342,4 @@ function setAnalogClock() {
     minuteHand.rotation.z = -minRadians;
     hourHand.rotation.z = -hourRadians;
 
-    // console.log("Secondes (degrés et radians):", secondsDegree, secRadians);
-    // console.log("Minutes (degrés et radians):", minutesDegree, minRadians);
-    // console.log("Heures (degrés et radians):", hoursDegree, hourRadians);
 }

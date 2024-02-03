@@ -317,17 +317,17 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// function updateAvailablePositions() {
-//   window.availablePositions = [];
-//   const allIcons = document.querySelectorAll('.desktop-icon-container');
-//   allIcons.forEach(icon => {
-//       if (icon.getAttribute('data-recyclable') === 'true' || icon.classList.contains('placeholder')) {
-//           const x = parseFloat(icon.style.left || 0);
-//           const y = parseFloat(icon.style.top || 0);
-//           window.availablePositions.push({ x, y });
-//       }
-//   });
-// }
+ function updateAvailablePositions() {
+   window.availablePositions = [];
+   const allIcons = document.querySelectorAll('.desktop-icon-container');
+   allIcons.forEach(icon => {
+       if (icon.getAttribute('data-recyclable') === 'true' || icon.classList.contains('placeholder')) {
+           const x = parseFloat(icon.style.left || 0);
+           const y = parseFloat(icon.style.top || 0);
+           window.availablePositions.push({ x, y });
+       }
+   });
+ }
 
 window.resetDesktopIcons = function() {
   const allIconContainers = document.querySelectorAll('.desktop-icon-container');

@@ -22,7 +22,7 @@ function createNewFolder() {
   newFolderIcon.dataset.window = 'explorer-window';
   newFolderIcon.innerHTML = `
       <img class="desktop-icon-image" src="./Icons/Folder-1.png" alt="Folder Icon">
-      <p class="desktop-icon-label">New Folder</p>
+      <p class="desktop-icon-label" data-translate="folder"></p>
   `;
 
   folderIdCounter++;

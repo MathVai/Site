@@ -28,8 +28,8 @@
   display: flex;
   flex-direction: column;
   align-items: center; 
-  width: calc(30 * var(--vps));
-  height: calc(36 * var(--vps));
+  width: calc(36 * var(--vps));
+  height: calc(40 * var(--vps));
   z-index: 1;
   cursor: none;
 }
@@ -95,6 +95,7 @@
   width: 100%; 
   white-space: nowrap; 
   text-align: center;
+  padding-top: var(--vps);
   font-size: var(--font-size-large);
   font-family: 'VT323', monospace;
   z-index: 1;
