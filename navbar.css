@@ -50,11 +50,6 @@
 width: calc(12 * var(--vps));
 }
 
-
-.dropdown:hover .dropbtn {
-  box-shadow: none;
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -155,7 +150,7 @@ width: calc(12 * var(--vps));
   font-size: var(--font-size-large);
 }
 
-.navbar button, .navbar .dropbtn, .navbar .clock-btn, .navbar .language-dropdown button, .minimized-window {
+.navbar button, .navbar .dropbtn, .navbar .clock-btn, .navbar button, .minimized-window {
   appearance: none;
   background: none;
   color: var(--text-color);
@@ -188,37 +183,18 @@ width: calc(12 * var(--vps));
   width: calc(60 * var(--vps));
 }
 
-/* Pour les boutons nécessitant un clic */
-.navbar button:hover:not(.dropbtn), .navbar .clock-btn:hover, .navbar .language-dropdown button:hover {
-  box-shadow: none;
-  background-color: var(--shadow);
+.hoverable-button:hover {
+  background-color: var(--bg-color-hover);
 }
 
-.navbar button:active:not(.dropbtn), .navbar .clock-btn:active, .navbar .language-dropdown button:active {
-  box-shadow: none;
+.hoverable-button:active {
   background-color: var(--shadow);
 }
 
 .navbar .dropdown-content a:hover {
   box-shadow: none;
-  background-color: var(--shadow);
+  background-color: var(--bg-color-hover);
 }
-
-/* Pour les boutons des menus déroulants */
-.navbar .dropdown:hover .dropbtn {
-  box-shadow: none;
-  background-color: var(--shadow);
-}
-
-.navbar .language-dropdown:hover .language {
-  box-shadow: none;
-  background-color: var(--shadow);
-}
-
-.navbar button:hover:not(.dropbtn) {
-  padding: calc(2 * var(--vps)) calc(2 * var(--vps)); 
-}
-
 
 #minimized-windows-overflow {
   display: none;  
