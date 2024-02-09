@@ -94,7 +94,6 @@ function maximizeWindow(event) {
 
         // Maximiser la fenêtre
         target.style.width = '100vw';
-        target.style.height = `calc(100vh - 50px)`; 
         target.style.left = '0'; 
         target.style.top = '0'; 
 
