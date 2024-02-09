@@ -81,16 +81,20 @@ function maximizeWindow(event) {
         // Restaurer les dimensions et la position
         target.style.width = target.dataset.originalWidth;
         target.style.height = target.dataset.originalHeight;
-        target.style.left = target.dataset.originalX;
-        target.style.top = target.dataset.originalY;
+        const originalDataX = target.getAttribute('data-originalX');
+        const originalDataY = target.getAttribute('data-originalY');
+        target.style.left = originalDataX;
+        target.style.top = originalDataY;
 
         target.classList.remove('maximized');
     } else {
         // Stocker les dimensions et la position actuelles seulement si elles n'ont pas déjà été stockées
         target.dataset.originalWidth = target.dataset.originalWidth || target.style.width;
         target.dataset.originalHeight = target.dataset.originalHeight || target.style.height;
-        target.dataset.originalX = target.dataset.originalX || target.style.left || '0px';
-        target.dataset.originalY = target.dataset.originalY || target.style.top || '0px';
+        const originalDataX = target.dataset.originalX || target.style.left || '0px';
+        const originalDataY = target.dataset.originalY || target.style.top || '0px';
+        target.setAttribute('data-originalX', originalDataX);
+        target.setAttribute('data-originalY', originalDataY);
 
         // Maximiser la fenêtre
         target.style.width = '100vw';
