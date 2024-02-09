@@ -33,7 +33,7 @@
 
 .dropbtn {
   appearance: none;
-  background: none;
+  background: var(--bg-color);
   color: #000;
   padding: calc(2 * var(--vps));
   font-family: 'VT323', monospace;
@@ -70,6 +70,7 @@ width: calc(12 * var(--vps));
 }
 
 .dropdown:hover .dropdown-content {
+  width: fit-content;
   display: block;
 }
 
@@ -108,7 +109,7 @@ width: calc(12 * var(--vps));
 
 
 .clock-btn {
-  background: none;
+  background: var(--bg-color);
   border: none;
   cursor: pointer;
   padding: 0;
@@ -123,12 +124,6 @@ width: calc(12 * var(--vps));
   font-size: var(--font-size-large);
   color: var(--text-color);
   border-radius: calc(1 * var(--vps));
-}
-
-.language-dropdown {
-  position: relative;
-  display: inline-flex;
-  align-items: stretch;
 }
 
 .language-dropdown button {
@@ -152,7 +147,7 @@ width: calc(12 * var(--vps));
 
 .navbar button, .navbar .dropbtn, .navbar .clock-btn, .navbar button, .minimized-window {
   appearance: none;
-  background: none;
+  background: var(--bg-color);
   color: var(--text-color);
 
   border: none;
@@ -192,7 +187,6 @@ width: calc(12 * var(--vps));
 }
 
 .navbar .dropdown-content a:hover {
-  box-shadow: none;
   background-color: var(--bg-color-hover);
 }
 
