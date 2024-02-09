@@ -44,6 +44,17 @@ function attachResizeEventsToWindow(windowElement) {
                 resizing = true; // Définissez le redimensionnement sur true lors du démarrage du redimensionnement
             }
         },
+        modifiers: [
+            interact.modifiers.restrictEdges({
+                outer: 'parent'
+            }),
+            interact.modifiers.restrictSize({
+                min: { 
+                    width: 80 * window.getVps(),
+                    height: 80 * window.getVps(),
+                }
+            })
+        ],
 //        cursorChecker: () => 'none'
         
     });
