@@ -117,17 +117,19 @@ function getMaxMinimizedCount() {
 
     const isOverflowButtonVisible = getComputedStyle(overflowButton).display !== "none";
     const overflowButtonWidth = isOverflowButtonVisible ? overflowButton.offsetWidth + 8 : 0; // +8 for the margin
-    const rightWidth = 227 + overflowButtonWidth;
 
-    const leftPermanentWidth = 241;
-    const marginBetweenButtons = 8; // margin between minimized windows
-    let minimizedWindowWidth = 150 + marginBetweenButtons; // default value
+    // Measure the width of the right section
+    const rightSection = document.querySelector('.right-section');
+    const rightSectionWidth = rightSection.offsetWidth;
 
-    const availableWidthForMinimised = navbarWidth - rightWidth - leftPermanentWidth - marginBetweenButtons;
-    const buffer = 0.5; // This is the buffer, adjust as needed
-    const maxMinimizedWindows = Math.floor(availableWidthForMinimised / minimizedWindowWidth);
+    // Measure the minimum x position of the right section
+    const minX = document.getElementsByClassName('navbar-separator')[0].getBoundingClientRect().right + 60;
 
-    return maxMinimizedWindows;
+    // Now we need to understand how many windows can fit in the minimized section
+    const widthPerMinimizedWindow = 62 * window.getVps();
+    const maxElements = Math.floor((navbarWidth - rightSectionWidth - overflowButtonWidth - minX) / widthPerMinimizedWindow);
+
+    return maxElements;
 }
 
 
