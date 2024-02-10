@@ -17,6 +17,8 @@ function updateDragPosition(event) {
   const viewportWidth = document.documentElement.clientWidth;
   const viewportHeight = document.documentElement.clientHeight;
 
+  const dataX = x;
+  const dataY = y;
   if (x < -margin) x = -margin;
   if (y < 0) y = 0;
   if (x + windowWidth - margin > viewportWidth)
@@ -26,10 +28,7 @@ function updateDragPosition(event) {
 
   windowElement.style.left = x + 'px';
   windowElement.style.top = y + 'px';
-  windowElement.setAttribute('data-x', x);
-  windowElement.setAttribute('data-y', y);
-
-  updateWindowDataAttributes(windowElement, x, y);
+  updateWindowDataAttributes(windowElement, dataX, dataY);
 }
 
 export function attachDragEventsToWindow(windowElement) {
