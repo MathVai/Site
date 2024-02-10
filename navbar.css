@@ -145,9 +145,17 @@ width: calc(12 * var(--vps));
   font-size: var(--font-size-large);
 }
 
-.navbar button, .navbar .dropbtn, .navbar .clock-btn, .navbar button, .minimized-window {
+.minimized-window {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: calc(60 * var(--vps));
+}
+
+.hoverable-button {
   appearance: none;
-  background: var(--bg-color);
+  background-color: var(--bg-color);
   color: var(--text-color);
 
   border: none;
@@ -168,14 +176,8 @@ width: calc(12 * var(--vps));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
 
-.minimized-window {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-  width: calc(60 * var(--vps));
+  transition: all .1s ease-in-out;
 }
 
 .hoverable-button:hover {
@@ -183,6 +185,7 @@ width: calc(12 * var(--vps));
 }
 
 .hoverable-button:active {
+  box-shadow: none;
   background-color: var(--shadow);
 }
 
