@@ -203,7 +203,7 @@ if (windowTitleElement) {
 
 
 
-      miniature.className = 'minimized-window';
+      miniature.className = 'minimized-window hoverable-button';
 
       miniature.addEventListener('click', () => {
         deminimizeWindow(windowElement);

@@ -262,18 +262,18 @@
     <div class="navbar">
         <div class="left-section">
             <div class="dropdown">
-                <button class="dropbtn principal">Mathis Vaille</button>
+                <button class="dropbtn principal hoverable-button">Mathis Vaille</button>
                 <div class="dropdown-content principal-option">
-                    <a href="#" data-action="openAboutWindow" data-window="about-window" data-id="navbar-about-window">À
+                    <a class="dropbtn hoverable-button" href="#" data-action="openAboutWindow" data-window="about-window" data-id="navbar-about-window">À
                         Propos</a>
-                    <a href="#" data-action="openContactWindow" data-window="contact-window"
+                    <a class="dropbtn hoverable-button" href="#" data-action="openContactWindow" data-window="contact-window"
                         data-id="navbar-contact-window">Contact</a>
                 </div>
             </div>
             <span class="navbar-separator"></span>
             <div id="minimized-windows" class="minimized-window-container"></div>
             <div id="minimized-windows-overflow" class="dropdown">
-                <button id="overflow-button" class="dropbtn overflow-btn">...</button>
+                <button id="overflow-button" class="dropbtn overflow-btn hoverable-button">...</button>
                 <div class="dropdown-content minimized-overflow-options">
                     <!-- Les fenêtres minimisées en trop seront déplacées ici par JavaScript -->
                 </div>
@@ -281,14 +281,14 @@
         </div>
         <div class="right-section">
             <div class="dropdown language-dropdown">
-                <button class="dropbtn language" id="currentLanguage">FR</button>
+                <button class="dropbtn language hoverable-button" id="currentLanguage">FR</button>
                 <div class="dropdown-content language-options">
-                    <a href="#" data-lang="fr">FR</a>
-                    <a href="#" data-lang="en">EN</a>
+                    <a class="dropbtn hoverable-button" href="#" data-lang="fr">FR</a>
+                    <a class="dropbtn hoverable-button" href="#" data-lang="en">EN</a>
                 </div>
             </div>
             <span class="navbar-separator"></span>
-            <button class="clock-btn" id="clock-button" data-action="openClockWindow" data-window="clock-window"
+            <button class="clock-btn hoverable-button" id="clock-button" data-action="openClockWindow" data-window="clock-window"
                 data-id="clock-window">
                 <div id="clock" class="clock"></div>
             </button>
