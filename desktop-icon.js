@@ -148,9 +148,8 @@ function initializeDesktopIcons() {
   });
 }
 
-function attachDoubleClickEvent() {
-  const desktopIcons = document.querySelectorAll('.desktop-icon');
-  desktopIcons.forEach((desktopIcon) => {
+function attachDoubleClickEvent(icons) {
+  icons.forEach((desktopIcon) => {
     desktopIcon.addEventListener('dblclick', () => {
       console.log('Double-click detected on', desktopIcon);
       const windowId = desktopIcon.dataset.window;
@@ -159,6 +158,7 @@ function attachDoubleClickEvent() {
     });
   });
 }
+window.attachDoubleClickEvent = attachDoubleClickEvent;
 
 
 
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initializeDesktopIcons();
 
-  attachDoubleClickEvent();
+  attachDoubleClickEvent(document.querySelectorAll('.desktop-icon'));
 
   desktopIconContainers.forEach((iconContainer) => {
     handleIconSelection(iconContainer);

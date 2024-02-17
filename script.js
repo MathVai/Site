@@ -13,6 +13,7 @@ import './selection-box.js';
 import './resize-management.js';
 import './update-header.js';
 import './kaboomcraze.js';
+import './file-system.js';
 
 export let minimizedCount = 0;
 
