@@ -1,8 +1,28 @@
 import { openWindowAlt } from './window-open.js';
 let folderIdCounter = 0;  // Compteur pour générer des ID uniques pour chaque dossier
 
+/**
+ * Create a new folder icon element.
+ * @param {number} folderId folder identifier
+ * @param {number} folderFsId file system identifier
+ */
+const createFolderIcon = (folderId, folderFsId) => {
+  const newFolderIcon = document.createElement('div');
+  newFolderIcon.classList.add('desktop-icon');
+  newFolderIcon.setAttribute('data-id', `${folderId}`);
+  newFolderIcon.setAttribute('data-fs-id', `${folderFsId}`);
+  newFolderIcon.dataset.window = 'explorer-window';
+  newFolderIcon.innerHTML = `
+      <img class="desktop-icon-image" src="./Icons/Folder-1.png" alt="Folder Icon">
+      <p class="desktop-icon-label" data-translate="folder">${document.fsIdToNode.get(folderFsId).name}</p>`;
+  return newFolderIcon;
+}
+window.createFolderIcon = createFolderIcon;
+
 document.addEventListener('DOMContentLoaded', function() {
-function createNewFolder() {
+const desktop = document.querySelector('.desktop');
+
+function createNewFolder(fsId, parent = desktop, folderId = folderIdCounter++) {
   const recyclableIcon = document.querySelector('.desktop-icon-container[data-recyclable="true"]');
   let newFolder;
 
@@ -16,18 +36,9 @@ function createNewFolder() {
       newFolder.classList.add('desktop-icon-container');
   }
 
-  const newFolderIcon = document.createElement('div');
-  newFolderIcon.classList.add('desktop-icon');
-  newFolderIcon.setAttribute('data-id', 'folder-' + folderIdCounter);
-  newFolderIcon.dataset.window = 'explorer-window';
-  newFolderIcon.innerHTML = `
-      <img class="desktop-icon-image" src="./Icons/Folder-1.png" alt="Folder Icon">
-      <p class="desktop-icon-label" data-translate="folder"></p>
-  `;
-
-  folderIdCounter++;
-  newFolder.setAttribute('data-icon-id', 'folder-' + folderIdCounter);
-  newFolder.setAttribute('data-id', 'folder-' + folderIdCounter);
+  const newFolderIcon = createFolderIcon(folderId, fsId);
+  newFolder.setAttribute('data-icon-id', folderId);
+  newFolder.setAttribute('data-id', folderId);
 
   newFolder.appendChild(newFolderIcon);
 
@@ -37,10 +48,8 @@ function createNewFolder() {
       newFolder.style.top = position.y + 'px';
   }
 
-  if (!recyclableIcon) {
-      const desktop = document.querySelector('.desktop');
-      desktop.appendChild(newFolder);
-  }
+  if (!recyclableIcon)
+    parent.appendChild(newFolder);
 
   setTimeout(() => {
       newFolder.setAttribute('data-init-x', newFolderIcon.offsetLeft + 'px');

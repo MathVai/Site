@@ -9,6 +9,30 @@ function generateUniqueWindowId() {
     return 'window-' + Date.now();
 }
 
+/**
+ * Update the file explorer window to show the contents of the folder.
+ * @param {number} fsId file system identifier, unique number
+ * @param {number} parentDataId parent window data identifier, unique number
+ * @param {Element} fileExplorerContainer parent window container, element
+ */
+const updateFileExplorer = (fsId, parentDataId, fileExplorerContainer) => {
+    // Okay, explorer window is already open. However, we need to update
+    // the window explorer content. First, we need to fetch the children
+    // of the folder that was clicked. Then, we need to update the DOM.
+    const children = document.fsIdToNode.get(fsId).children;
+    
+    // Clear the files and folders icons from the explorer window
+    if(fileExplorerContainer === document.querySelector('.desktop')) return;
+    fileExplorerContainer.innerHTML = '';
+
+    // Add the new files and folders icons to the explorer window
+    children.forEach(child =>
+        window.createNewFolder(child.id, fileExplorerContainer, parentDataId));
+
+    // Attach event listeners to the new icons
+    window.attachDoubleClickEvent(fileExplorerContainer.querySelectorAll('.desktop-icon'));
+}
+
 function openWindowAlt(windowId, iconElement = null) {
     console.log('Tentative d\'ouverture de la fenêtre:', windowId);
     
@@ -26,6 +50,12 @@ function openWindowAlt(windowId, iconElement = null) {
     if (existingWindow) {
         console.log('Fenêtre existante trouvée pour:', dataId || windowId);
         existingWindow.focus();
+
+        // Update the file explorer window to show the contents of the folder.
+        const fsId = iconElement?.getAttribute('data-fs-id');
+        if(fsId)
+            updateFileExplorer(fsId, iconElement.getAttribute('data-id'),
+                iconElement.parentNode.parentNode)
         return;
     } else {
         console.log('Aucune fenêtre existante trouvée pour:', dataId || windowId);
@@ -79,7 +109,13 @@ function openWindowAlt(windowId, iconElement = null) {
             windowClone.setAttribute('data-x', initialX);
             windowClone.setAttribute('data-y', initialY);
 
-            var event = new Event('windowOpened');
+            // Update the file explorer window to show the contents of the folder.
+            const fsId = iconElement?.getAttribute('data-fs-id');
+            if(fsId)
+                updateFileExplorer(fsId, iconElement.getAttribute('data-id'),
+                    windowClone.querySelector('.file-explorer-container'));
+
+                var event = new Event('windowOpened');
             event.windowId = windowId; 
             document.dispatchEvent(event);
         } else {

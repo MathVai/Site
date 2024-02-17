@@ -1,0 +1,6 @@
+.file-explorer-container {
+  display: flex; /* Use Flexbox layout */
+  flex-wrap: wrap; /* Allow items to wrap onto the next line */
+  align-items: flex-start; /* Align items to the start of the container */
+  justify-content: flex-start; /* Align items to the start of the main-axis */
+}
