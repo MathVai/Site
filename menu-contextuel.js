@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else if (event.target.id === 'reset-icons') {
                     resetDesktopIcons();
                 } else if (event.target.id === 'create-folder')
-                    window.createNewFolder(document.createNewFolder('New Folder').id);
+                    window.createNewFolder(document.createFileSystemNode('New Folder').id);
 
                 contextMenu.style.display = 'none'; 
             });

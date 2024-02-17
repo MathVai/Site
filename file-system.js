@@ -14,28 +14,28 @@ document.fsIdToNode = new Map();
 document.fsIdToNode.set(fileSystemRoot.id, fileSystemRoot);
 
 // We will have to handle the creation and deletion of files and folders.
-const createNewFolder = (name, parentFolder = fileSystemRoot) => {
-  const newFolder = {
+const createFileSystemNode = (name, parentNode = fileSystemRoot) => {
+  const newNode = {
     id: (idCounter++).toString(36),
     name,
     children: [],
   };
-  parentFolder.children.push(newFolder);
-  document.fsIdToNode.set(newFolder.id, newFolder);
-  return newFolder;
+  parentNode.children.push(newNode);
+  document.fsIdToNode.set(newNode.id, newNode);
+  return newNode;
 };
-document.createNewFolder = createNewFolder;
+document.createFileSystemNode = createFileSystemNode;
 
 // We can create a few folders to start with
-const folderDocuments = createNewFolder('Documents', fileSystemRoot);
-const folderImages = createNewFolder('Images', fileSystemRoot);
-const folderDownloads = createNewFolder('Downloads', fileSystemRoot);
-const folderMusic = createNewFolder('Music', fileSystemRoot);
-const folderVideos = createNewFolder('Videos', fileSystemRoot);
-const folderProjects = createNewFolder('Projects', folderDocuments);
-const folderSchool = createNewFolder('School', folderDocuments);
-const folderWork = createNewFolder('Work', folderDocuments);
-const folderPhotos = createNewFolder('Photos', folderImages);
-const folderWallpapers = createNewFolder('Wallpapers', folderImages);
-const folderSoftware = createNewFolder('Software', folderDownloads);
-const folderGames = createNewFolder('Games', folderDownloads);
+const folderDocuments = createFileSystemNode('Documents', fileSystemRoot);
+const folderImages = createFileSystemNode('Images', fileSystemRoot);
+const folderDownloads = createFileSystemNode('Downloads', fileSystemRoot);
+const folderMusic = createFileSystemNode('Music', fileSystemRoot);
+const folderVideos = createFileSystemNode('Videos', fileSystemRoot);
+const folderProjects = createFileSystemNode('Projects', folderDocuments);
+const folderSchool = createFileSystemNode('School', folderDocuments);
+const folderWork = createFileSystemNode('Work', folderDocuments);
+const folderPhotos = createFileSystemNode('Photos', folderImages);
+const folderWallpapers = createFileSystemNode('Wallpapers', folderImages);
+const folderSoftware = createFileSystemNode('Software', folderDownloads);
+const folderGames = createFileSystemNode('Games', folderDownloads);
